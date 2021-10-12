@@ -1,0 +1,24 @@
+.starter {
+  padding: 0rem 2rem 0rem 2rem;
+
+  .starterWrapper {
+    padding: 2rem;
+    height: 17vh;
+    border-radius: 1.2rem;
+    background-image: url("/starter-background.png");
+    background-color: #148f00;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: -10px 10px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    padding-left: 30%;
+
+    p {
+      text-align: right;
+      font-size: 2.1rem;
+      font-weight: 600;
+    }
+  }
+}

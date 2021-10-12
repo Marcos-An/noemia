@@ -1,0 +1,29 @@
+.cardDrinks {
+  height: 7rem;
+  border-radius: 6px;
+  padding-left: 0.7rem;
+  padding-bottom: 0.5rem;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.cardDrinks-active {
+  height: 7rem;
+  border-radius: 6px;
+  padding-left: 0.7rem;
+  padding-bottom: 0.5rem;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+
+  outline: 4px solid #ffd239;
+}

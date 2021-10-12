@@ -1,0 +1,17 @@
+.cardNav {
+  height: 5rem;
+  width: 26vw;
+  padding-left: 0.7rem;
+  padding-bottom: 0.3rem;
+  border-radius: 8px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  flex: none;
+
+  scroll-snap-align: center;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+}

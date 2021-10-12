@@ -1,0 +1,11 @@
+.pizzaBanner {
+  padding: 2rem 0rem 2rem 2rem;
+  background-image: url("/line-background.png");
+  background-color: var(--yellow);
+  background-repeat: no-repeat;
+  background-size: 90%;
+
+  div:first-child {
+    grid-gap: 15px !important;
+  }
+}

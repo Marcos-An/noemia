@@ -1,0 +1,13 @@
+.footer {
+  display: grid;
+  grid-template-columns: 0.8fr 2fr;
+  grid-gap: 1rem;
+  align-items: center;
+  height: 8vh;
+  width: 100vw;
+  background-color: var(--white);
+  box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.19);
+  position: fixed;
+  bottom: -1px;
+  padding: 1rem 2.4rem;
+}

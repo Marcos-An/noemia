@@ -1,0 +1,42 @@
+.footer {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  .itemMenu {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .itemWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    p {
+      color: var(--grey);
+      font-size: 1.05rem;
+    }
+    svg {
+      color: var(--grey);
+    }
+  }
+
+  .itemWrapperActive {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    p {
+      color: var(--black);
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    svg {
+      color: var(--black);
+    }
+  }
+}

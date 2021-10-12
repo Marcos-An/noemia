@@ -1,0 +1,38 @@
+.container {
+  margin-bottom: calc(10vh - 2rem);
+
+  .imageContainer {
+    position: relative;
+    height: 35vh;
+    margin-top: -10vh;
+    z-index: -1;
+  }
+
+  .informationsContainer {
+    padding: 2rem 2.4rem;
+    h1:first-child {
+      font-size: 2.2rem;
+    }
+    p {
+      margin-top: 1.4rem;
+      font-size: 1.3rem;
+    }
+
+    .chooseSize {
+      margin-top: 4rem;
+      h1 {
+        font-size: 1.6rem;
+      }
+    }
+  }
+
+  .addObservationWrapper {
+    display: flex;
+    align-items: center;
+    margin-top: 4rem;
+    h1 {
+      margin-left: 1rem;
+      font-size: 1.6rem;
+    }
+  }
+}

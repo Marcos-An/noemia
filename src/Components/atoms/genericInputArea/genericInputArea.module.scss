@@ -1,0 +1,25 @@
+.inpuArea {
+  margin-top: 2rem;
+  position: relative;
+
+  .labelInput {
+    font-size: 1.3rem;
+    position: absolute;
+    margin-top: 1rem;
+    margin-left: 1.3rem;
+    color: var(--grey);
+    transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;
+    background-color: var(--white);
+  }
+
+  .input {
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 7rem;
+    max-height: 12rem;
+    padding: 1.3rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    font-family: "Poppins", sans-serif;
+  }
+}

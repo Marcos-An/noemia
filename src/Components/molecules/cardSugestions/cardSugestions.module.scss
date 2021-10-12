@@ -1,0 +1,44 @@
+.cardSugestions {
+  height: 20rem;
+  width: 42vw;
+  border-radius: 0.8rem;
+  background-color: var(--white);
+  filter: drop-shadow(0px 1px 10px rgba(0, 0, 0, 0.1));
+
+  .imageContainer {
+    position: relative;
+    height: 50%;
+    img {
+      border-radius: 0.8rem 0.8rem 0rem 0rem;
+    }
+  }
+
+  .infoContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+    height: 50%;
+
+    .priceHateWrapper {
+      display: flex;
+      justify-content: space-between;
+
+      .hateWrapper {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        p {
+          color: var(--yellow);
+          font-weight: 700;
+          font-size: 1.2rem;
+          margin-left: 3px;
+        }
+        svg {
+          color: var(--yellow);
+          fill: var(--yellow);
+        }
+      }
+    }
+  }
+}

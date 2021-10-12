@@ -1,0 +1,11 @@
+.drinksBanner {
+  margin-top: 2rem;
+  padding: 0rem 2.4rem;
+
+  .container {
+    display: grid;
+    margin-top: 1.5rem;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1rem;
+  }
+}

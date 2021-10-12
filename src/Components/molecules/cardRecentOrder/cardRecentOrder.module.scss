@@ -1,0 +1,44 @@
+.cardRecentOrder {
+  height: 15rem;
+  width: 38vw;
+  border-radius: 0.8rem;
+  background-color: var(--white);
+
+  p {
+    margin-bottom: 3px;
+  }
+  .imageContainer {
+    position: relative;
+    height: 50%;
+    img {
+      border-radius: 0.8rem 0.8rem 0rem 0rem;
+    }
+  }
+
+  .infoContainer {
+    padding: 1rem;
+
+    .priceHateWrapper {
+      display: flex;
+      justify-content: space-between;
+      p {
+        font-size: 1.5rem;
+      }
+      .hateWrapper {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        p {
+          color: var(--yellow);
+          font-weight: 700;
+          font-size: 1.2rem;
+          margin-left: 5px;
+        }
+        svg {
+          color: var(--yellow);
+          fill: var(--yellow);
+        }
+      }
+    }
+  }
+}
