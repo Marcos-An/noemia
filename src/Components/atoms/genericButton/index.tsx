@@ -5,7 +5,7 @@ import GenericText from '../genericText'
 export default function GenericButton({ text, price = null, disabled = false, onClick = null }) {
 
   return (
-    <button className={styles[`genericButton${disabled ? 'Disabled' : ''}`]} onClick={() => onClick} disabled={disabled}>
+    <button className={styles[`genericButton${disabled ? 'Disabled' : ''}`]} onClick={() => onClick()} disabled={disabled}>
       <GenericText weight="bold">
         {text}
       </GenericText>
