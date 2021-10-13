@@ -4,8 +4,12 @@ import { createContext, useState, ReactNode } from 'react';
 type ControllersContextData = {
   selectedItemMenu: object;
   addingCardItem: newCardItem;
+  myCartItems: Array<newCardItem>;
+  headerText: string;
   updateSelectedItemMenu: (selectedItem: object) => void;
-  updateAddingCardItem: (itemToAdd: newCardItem) => void;
+  updateAddingCardItem: (newCardItem: newCardItem) => void;
+  updateMyCart: (newCardItem: newCardItem) => void;
+  updateHeaderText: (text: string) => void;
 }
 
 
@@ -29,6 +33,8 @@ type newCardItem = {
 
 export function ControllersContextProvider({ children }: ControllersContextProviderProps) {
   const [selectedItemMenu, setSelectedItem] = useState({})
+  const [myCartItems, setMyCart] = useState([])
+  const [headerText, setHeaderText] = useState('')
   const [addingCardItem, setAddingCardItem] = useState({
     name: '',
     pathImage: '',
@@ -48,13 +54,30 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
     setAddingCardItem(newCardItem)
   }
 
+  const updateHeaderText = (text) => {
+    setHeaderText(text)
+  }
+
+  const updateMyCart = (newCardItem: newCardItem) => {
+    const arr = [...myCartItems, newCardItem]
+    const newItems = arr.filter((current, i) => {
+      return arr.indexOf(current) === i;
+    });
+
+    setMyCart(newItems)
+  }
+
   return (
     <ControllersContext.Provider
       value={{
         selectedItemMenu,
         addingCardItem,
+        myCartItems,
+        headerText,
         updateSelectedItemMenu,
-        updateAddingCardItem
+        updateAddingCardItem,
+        updateMyCart,
+        updateHeaderText
       }}
     >
       {children}
