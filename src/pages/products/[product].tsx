@@ -28,14 +28,15 @@ export default function Product() {
   const { addingCardItem, updateAddingCardItem } = controllersContext
 
   useEffect(() => {
-    const newCardItem = {
-      ...itemSeleted,
-      observation: '',
-      quantity: 1,
-      size: ''
+    if (!(addingCardItem.name === itemSeleted.name)) {
+      const newCardItem = {
+        ...itemSeleted,
+        observation: '',
+        quantity: 1,
+        size: ''
+      }
+      updateAddingCardItem(newCardItem)
     }
-
-    updateAddingCardItem(newCardItem)
   }, [])
 
   const updateSize = (size) => {

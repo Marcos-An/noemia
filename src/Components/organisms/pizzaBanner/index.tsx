@@ -14,6 +14,7 @@ export default function PizzaBanner() {
       <GenericCarousel
         size={3}
         padding={false}
+        limit={13}
       >
         <CardRecentOrder />
         <CardRecentOrder />

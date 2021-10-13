@@ -1,7 +1,7 @@
 import styles from './genericCarousel.module.scss'
 import { useState, useEffect } from 'react'
 
-export default function GenericCarousel({ children, padding = true, size }) {
+export default function GenericCarousel({ children, padding = true, size, limit = 9 }) {
   const [initialPosition, setInitialPosition] = useState(null)
   const [moving, setMoving] = useState(false)
   const [trasnform, setTrasnform] = useState(0)
@@ -37,7 +37,7 @@ export default function GenericCarousel({ children, padding = true, size }) {
     if (Math.sign(difference) === 1) {
       document.getElementById(id).style.transform = `translateX(0px)`
     } if (difference < -90) {
-      document.getElementById(id).style.transform = `translateX(-110px)`
+      document.getElementById(id).style.transform = `translateX(-${limit}rem)`
     }
     setMoving(false)
   }
