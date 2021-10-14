@@ -2,20 +2,23 @@ import React, { useContext } from 'react'
 import styles from './buttonFooter.module.scss'
 import GenericButton from '../../atoms/genericButton'
 import { ControllersContext } from '../../../Contexts/ControllersContext'
-import AddItemButton from '../../molecules/addItemButton'
+import UpdateItemCartButton from '../../organisms/updateItemCartButton'
 import { formatCurrency } from '../../../utils/formatData'
-import router, { useRouter } from 'next/router'
+import Router from 'next/router'
+import GenericTitle from '../../atoms/genericTitle'
+import GenericText from '../../atoms/genericText'
 
 
 export default function ButtonFooter() {
   const controllersContext = useContext(ControllersContext)
-  const router = useRouter()
+  const { footerType } = controllersContext
 
   const selectFooter = () => {
-    if (router.asPath.includes('products')) {
+    if (footerType === 'detailProduct') {
       return <DetailProduct controllersContext={controllersContext} />
     }
-    if (router.asPath.includes('my-cart')) {
+
+    if (footerType === 'cartDetail') {
       return <CartDetail controllersContext={controllersContext} />
     }
   }
@@ -27,24 +30,22 @@ export default function ButtonFooter() {
 function DetailProduct({ controllersContext }) {
   const { addingCardItem, updateMyCart } = controllersContext
 
+  const addToCart = () => {
+    updateMyCart(addingCardItem)
+    Router.push('/my-cart')
+  }
+
   const currentPrice = () => {
     return addingCardItem.quantity * addingCardItem.price
   }
 
-  const addToCart = () => {
-    console.log('to aqui')
-    updateMyCart(addingCardItem)
-    router.push('/my-cart')
-  }
-
   return (
-    <div className={styles.footer}>
-      <AddItemButton />
-      <GenericButton
-        disabled={addingCardItem.size ? false : true}
-        text="Add to cart"
-        price={formatCurrency(currentPrice())}
+    <div className={styles.footerUpdateItem}>
+      <UpdateItemCartButton
+        price={currentPrice()}
         onClick={addToCart}
+        text="Add to cart"
+        disabled={addingCardItem.size ? false : true}
       />
     </div>
   )
@@ -52,16 +53,26 @@ function DetailProduct({ controllersContext }) {
 
 // FOOTER MY CART DETAIL
 function CartDetail({ controllersContext }) {
-  const { addingCardItem } = controllersContext
+  const { myCartItems } = controllersContext
+
 
   const currentPrice = () => {
-    return addingCardItem.quantity * addingCardItem.price
+    var subTotal = 0
+
+    myCartItems.forEach(({ quantity, price }) => {
+      subTotal = quantity * price
+    })
+
+    return myCartItems.length > 0 ? subTotal + 5 : subTotal
   }
 
   return (
     <div className={styles.footer}>
-      <AddItemButton />
-      <GenericButton disabled={addingCardItem.size ? false : true} text="Add to cart" price={formatCurrency(currentPrice())} />
+      <div className={styles.totalPrice}>
+        <GenericText>Total</GenericText>
+        <GenericTitle>{formatCurrency(currentPrice())}</GenericTitle>
+      </div>
+      <GenericButton disabled={false} text="Payment" />
     </div>
   )
 }

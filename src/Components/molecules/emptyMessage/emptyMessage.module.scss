@@ -1,0 +1,19 @@
+.emptyMessage{
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  margin-top: 10rem;
+
+  .imageContainer { 
+    position: relative;
+    width: 10rem;
+    height: 10rem;
+  }
+
+  h1 {
+    font-weight: 600;
+    margin-bottom: 2rem;
+  }
+}

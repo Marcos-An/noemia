@@ -8,27 +8,59 @@ import { useRouter } from 'next/router'
 
 export default function MainFooter() {
   const [menuItems, setMenuItems] = useState(FOOTER_MENU)
+  const [itemSelected, setItemSelected] = useState("")
   const router = useRouter()
 
   useEffect(() => {
     const newMenuItems = menuItems
 
     newMenuItems.forEach((item) => {
-      if (router.asPath.split('/')[1] === '' && item.name === 'Home') {
-        item.isActive = true
-      }
-      if (router.asPath.split('/')[1] === item.name) {
+      if (itemSelected === item.name) {
         item.isActive = true
       }
     })
+
     setMenuItems(() => [...newMenuItems])
+  }, [itemSelected, router])
+
+
+  useEffect(() => {
+    if (router.asPath === '/') {
+      updateSelection("Home")
+    }
+    if (router.asPath.includes("/my-cart")) {
+      updateSelection("Orders")
+    }
+    if (router.asPath.includes("/profile")) {
+      updateSelection("User")
+    }
+    if (router.asPath.includes("/search")) {
+      updateSelection("Search")
+    }
   }, [router])
 
-  const handleActive = itemSeleted => {
+  const updateSelection = (name) => {
     const newMenuItems = [...menuItems]
 
     newMenuItems.forEach((currentItem) => {
-      if (currentItem === itemSeleted) {
+      if (currentItem.name === name) {
+        setItemSelected(name)
+        currentItem.isActive = true;
+      } else {
+        currentItem.isActive = false;
+      }
+    })
+
+    setMenuItems(() => [...newMenuItems])
+  }
+
+  const handleActive = itemSelected => {
+    const newMenuItems = [...menuItems]
+
+    newMenuItems.forEach((currentItem) => {
+      if (currentItem === itemSelected) {
+        router.push(itemSelected.path)
+        setItemSelected(itemSelected.name)
         currentItem.isActive = true;
       } else {
         currentItem.isActive = false;

@@ -67,21 +67,25 @@ export const SIZE_OPTIONS = [
 export const FOOTER_MENU = [
   {
     name: "Home",
+    path: '/',
     icon: "home",
     isActive: false,
   },
   {
     name: "Search",
+    path: '#',
     icon: "search",
     isActive: false,
   },
   {
     name: "Orders",
+    path: '/my-cart',
     icon: "shopping-cart",
     isActive: false,
   },
   {
     name: "User",
+    path: '#',
     icon: "user",
     isActive: false,
   },

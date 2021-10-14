@@ -26,14 +26,17 @@ function HeaderHome() {
     </div>
   )
 }
+
+
 function HeaderWithBackButton({ router }) {
+
   const controllersContext = useContext(ControllersContext)
   const { headerText } = controllersContext
 
   return (
     <div className={styles.headerWithBackButton}>
       <BackButton />
-      {!router.asPath.includes("products") && <GenericTitle>{headerText}</GenericTitle>}
+      <GenericTitle>{headerText}</GenericTitle>
     </div>
   )
 }

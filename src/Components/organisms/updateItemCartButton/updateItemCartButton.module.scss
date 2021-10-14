@@ -1,0 +1,18 @@
+.footer {
+  display: grid;
+  grid-template-columns: 0.8fr 2fr;
+  grid-gap: 1rem;
+  align-items: center;
+  height: 8vh;
+  bottom: -1px;
+  padding: 1rem 0rem;
+
+  .totalPrice {
+    p {
+      font-size: 1.3rem;
+    }
+    h1 {
+      font-size: 1.6rem;
+    }
+  }
+}

@@ -7,7 +7,9 @@ import { ControllersContext } from '../../../Contexts/ControllersContext'
 
 export default function Banners() {
   const controllersContext = useContext(ControllersContext)
-  const { selectedItemMenu: { name } } = controllersContext
+  const { selectedItemMenu } = controllersContext
+
+  const { name } = selectedItemMenu
 
   return (
     <>
