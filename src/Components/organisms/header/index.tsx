@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import styles from './header.module.scss'
 import SimpleAdress from '../../molecules/simpleAdress'
-import CardButton from '../../molecules/cardButton'
+import CardButton from '../../molecules/cartButton'
 import BackButton from '../../molecules/backButton'
 import { useRouter } from 'next/router'
 import GenericTitle from '../../atoms/genericTitle'
