@@ -85,7 +85,7 @@ export const FOOTER_MENU = [
   },
   {
     name: "User",
-    path: '#',
+    path: '/profile',
     icon: "user",
     isActive: false,
   },
