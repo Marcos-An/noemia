@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from 'react'
-import Image from 'next/image'
 import styles from './product.module.scss'
 import GenericTitle from '../../Components/atoms/genericTitle'
 import GenericIcon from '../../Components/atoms/genericIcon'
@@ -8,8 +7,10 @@ import GenericInputArea from '../../Components/atoms/genericInputArea'
 import RadioSelector from '../../Components/organisms/radioSelector'
 import { ControllersContext } from '../../Contexts/ControllersContext'
 import { SIZE_OPTIONS } from '../../utils/datas'
+import Image from 'next/image'
 
-const itemSeleted = {
+const itemSelected = {
+  id: 1,
   name: "Napoletana",
   pathImage: "/napoletana.jpg",
   description: "Layer of Fresh Mozzarella, San Marzano Plum Tomatoes, Fresh garlic, Fresh Basil & Tuscan Olive Oil",
@@ -17,7 +18,7 @@ const itemSeleted = {
   price: 33.99,
 }
 
-const { name, pathImage, type, description } = itemSeleted
+const { name, pathImage, type, description } = itemSelected
 
 
 export default function Product() {
@@ -25,12 +26,15 @@ export default function Product() {
   const [observation, setObservation] = useState({ value: '', fieldActive: false })
   const controllersContext = useContext(ControllersContext)
 
-  const { addingCardItem, updateAddingCardItem } = controllersContext
+  const { addingCardItem, updateAddingCardItem, updateHeaderText, updateFooterType } = controllersContext
 
   useEffect(() => {
-    if (!(addingCardItem.name === itemSeleted.name)) {
+    updateHeaderText('')
+    updateFooterType('detailProduct')
+
+    if (!(addingCardItem.id === itemSelected.id)) {
       const newCardItem = {
-        ...itemSeleted,
+        ...itemSelected,
         observation: '',
         quantity: 1,
         size: ''

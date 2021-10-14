@@ -1,21 +1,23 @@
+import React, { useContext } from 'react'
+import { ControllersContext } from '../../../Contexts/ControllersContext'
 import styles from './footer.module.scss'
 import MainFooter from '../mainFooter'
 import ButtonFooter from '../buttonFooter'
-import { useRouter } from 'next/router'
 
 export default function Footer() {
-  const router = useRouter()
+  const controllersContext = useContext(ControllersContext)
+  const { footerType } = controllersContext
 
-  const handleShowMenu = () => {
-    if (router.asPath.includes('products')) {
-      return false
-    } else {
+  const handleShowMainMenu = () => {
+    if (footerType === 'main') {
       return true
     }
+    return false
   }
+
   return (
     <div className={styles.footer}>
-      {handleShowMenu() ? <MainFooter /> : <ButtonFooter />}
+      {handleShowMainMenu() ? <MainFooter /> : <ButtonFooter />}
     </div>
   )
 }

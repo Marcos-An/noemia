@@ -2,14 +2,17 @@ import { createContext, useState, ReactNode } from 'react';
 
 
 type ControllersContextData = {
-  selectedItemMenu: object;
+  selectedItemMenu: selectedItemMenu;
   addingCardItem: newCardItem;
   myCartItems: Array<newCardItem>;
   headerText: string;
+  footerType: string;
   updateSelectedItemMenu: (selectedItem: object) => void;
   updateAddingCardItem: (newCardItem: newCardItem) => void;
   updateMyCart: (newCardItem: newCardItem) => void;
   updateHeaderText: (text: string) => void;
+  updateFooterType: (type: string) => void;
+  removingItemFromCart: (selectedItem: newCardItem) => void;
 }
 
 
@@ -21,6 +24,7 @@ type ControllersContextProviderProps = {
 }
 
 type newCardItem = {
+  id: number;
   name: string,
   pathImage: string,
   description: string,
@@ -31,11 +35,25 @@ type newCardItem = {
   observation: string,
 }
 
+type selectedItemMenu = {
+  gradient: string,
+  isActive: boolean,
+  name: string,
+  path: string
+}
+
 export function ControllersContextProvider({ children }: ControllersContextProviderProps) {
-  const [selectedItemMenu, setSelectedItem] = useState({})
+  const [selectedItemMenu, setSelectedItem] = useState({
+    gradient: '',
+    isActive: false,
+    name: '',
+    path: ''
+  })
   const [myCartItems, setMyCart] = useState([])
   const [headerText, setHeaderText] = useState('')
+  const [footerType, setFooterType] = useState('main')
   const [addingCardItem, setAddingCardItem] = useState({
+    id: 0,
     name: '',
     pathImage: '',
     description: '',
@@ -46,7 +64,7 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
     observation: ''
   })
 
-  const updateSelectedItemMenu = (selectedItem) => {
+  const updateSelectedItemMenu = (selectedItem: selectedItemMenu) => {
     setSelectedItem(selectedItem)
   }
 
@@ -54,17 +72,42 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
     setAddingCardItem(newCardItem)
   }
 
-  const updateHeaderText = (text) => {
+  const updateHeaderText = (text: string) => {
     setHeaderText(text)
   }
 
-  const updateMyCart = (newCardItem: newCardItem) => {
-    const arr = [...myCartItems, newCardItem]
-    const newItems = arr.filter((current, i) => {
-      return arr.indexOf(current) === i;
-    });
+  const updateFooterType = (footerType: string) => {
+    setFooterType(footerType)
+  }
 
-    setMyCart(newItems)
+  const removingItemFromCart = (selectedItem: newCardItem) => {
+    const newItems = myCartItems.filter(item => item.id !== selectedItem.id)
+
+    setMyCart([...newItems])
+  }
+  const updateMyCart = (newCardItem: newCardItem) => {
+    var arr = []
+
+    if (myCartItems.length > 0) {
+      arr = myCartItems.map(item => {
+        if (item.name === newCardItem.name) {
+          item = newCardItem
+        }
+        return item
+      })
+
+      const index = arr.findIndex(item => item.name !== newCardItem.name)
+
+
+      if (index !== -1) {
+        setMyCart([...arr, newCardItem])
+      } else {
+        setMyCart([...arr])
+      }
+
+    } else {
+      setMyCart([...myCartItems, newCardItem])
+    }
   }
 
   return (
@@ -74,10 +117,13 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
         addingCardItem,
         myCartItems,
         headerText,
+        footerType,
         updateSelectedItemMenu,
         updateAddingCardItem,
         updateMyCart,
-        updateHeaderText
+        updateHeaderText,
+        updateFooterType,
+        removingItemFromCart
       }}
     >
       {children}

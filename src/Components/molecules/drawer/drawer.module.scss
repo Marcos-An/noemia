@@ -1,0 +1,26 @@
+.drawer{ 
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(28, 31, 42, 0.54);
+  top: 0px;
+  left: 0px;
+  
+  .contentDrawerContainer {
+    position: absolute;
+    z-index: 3;
+    min-height: 30%;
+    width: 100%;
+    bottom: 0;
+    background-color: var(--white);
+    padding: 2rem ;
+    border-radius: 2rem 2rem 0rem 0rem;
+  }
+
+  .closeDiv {
+    flex: 1;
+  }
+}

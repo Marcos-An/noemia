@@ -1,15 +1,15 @@
 import React from 'react'
-import styles from './cardSugestions.module.scss'
+import styles from './cardSuggestions.module.scss'
 import GenericText from '../../atoms/genericText'
 import GenericIcon from '../../atoms/genericIcon'
 import Image from 'next/image'
 import GenericDescription from '../../atoms/genericDescription'
 
-export default function CardSugestions() {
+export default function cardSuggestions() {
   const number = 1.3
 
   return (
-    <div className={styles.cardSugestions}>
+    <div className={styles.cardSuggestions}>
       <div className={styles.imageContainer}>
         <Image
           src="/napoletana.jpg"

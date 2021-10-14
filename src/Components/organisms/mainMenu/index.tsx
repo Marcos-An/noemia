@@ -22,14 +22,14 @@ export default function MainMenu() {
   }, [])
 
 
-  const handleActive = itemSeleted => {
+  const handleActive = itemSelected => {
     const newMenuItems = [...menuItems]
 
-    updateSelectedItemMenu(itemSeleted)
 
     newMenuItems.forEach((currentItem) => {
-      if (currentItem === itemSeleted) {
+      if (currentItem === itemSelected) {
         currentItem.isActive = true;
+        updateSelectedItemMenu(itemSelected)
       } else {
         currentItem.isActive = false;
       }

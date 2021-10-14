@@ -1,3 +1,40 @@
 .container {
   padding: 0rem 2.4rem;
+  margin-bottom: 10rem;
+  
+  .resumeCart {
+    margin-top: 5rem;
+
+    .resumeItems{ 
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1rem;
+      h1 {
+        font-size: 1.6rem;
+      }
+      p {
+        font-size: 1.4rem;
+      }
+    }
+
+    .strokeDashed{
+      margin: 1.5rem 0rem ;
+      border-bottom: 2px dashed var(--grey);
+    }
+  }
+}
+
+.titleAndTrashButton{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chooseSize {
+  margin: 4rem 0rem;
+  h1 {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+  }
 }

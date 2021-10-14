@@ -5,27 +5,40 @@ import GenericIcon from '../../atoms/genericIcon'
 import Image from 'next/image'
 import GenericDescription from '../../atoms/genericDescription'
 import Link from 'next/link'
+import { formatCurrency } from '../../../utils/formatData'
+
 
 export default function CardAllMenu() {
   const number = 1.3
+  const product = {
+    id: 1,
+    name: 'Napoletana',
+    pathImage: '/napoletana.jpg',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
+    type: 'pizza',
+    price: 33.99
+  }
+
+  const { id, name, pathImage, description, type, price } = product
+
 
   return (
-    <Link href="/products/napoletana">
+    <Link href={`/products/${type}?id:${id}`} passHref>
       <div className={styles.cardAllMenu}>
         <div className={styles.imageContainer}>
           <Image
-            src="/napoletana.jpg"
+            src={pathImage}
             alt="napoletana"
             layout="fill"
             objectFit="cover"
           />
         </div>
         <div className={styles.infoContainer}>
-          <GenericText weight="bold">Napoletana</GenericText>
-          <GenericDescription>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</GenericDescription>
+          <GenericText weight="bold">{name}</GenericText>
+          <GenericDescription>{description}</GenericDescription>
           <div className={styles.priceHateWrapper}>
             <div className={styles.priceWrapper}>
-              <GenericText>$51,99</GenericText>
+              <GenericText>{formatCurrency(price)}</GenericText>
               <GenericDescription>30-40 min</GenericDescription>
             </div>
             <div className={styles.hateWrapper}>
