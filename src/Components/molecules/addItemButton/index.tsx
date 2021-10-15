@@ -6,14 +6,14 @@ import GenericText from '../../atoms/genericText'
 
 export default function AddItemButton() {
   const controllersContext = useContext(ControllersContext)
-  const { addingCardItem, updateAddingCardItem } = controllersContext
+  const { addingCardItem, updateAddingCartItem } = controllersContext
 
   const addItem = () => {
     const newCardItem = { ...addingCardItem }
 
     newCardItem.quantity += 1
 
-    updateAddingCardItem(newCardItem)
+    updateAddingCartItem(newCardItem)
   }
 
   const removeItem = () => {
@@ -21,7 +21,7 @@ export default function AddItemButton() {
 
     newCardItem.quantity -= 1
 
-    updateAddingCardItem(newCardItem)
+    updateAddingCartItem(newCardItem)
   }
 
   return (

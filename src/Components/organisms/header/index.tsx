@@ -9,15 +9,16 @@ import GenericText from '../../atoms/genericText'
 import { ControllersContext } from '../../../Contexts/ControllersContext'
 
 export default function Header() {
+  const controllersContext = useContext(ControllersContext)
   const router = useRouter()
 
   const headerShow = () => {
     if (router.asPath === '/') {
       return <HeaderHome />
-    } else if (router.asPath.includes('/profile')) {
-      return <HeaderProfile />
+    } else if (router.asPath === '/profile') {
+      return <HeaderProfile controllersContext={controllersContext} />
     } else {
-      return <HeaderWithBackButton router={router} />
+      return <HeaderWithBackButton controllersContext={controllersContext} />
     }
   }
 
@@ -34,18 +35,19 @@ function HeaderHome() {
   )
 }
 
-function HeaderProfile() {
+function HeaderProfile({ controllersContext }) {
+  const { myInformations } = controllersContext
+
   return (
     <div className={styles.headerProfile}>
       <GenericText>User configurations</GenericText>
-      <GenericTitle>Marcos Antonio da Silva Junior</GenericTitle>
+      <GenericTitle>{myInformations.name}</GenericTitle>
     </div>
   )
 }
 
 
-function HeaderWithBackButton({ router }) {
-  const controllersContext = useContext(ControllersContext)
+function HeaderWithBackButton({ controllersContext }) {
   const { headerText } = controllersContext
 
   return (

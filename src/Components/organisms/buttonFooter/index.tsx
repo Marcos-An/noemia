@@ -21,6 +21,10 @@ export default function ButtonFooter() {
     if (footerType === 'cartDetail') {
       return <CartDetail controllersContext={controllersContext} />
     }
+
+    if (footerType === 'cartDetail') {
+      return <CartDetail controllersContext={controllersContext} />
+    }
   }
 
   return selectFooter()

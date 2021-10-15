@@ -1,0 +1,12 @@
+.cardAddress {
+  padding: 2rem;
+  border: 2px solid var(--yellow);
+  border-radius: 6px;
+  position: relative;
+
+  .icon {
+    position: absolute;
+    top: 40%;
+    right: 1.5rem;
+  }
+}

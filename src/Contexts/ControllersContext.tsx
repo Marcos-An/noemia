@@ -7,15 +7,19 @@ type ControllersContextData = {
   myCartItems: Array<newCardItem>;
   headerText: string;
   footerType: string;
+  address: address;
+  myInformations: myInformations;
+  paymentMethods: Array<paymentMethod>;
   updateSelectedItemMenu: (selectedItem: object) => void;
-  updateAddingCardItem: (newCardItem: newCardItem) => void;
+  updateAddingCartItem: (newCardItem: newCardItem) => void;
   updateMyCart: (newCardItem: newCardItem) => void;
   updateHeaderText: (text: string) => void;
   updateFooterType: (type: string) => void;
   removingItemFromCart: (selectedItem: newCardItem) => void;
+  updateAddress: (address: address) => void;
+  updateMyInformations: (myInformations: myInformations) => void;
+  updatePaymentMethods: (paymentMethod: paymentMethod) => void;
 }
-
-
 
 export const ControllersContext = createContext({} as ControllersContextData)
 
@@ -42,6 +46,31 @@ type selectedItemMenu = {
   path: string
 }
 
+type address = {
+  street: string,
+  number: string,
+  zipCode: string,
+  state: string,
+  city: string,
+  neighbourhood: string
+}
+
+type myInformations = {
+  name: string,
+  email: string,
+  phone: string,
+}
+
+type paymentMethod = {
+  nickName: string,
+  cardNumber: string,
+  type: string,
+  niceType: string,
+  valid: string,
+  CVC: string,
+  nameOwner: string
+}
+
 export function ControllersContextProvider({ children }: ControllersContextProviderProps) {
   const [selectedItemMenu, setSelectedItem] = useState({
     gradient: '',
@@ -49,9 +78,33 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
     name: '',
     path: ''
   })
+  const [address, setAddress] = useState({
+    street: '',
+    number: '',
+    zipCode: '',
+    state: '',
+    city: '',
+    neighbourhood: ''
+  })
   const [myCartItems, setMyCart] = useState([])
   const [headerText, setHeaderText] = useState('')
   const [footerType, setFooterType] = useState('main')
+  const [paymentMethods, setPaymentMethods] = useState([
+    {
+      nickName: 'Money',
+      cardNumber: "",
+      type: 'Money',
+      niceType: 'Money',
+      valid: '',
+      CVC: '',
+      nameOwner: ''
+    }
+  ])
+  const [myInformations, setMyInformations] = useState({
+    name: "Marcos Antonio da Silva Junior",
+    email: "marcos.silva@gmail.com",
+    phone: "67999290375",
+  })
   const [addingCardItem, setAddingCardItem] = useState({
     id: 0,
     name: '',
@@ -68,7 +121,11 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
     setSelectedItem(selectedItem)
   }
 
-  const updateAddingCardItem = (newCardItem: newCardItem) => {
+  const updatePaymentMethods = (paymentMethod: paymentMethod) => {
+    setPaymentMethods([...paymentMethods, paymentMethod])
+  }
+
+  const updateAddingCartItem = (newCardItem: newCardItem) => {
     setAddingCardItem(newCardItem)
   }
 
@@ -78,6 +135,14 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
 
   const updateFooterType = (footerType: string) => {
     setFooterType(footerType)
+  }
+
+  const updateAddress = (address: address) => {
+    setAddress(address)
+  }
+
+  const updateMyInformations = (myInformations: myInformations) => {
+    setMyInformations(myInformations)
   }
 
   const removingItemFromCart = (selectedItem: newCardItem) => {
@@ -118,12 +183,18 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
         myCartItems,
         headerText,
         footerType,
+        address,
+        myInformations,
+        paymentMethods,
         updateSelectedItemMenu,
-        updateAddingCardItem,
+        updateAddingCartItem,
         updateMyCart,
         updateHeaderText,
         updateFooterType,
-        removingItemFromCart
+        removingItemFromCart,
+        updateAddress,
+        updateMyInformations,
+        updatePaymentMethods
       }}
     >
       {children}

@@ -1,0 +1,35 @@
+.cardPaymentMethods {
+  padding: 1rem 1.2rem;
+  margin-bottom: 1.3rem;
+  min-height: 6rem;
+  border: 1px solid #bdbdbd;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  .imageContainer {
+    position: relative;
+    width: 3.9rem;
+    height: 3rem;
+    margin-right: 2rem;
+    img {
+      border-radius: 0.3rem;
+    }
+  }
+
+  .nameNumber {
+    p {
+      font-size: 1.3rem;
+    }
+    h1 {
+      font-size: 1.6rem;
+    }
+  }
+
+  .icon {
+    position: absolute;
+    top: 40%;
+    right: 1.5rem;
+  }
+}

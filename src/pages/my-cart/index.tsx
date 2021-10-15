@@ -19,7 +19,7 @@ export default function MyCart() {
   useEffect(() => {
     updateHeaderText('Your Cart')
     updateFooterType('cartDetail')
-  }, [])
+  }, [updateHeaderText, updateFooterType])
 
   return myCartItems.length > 0 ? <CartWithItems controllersContext={controllersContext} /> : <CartWithoutItems />
 }
@@ -53,7 +53,7 @@ function CartWithItems({ controllersContext }) {
   const {
     myCartItems,
     addingCardItem,
-    updateAddingCardItem,
+    updateAddingCartItem,
     updateMyCart,
     removingItemFromCart
   } = controllersContext
@@ -71,7 +71,7 @@ function CartWithItems({ controllersContext }) {
     })
 
     setOptions(() => [...newOptions])
-  }, [addingCardItem])
+  }, [addingCardItem, options])
 
 
   const currentPrice = () => {
@@ -90,7 +90,7 @@ function CartWithItems({ controllersContext }) {
 
   const handleDrawerActive = (selectedItem) => {
     setSelectedItem(selectedItem)
-    updateAddingCardItem(selectedItem)
+    updateAddingCartItem(selectedItem)
     setDrawerIsActive(!drawerIsActive)
   }
 

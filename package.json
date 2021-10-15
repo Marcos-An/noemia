@@ -9,11 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "card-validator": "^8.1.1",
     "feather-icons-react": "^0.4.3",
     "next": "11.1.2",
     "prettier": "^2.4.1",
     "react": "17.0.2",
+    "react-credit-cards": "^0.8.3",
     "react-dom": "17.0.2",
+    "remask": "0.1.0-alpha.5",
     "sass": "^1.42.1"
   },
   "devDependencies": {

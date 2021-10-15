@@ -1,0 +1,20 @@
+.myInformations {
+  padding: 0rem 2.4rem;
+  margin-top: 2rem;
+
+  .button {
+    width: 87%;
+    position: absolute;
+    bottom: 2rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 2rem;
+  }
+
+  .form {
+    margin-top: 1rem;
+  }
+}

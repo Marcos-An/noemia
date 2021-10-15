@@ -1,0 +1,16 @@
+.itemProfileMenu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 1rem;
+  border-bottom: 1px solid #dcdcdc;
+
+  .itemNameIcon {
+    display: flex;
+    align-items: center;
+
+    p {
+      margin-left: 1rem;
+    }
+  }
+}

@@ -10,14 +10,21 @@ export default function Footer() {
 
   const handleShowMainMenu = () => {
     if (footerType === 'main') {
-      return true
+      return (
+        <div className={styles.footer}>
+          <MainFooter />
+        </div>
+      )
+    } if (footerType === 'none') {
+      return <div />
+    } else {
+      return (
+        <div className={styles.footer}>
+          <ButtonFooter />
+        </div >
+      )
     }
-    return false
   }
 
-  return (
-    <div className={styles.footer}>
-      {handleShowMainMenu() ? <MainFooter /> : <ButtonFooter />}
-    </div>
-  )
+  return handleShowMainMenu()
 }

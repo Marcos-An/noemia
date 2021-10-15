@@ -38,9 +38,18 @@ button:hover {
   cursor: pointer;
 }
 
+input {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.6rem;
+  font-weight: 500;
+  border: 1px solid #b8b8b8;
+  border-radius: 0.4rem;
+}
+
 input:focus {
   font-family: "Poppins", sans-serif;
-  border-color: var(--yellow);
+  border: 1px solid var(--yellow);
+  border-radius: 0.4rem;
 }
 
 a {

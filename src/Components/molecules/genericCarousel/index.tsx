@@ -27,7 +27,7 @@ export default function GenericCarousel({ children, padding = true, size, limit 
     if (moving) {
       const currentPosition = changedTouches[0].pageX
       const diff = currentPosition - initialPosition
-      document.getElementById(id).style.transform = `translateX(${trasnform + diff}px)`
+      document.getElementById(id).style.transform = `translateX(${(trasnform + diff) * 1.3}px)`
       setDifference(trasnform + diff)
 
     }

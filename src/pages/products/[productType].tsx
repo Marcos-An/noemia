@@ -26,7 +26,7 @@ export default function Product() {
   const [observation, setObservation] = useState({ value: '', fieldActive: false })
   const controllersContext = useContext(ControllersContext)
 
-  const { addingCardItem, updateAddingCardItem, updateHeaderText, updateFooterType } = controllersContext
+  const { addingCardItem, updateAddingCartItem, updateHeaderText, updateFooterType } = controllersContext
 
   useEffect(() => {
     updateHeaderText('')
@@ -39,16 +39,16 @@ export default function Product() {
         quantity: 1,
         size: ''
       }
-      updateAddingCardItem(newCardItem)
+      updateAddingCartItem(newCardItem)
     }
-  }, [])
+  }, [updateHeaderText, updateFooterType, updateAddingCartItem, addingCardItem])
 
   const updateSize = (size) => {
     const newCardItem = { ...addingCardItem }
 
     newCardItem.size = size
 
-    updateAddingCardItem(newCardItem)
+    updateAddingCartItem(newCardItem)
   }
 
   const handleActive = itemSeleted => {
