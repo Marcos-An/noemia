@@ -4,9 +4,10 @@ import GenericButton from '../../atoms/genericButton'
 import { ControllersContext } from '../../../Contexts/ControllersContext'
 import UpdateItemCartButton from '../../organisms/updateItemCartButton'
 import { formatCurrency } from '../../../utils/formatData'
-import Router, { useRouter } from 'next/router'
+import Router from 'next/router'
 import GenericTitle from '../../atoms/genericTitle'
 import GenericText from '../../atoms/genericText'
+import { format } from 'date-fns'
 
 
 export default function ButtonFooter() {
@@ -23,7 +24,7 @@ export default function ButtonFooter() {
     }
 
     if (footerType === 'payment') {
-      return <CartPayment />
+      return <CartPayment controllersContext={controllersContext} />
     }
   }
 
@@ -80,12 +81,32 @@ function CartDetail({ controllersContext }) {
   )
 }
 
-// FOOTER MY CART DETAIL
-function CartPayment() {
+// FOOTER CART PAYMENT
+function CartPayment({ controllersContext }) {
+  const { address, myCartItems, updateOrder } = controllersContext
+
+  const disabled = () => {
+    return address.street && myCartItems.length > 0 ? false : true
+  }
+
+  const date = format(new Date(), 'PP')
+
+  const saveOrderStatus = () => {
+    const newOrder = {
+      myCartItems: myCartItems,
+      dateOrder: date,
+      orderStatus: 'confirmed',
+      orderId: Math.floor(Math.random() * 100) + 1
+    }
+
+    updateOrder(newOrder)
+
+    Router.push(`/my-cart/order-status/${newOrder.orderId}`)
+  }
 
   return (
     <div className={styles.cartPayment}>
-      <GenericButton disabled={false} text="Place Order" />
+      <GenericButton disabled={disabled()} text="Place Order" onClick={() => saveOrderStatus()} />
     </div>
   )
 }

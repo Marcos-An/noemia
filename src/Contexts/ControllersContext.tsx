@@ -11,6 +11,7 @@ type ControllersContextData = {
   myInformations: myInformations;
   paymentMethods: Array<paymentMethod>;
   mainPaymentMethod: paymentMethod;
+  order: Array<order>;
   updateSelectedItemMenu: (selectedItem: object) => void;
   updateAddingCartItem: (newCardItem: newCardItem) => void;
   updateMyCart: (newCardItem: newCardItem) => void;
@@ -21,6 +22,7 @@ type ControllersContextData = {
   updateMyInformations: (myInformations: myInformations) => void;
   updatePaymentMethods: (paymentMethod: paymentMethod) => void;
   updateMainPaymentMethod: (paymentMethod: paymentMethod) => void;
+  updateOrder: (order: order) => void;
 }
 
 export const ControllersContext = createContext({} as ControllersContextData)
@@ -71,6 +73,18 @@ type paymentMethod = {
   valid: string,
   CVC: string,
   nameOwner: string
+}
+
+type order = {
+  myCartItems: Array<newCardItem>,
+  dateOrder: string,
+  orderStatus: Array<stepOrderStatus>,
+  orderId: number,
+}
+
+type stepOrderStatus = {
+  step: string,
+  completeDate: string
 }
 
 export function ControllersContextProvider({ children }: ControllersContextProviderProps) {
@@ -127,6 +141,7 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
     size: '',
     observation: ''
   })
+  const [order, setOrder] = useState([])
 
   const updateSelectedItemMenu = (selectedItem: selectedItemMenu) => {
     setSelectedItem(selectedItem)
@@ -156,6 +171,29 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
     setAddress(address)
   }
 
+  const updateOrder = (newOrder: order) => {
+    setOrder([...order, {
+      ...newOrder, orderStatus: [
+        {
+          step: 'confirmation',
+          completeDate: '',
+        },
+        {
+          step: 'preparation',
+          completeDate: '',
+        },
+        {
+          step: 'delivery',
+          completeDate: '',
+        },
+        {
+          step: 'arrived',
+          completeDate: '',
+        }
+      ],
+    }])
+  }
+
   const updateMyInformations = (myInformations: myInformations) => {
     setMyInformations(myInformations)
   }
@@ -165,6 +203,7 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
 
     setMyCart([...newItems])
   }
+
   const updateMyCart = (newCardItem: newCardItem) => {
     var arr = []
 
@@ -202,6 +241,7 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
         myInformations,
         paymentMethods,
         mainPaymentMethod,
+        order,
         updateSelectedItemMenu,
         updateAddingCartItem,
         updateMyCart,
@@ -211,7 +251,8 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
         updateAddress,
         updateMyInformations,
         updatePaymentMethods,
-        updateMainPaymentMethod
+        updateMainPaymentMethod,
+        updateOrder
       }}
     >
       {children}
