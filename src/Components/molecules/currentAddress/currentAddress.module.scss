@@ -1,0 +1,25 @@
+.currentAddress {
+  min-height: 6rem;
+  border-radius: 6px;
+  margin-top: 1.2rem;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  .address {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .imageContainer {
+    position: relative;
+    width: 4.5rem;
+    height: 4.5rem;
+    margin-right: 2rem;
+    img {
+      border-radius: 0.3rem;
+    }
+  }
+}

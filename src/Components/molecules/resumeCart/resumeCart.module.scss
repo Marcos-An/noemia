@@ -1,0 +1,23 @@
+.resumeCart {
+  position: absolute;
+  bottom: 10rem;
+  width: 87%;
+
+  .resumeItems {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    h1 {
+      font-size: 1.6rem;
+    }
+    p {
+      font-size: 1.4rem;
+    }
+  }
+
+  .strokeDashed {
+    margin: 1.5rem 0rem;
+    border-bottom: 2px dashed var(--grey);
+  }
+}

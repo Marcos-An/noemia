@@ -4,7 +4,7 @@ import GenericButton from '../../atoms/genericButton'
 import { ControllersContext } from '../../../Contexts/ControllersContext'
 import UpdateItemCartButton from '../../organisms/updateItemCartButton'
 import { formatCurrency } from '../../../utils/formatData'
-import Router from 'next/router'
+import Router, { useRouter } from 'next/router'
 import GenericTitle from '../../atoms/genericTitle'
 import GenericText from '../../atoms/genericText'
 
@@ -22,8 +22,8 @@ export default function ButtonFooter() {
       return <CartDetail controllersContext={controllersContext} />
     }
 
-    if (footerType === 'cartDetail') {
-      return <CartDetail controllersContext={controllersContext} />
+    if (footerType === 'payment') {
+      return <CartPayment />
     }
   }
 
@@ -59,7 +59,6 @@ function DetailProduct({ controllersContext }) {
 function CartDetail({ controllersContext }) {
   const { myCartItems } = controllersContext
 
-
   const currentPrice = () => {
     var subTotal = 0
 
@@ -76,7 +75,17 @@ function CartDetail({ controllersContext }) {
         <GenericText>Total</GenericText>
         <GenericTitle>{formatCurrency(currentPrice())}</GenericTitle>
       </div>
-      <GenericButton disabled={false} text="Payment" />
+      <GenericButton disabled={false} text="Payment" onClick={() => Router.push('/my-cart/payment')} />
+    </div>
+  )
+}
+
+// FOOTER MY CART DETAIL
+function CartPayment() {
+
+  return (
+    <div className={styles.cartPayment}>
+      <GenericButton disabled={false} text="Place Order" />
     </div>
   )
 }

@@ -1,0 +1,28 @@
+.container {
+  padding: 0rem 2.4rem;
+
+  .payment {
+    margin-top: 5rem;
+  }
+  .address {
+    margin-top: 3rem;
+  }
+  span {
+    margin-top: 0.3rem;
+    font-size: 1.3rem;
+    color: var(--yellow);
+  }
+}
+
+.containerDrawer {
+  .paymentMethodsList {
+    margin-top: 3rem;
+    margin-bottom: 7rem;
+  }
+
+  .button {
+    position: fixed;
+    width: 89%;
+    bottom: 2rem;
+  }
+}

@@ -3,14 +3,13 @@ import React, { useState, useEffect, useContext } from 'react'
 import { ControllersContext } from '../../Contexts/ControllersContext'
 import CardMyCart from '../../Components/molecules/cardMyCart'
 import GenericTitle from '../../Components/atoms/genericTitle'
-import GenericText from '../../Components/atoms/genericText'
-import { formatCurrency } from '../../utils/formatData'
 import Drawer from '../../Components/molecules/drawer'
 import TrashButton from '../../Components/molecules/trashButton'
 import RadioSelector from '../../Components/organisms/radioSelector'
 import UpdateItemCartButton from '../../Components/organisms/updateItemCartButton'
 import { SIZE_OPTIONS } from '../../utils/datas'
 import EmptyMessage from '../../Components/molecules/emptyMessage'
+import ResumeCart from '../../Components/molecules/resumeCart'
 
 export default function MyCart() {
   const controllersContext = useContext(ControllersContext)
@@ -38,17 +37,6 @@ function CartWithoutItems() {
 function CartWithItems({ controllersContext }) {
   const [drawerIsActive, setDrawerIsActive] = useState(false)
   const [options, setOptions] = useState(SIZE_OPTIONS)
-  const [selectedItem, setSelectedItem] = useState({
-    id: 0,
-    name: '',
-    pathImage: '',
-    description: '',
-    type: '',
-    price: 0,
-    quantity: 0,
-    size: '',
-    observation: '',
-  })
 
   const {
     myCartItems,
@@ -63,7 +51,6 @@ function CartWithItems({ controllersContext }) {
 
     newOptions.forEach((currentItem) => {
       if (currentItem.value === addingCardItem.size) {
-        setSelectedItem(addingCardItem)
         currentItem.isActive = true;
       } else {
         currentItem.isActive = false;
@@ -71,25 +58,10 @@ function CartWithItems({ controllersContext }) {
     })
 
     setOptions(() => [...newOptions])
-  }, [addingCardItem, options])
+  }, [])
 
-
-  const currentPrice = () => {
-    var subTotal = 0
-
-    myCartItems.forEach(({ quantity, price }) => {
-      subTotal = quantity * price
-    })
-
-    return subTotal
-  }
-
-  const itemPrice = () => {
-    return selectedItem.price * selectedItem.quantity
-  }
 
   const handleDrawerActive = (selectedItem) => {
-    setSelectedItem(selectedItem)
     updateAddingCartItem(selectedItem)
     setDrawerIsActive(!drawerIsActive)
   }
@@ -109,12 +81,12 @@ function CartWithItems({ controllersContext }) {
   }
 
   const updateCart = () => {
-    updateMyCart(selectedItem)
+    updateMyCart(addingCardItem)
     setDrawerIsActive(!drawerIsActive)
   }
 
   const removeItem = () => {
-    removingItemFromCart(selectedItem)
+    removingItemFromCart(addingCardItem)
     setDrawerIsActive(!drawerIsActive)
   }
 
@@ -125,29 +97,14 @@ function CartWithItems({ controllersContext }) {
         <CardMyCart key={item.name} product={item} onClick={() => handleDrawerActive(item)} />
       )}
 
-      <div className={styles.resumeCart}>
-        <GenericTitle>Your Resume</GenericTitle>
-        <div className={styles.resumeItems}>
-          <GenericText>Subtotal</GenericText>
-          <GenericTitle>{formatCurrency(currentPrice())}</GenericTitle>
-        </div>
-        <div className={styles.resumeItems}>
-          <GenericText>Delivery</GenericText>
-          <GenericTitle>{formatCurrency(5)}</GenericTitle>
-        </div>
-        <div className={styles.strokeDashed} />
-        <div className={styles.resumeItems}>
-          <GenericText>Total</GenericText>
-          <GenericTitle>{formatCurrency(currentPrice() + 5)}</GenericTitle>
-        </div>
-      </div>
+      <ResumeCart />
 
       <Drawer isActive={drawerIsActive} close={setDrawerIsActive}>
         <div className={styles.titleAndTrashButton}>
-          <GenericTitle>{selectedItem.name}</GenericTitle>
+          <GenericTitle>{addingCardItem.name}</GenericTitle>
           <TrashButton onClick={removeItem} />
         </div>
-        {selectedItem.type === 'pizza' && (
+        {addingCardItem.type === 'pizza' && (
           <div className={styles.chooseSize}>
             <GenericTitle>Choose a size</GenericTitle>
             <RadioSelector options={options} onClick={handleActiveOption} />
@@ -155,7 +112,7 @@ function CartWithItems({ controllersContext }) {
         )}
         <UpdateItemCartButton
           disabled={false}
-          price={itemPrice()}
+          price={addingCardItem.quantity * addingCardItem.price}
           text="Update cart"
           onClick={updateCart}
         />

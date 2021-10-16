@@ -10,6 +10,7 @@ type ControllersContextData = {
   address: address;
   myInformations: myInformations;
   paymentMethods: Array<paymentMethod>;
+  mainPaymentMethod: paymentMethod;
   updateSelectedItemMenu: (selectedItem: object) => void;
   updateAddingCartItem: (newCardItem: newCardItem) => void;
   updateMyCart: (newCardItem: newCardItem) => void;
@@ -19,6 +20,7 @@ type ControllersContextData = {
   updateAddress: (address: address) => void;
   updateMyInformations: (myInformations: myInformations) => void;
   updatePaymentMethods: (paymentMethod: paymentMethod) => void;
+  updateMainPaymentMethod: (paymentMethod: paymentMethod) => void;
 }
 
 export const ControllersContext = createContext({} as ControllersContextData)
@@ -89,6 +91,15 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
   const [myCartItems, setMyCart] = useState([])
   const [headerText, setHeaderText] = useState('')
   const [footerType, setFooterType] = useState('main')
+  const [mainPaymentMethod, setMainPaymentMethod] = useState({
+    nickName: 'Money',
+    cardNumber: "",
+    type: 'Money',
+    niceType: 'Money',
+    valid: '',
+    CVC: '',
+    nameOwner: ''
+  })
   const [paymentMethods, setPaymentMethods] = useState([
     {
       nickName: 'Money',
@@ -123,6 +134,10 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
 
   const updatePaymentMethods = (paymentMethod: paymentMethod) => {
     setPaymentMethods([...paymentMethods, paymentMethod])
+  }
+
+  const updateMainPaymentMethod = (paymentMethod: paymentMethod) => {
+    setMainPaymentMethod(paymentMethod)
   }
 
   const updateAddingCartItem = (newCardItem: newCardItem) => {
@@ -186,6 +201,7 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
         address,
         myInformations,
         paymentMethods,
+        mainPaymentMethod,
         updateSelectedItemMenu,
         updateAddingCartItem,
         updateMyCart,
@@ -194,7 +210,8 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
         removingItemFromCart,
         updateAddress,
         updateMyInformations,
-        updatePaymentMethods
+        updatePaymentMethods,
+        updateMainPaymentMethod
       }}
     >
       {children}

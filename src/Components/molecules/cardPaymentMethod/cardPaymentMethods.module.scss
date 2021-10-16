@@ -29,7 +29,52 @@
 
   .icon {
     position: absolute;
-    top: 40%;
     right: 1.5rem;
+    top: 40%;
+  }
+}
+
+.cardPaymentMethodsMain {
+  padding: 1rem 1.2rem;
+  margin-bottom: 1.3rem;
+  min-height: 6rem;
+  border: 2px solid #ffe99f;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  .imageContainer {
+    position: relative;
+    width: 3.9rem;
+    height: 3rem;
+    margin-right: 2rem;
+    img {
+      border-radius: 0.3rem;
+    }
+  }
+
+  .nameNumber {
+    p {
+      font-size: 1.3rem;
+    }
+    h1 {
+      font-size: 1.6rem;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .icon {
+    position: absolute;
+    right: 1.5rem;
+    top: 40%;
+  }
+
+  span {
+    margin-left: 1rem;
+    font-weight: 400;
+    font-size: 1.5rem;
+    color: #ffd239;
   }
 }
