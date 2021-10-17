@@ -1,0 +1,10 @@
+.categoriesSearch {
+  margin-top: 3rem;
+
+  .categoriesItems {
+    display: grid;
+    margin-top: 2rem;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1rem;
+  }
+}

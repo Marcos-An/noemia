@@ -76,7 +76,7 @@ function CartDetail({ controllersContext }) {
         <GenericText>Total</GenericText>
         <GenericTitle>{formatCurrency(currentPrice())}</GenericTitle>
       </div>
-      <GenericButton disabled={false} text="Payment" onClick={() => Router.push('/my-cart/payment')} />
+      <GenericButton disabled={myCartItems.length > 0 ? false : true} text="Payment" onClick={() => Router.push('/my-cart/payment')} />
     </div>
   )
 }

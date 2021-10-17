@@ -1,3 +1,13 @@
 .search {
   padding: 2rem 2.4rem;
+
+  .searchInput {
+    p {
+      color: red;
+      margin-top: -1.3rem;
+      margin-left: 1rem;
+
+      font-size: 1.3rem;
+    }
+  }
 }

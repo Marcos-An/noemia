@@ -1,59 +1,31 @@
 .input {
+  flex: 1;
   margin-bottom: 1.3rem;
   position: relative;
   input {
     width: 100%;
-    padding: 1rem 1.2rem;
+    padding: 1rem 1.2rem 1rem 5rem;
     min-height: 4.5rem;
   }
-  label {
-    p {
-      color: #b0b0b0;
-      font-size: 1.2rem;
-    }
-    cursor: text;
-    text-transform: capitalize;
+  .searchIcon {
     position: absolute;
-    padding: 0rem 1rem;
-    transition: top 100ms ease-in, left 100ms ease-in, font-size 100ms ease-in;
-    background-color: var(--white);
-    top: -0.8rem;
-    left: 0.7rem;
+    bottom: 1rem;
+    left: 1rem;
   }
 }
 
 .inputEmpety {
+  flex: 1;
   margin-bottom: 1.3rem;
   position: relative;
   input {
     width: 100%;
-    padding: 1rem 1.2rem;
+    padding: 1rem 1.2rem 1rem 4rem;
     min-height: 4.5rem;
   }
-  label {
-    p {
-      color: #b0b0b0;
-      font-size: 1.6rem;
-    }
-    cursor: text;
-    text-transform: capitalize;
+  .searchIcon {
     position: absolute;
-    padding: 0rem 1rem;
-    transition: top 100ms ease-in, left 100ms ease-in, font-size 100ms ease-in;
-    background-color: var(--white);
-    top: 1.1rem;
+    bottom: 1rem;
     left: 1rem;
-  }
-
-  &:hover {
-    label {
-      p {
-        color: #b0b0b0;
-        font-size: 1.2rem;
-      }
-      position: absolute;
-      top: -0.8rem;
-      left: 0.7rem;
-    }
   }
 }
