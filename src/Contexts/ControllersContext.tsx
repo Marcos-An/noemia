@@ -22,6 +22,8 @@ type ControllersContextData = {
   updateMyInformations: (myInformations: myInformations) => void;
   updatePaymentMethods: (paymentMethod: paymentMethod) => void;
   updateMainPaymentMethod: (paymentMethod: paymentMethod) => void;
+  removingPaymentMethod: (paymentMethod: paymentMethod) => void;
+  updatePaymentMethod: (paymentMethod: paymentMethod, nickName: string) => void;
   updateOrder: (order: order) => void;
 }
 
@@ -204,6 +206,25 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
     setMyCart([...newItems])
   }
 
+  const removingPaymentMethod = (paymentMethod: paymentMethod) => {
+    const newPaymentMethods = paymentMethods.filter(item => item.cardNumber !== paymentMethod.cardNumber)
+
+    setPaymentMethods([...newPaymentMethods])
+  }
+
+  const updatePaymentMethod = (paymentMethod: paymentMethod, nickname: string) => {
+    const newPaymentMethods = paymentMethods.map(item => {
+      if (item.cardNumber === paymentMethod.cardNumber) {
+        item.nickName = nickname
+        return item
+      }
+      return item
+    })
+
+    console.log(newPaymentMethods)
+    setPaymentMethods([...newPaymentMethods])
+  }
+
   const updateMyCart = (newCardItem: newCardItem) => {
     var arr = []
 
@@ -251,7 +272,9 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
         updateAddress,
         updateMyInformations,
         updatePaymentMethods,
+        updatePaymentMethod,
         updateMainPaymentMethod,
+        removingPaymentMethod,
         updateOrder
       }}
     >

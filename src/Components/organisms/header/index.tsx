@@ -13,10 +13,17 @@ export default function Header() {
   const router = useRouter()
 
   const headerShow = () => {
-    if (router.asPath === '/') {
-      return <HeaderHome />
-    } else if (router.asPath === '/profile') {
-      return <HeaderProfile controllersContext={controllersContext} />
+    const path = router.asPath
+    if (path === '/' || path === '/profile' || path === '/search') {
+      if (path === '/') {
+        return <HeaderHome />
+      }
+      if (path === '/profile') {
+        return <HeaderProfile controllersContext={controllersContext} />
+      }
+      if (path === '/search') {
+        return <HeaderSearch />
+      }
     } else {
       return <HeaderWithBackButton controllersContext={controllersContext} />
     }
@@ -43,6 +50,12 @@ function HeaderProfile({ controllersContext }) {
       <GenericText>User configurations</GenericText>
       <GenericTitle>{myInformations.name}</GenericTitle>
     </div>
+  )
+}
+
+function HeaderSearch() {
+  return (
+    <div />
   )
 }
 

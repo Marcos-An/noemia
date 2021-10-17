@@ -12,7 +12,14 @@ import { useRouter } from 'next/router'
 
 export default function PaymentMethod() {
   const controllersContext = useContext(ControllersContext)
-  const { updateFooterType, updateHeaderText, paymentMethods } = controllersContext
+  const {
+    updateFooterType,
+    updateHeaderText,
+    removingPaymentMethod,
+    updatePaymentMethod,
+    paymentMethods
+  } = controllersContext
+
   const router = useRouter()
 
   const [nickName, setNickName] = useState('')
@@ -31,8 +38,12 @@ export default function PaymentMethod() {
     setNickName(card.nickName)
 
   }
-  const removeitem = (card) => {
-    console.log(card)
+  const removeItem = () => {
+    removingPaymentMethod(selectedItem)
+    setDrawerIsActive(false)
+  }
+  const updateItem = () => {
+    updatePaymentMethod(selectedItem, nickName)
   }
 
   return (
@@ -48,18 +59,19 @@ export default function PaymentMethod() {
       <Drawer isActive={drawerIsActive} close={() => setDrawerIsActive(false)}>
         <div className={styles.titleAndTrashButton}>
           <GenericTitle>{selectedItem.nickName ? selectedItem.nickName : selectedItem.niceType}</GenericTitle>
-          <TrashButton onClick={removeitem} />
+          <TrashButton onClick={removeItem} />
         </div>
 
         <form className={styles.form}>
           <GenericInput
             label='nickName Card'
             value={nickName}
+            max={15}
             setValue={setNickName}
           />
         </form>
         <div className={styles.buttonUpdate}>
-          <GenericButton text="Update Card" />
+          <GenericButton text="Update Card" onClick={updateItem} />
           <GenericInvisibleButton onClick={() => setDrawerIsActive(false)}>Cancel</GenericInvisibleButton>
         </div>
       </Drawer>

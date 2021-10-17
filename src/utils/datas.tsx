@@ -28,6 +28,7 @@ export const CARDS_MENU = [
       "linear-gradient(0deg, rgba(1, 54, 134, 0.52), rgba(1, 54, 134, 0.52))",
   },
 ];
+
 export const CARDS_MENU_DRINKS = [
   {
     name: "Soda",
@@ -45,6 +46,7 @@ export const CARDS_MENU_DRINKS = [
     path: "/menuDrinks/others-option.jpg",
   },
 ];
+
 export const SIZE_OPTIONS = [
   {
     label: "Large Round",
@@ -73,7 +75,7 @@ export const FOOTER_MENU = [
   },
   {
     name: "Search",
-    path: '#',
+    path: '/search',
     icon: "search",
     isActive: false,
   },

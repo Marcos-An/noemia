@@ -19,7 +19,10 @@ export default function NewPaymentMethod() {
 
   const router = useRouter()
   const [disabled, setDisabled] = useState(true)
-  const [cardValidation, setCardValidation] = useState(true)
+  const [cardValidation, setCardValidation] = useState({
+    card: { type: '', niceType: '' },
+    isValid: false
+  })
   const controllersContext = useContext(ControllersContext)
   const { updateFooterType, updateHeaderText, updatePaymentMethods } = controllersContext
 
@@ -36,18 +39,21 @@ export default function NewPaymentMethod() {
 
 
   const savePayment = () => {
-    const newPaymentMethod = {
-      cardNumber,
-      valid,
-      CVC,
-      nameOwner,
-      nickName,
-      type: cardValidation.card.type,
-      niceType: cardValidation.card.niceType,
+    if (cardValidation.isValid) {
+      const newPaymentMethod = {
+        cardNumber,
+        valid,
+        CVC,
+        nameOwner,
+        nickName,
+        type: cardValidation.card.type,
+        niceType: cardValidation.card.niceType,
 
+      }
+
+      updatePaymentMethods(newPaymentMethod)
+      router.back()
     }
-    updatePaymentMethods(newPaymentMethod)
-    router.back()
   }
   return (
     <div className={styles.myInformations}>
@@ -89,8 +95,9 @@ export default function NewPaymentMethod() {
         />
         <GenericInput
           label='Card’s Nick Name (opitional)'
-          id='nick-name'
+          id='nick'
           value={nickName}
+          max={15}
           setValue={setNickName}
         />
       </form>
