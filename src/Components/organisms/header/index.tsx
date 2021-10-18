@@ -14,7 +14,7 @@ export default function Header() {
 
   const headerShow = () => {
     const path = router.asPath
-    if (path === '/' || path === '/profile' || path === '/search') {
+    if (path === '/' || path === '/profile' || path === '/search' || path === '/login') {
       if (path === '/') {
         return <HeaderHome />
       }
@@ -23,6 +23,9 @@ export default function Header() {
       }
       if (path === '/search') {
         return <HeaderSearch />
+      }
+      if (path === '/login') {
+        return <div />
       }
     } else {
       return <HeaderWithBackButton controllersContext={controllersContext} />

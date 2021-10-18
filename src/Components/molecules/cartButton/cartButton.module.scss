@@ -1,4 +1,4 @@
-.wrapper {
+.wrapperActive {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -6,7 +6,34 @@
   background-color: var(--yellow);
   height: 3rem;
   width: 3rem;
-  box-shadow: 0px 2px 5px rgba(234, 138, 13, 0.56);
+  border-radius: 3px;
+
+  .notification {
+    height: 1.4rem;
+    width: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: var(--black);
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    span {
+      margin-top: 1px;
+      padding: 0px;
+      color: var(--white);
+    }
+  }
+}
+.wrapperDefault {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-color: #f6f6f6;
+  height: 3rem;
+  width: 3rem;
   border-radius: 3px;
 
   .notification {

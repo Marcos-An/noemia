@@ -1,0 +1,72 @@
+.container {
+  height: 100vh;
+  position: relative;
+  hr {
+    flex: 1;
+    background-color: #a3a3a3;
+  }
+
+  span {
+    margin: 0 1rem;
+    font-family: "Poppins", sans-serif;
+    font-size: 1.5rem;
+    color: #a3a3a3;
+  }
+
+  .imageBackgroundContainer {
+    height: 60vh;
+    width: 100vw;
+    background: linear-gradient(
+        137.42deg,
+        rgba(0, 0, 0, 0.78) -2.45%,
+        rgba(255, 210, 57, 0.507) 83.56%
+      ),
+      url("/background-login.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+
+    .imageContainer {
+      position: relative;
+      z-index: 3;
+      height: 9rem;
+      width: 55%;
+      margin-top: 10rem;
+    }
+  }
+
+  .loginContainer {
+    padding: 3rem 3.4rem 1rem 3.4rem;
+    height: 53vh;
+    width: 100vw;
+    position: absolute;
+    border-radius: 6rem;
+    bottom: 0;
+    background-color: var(--white);
+    z-index: 5;
+
+    form {
+      margin-top: 3rem;
+      margin-bottom: 3rem;
+      input {
+        margin-bottom: 1rem;
+      }
+    }
+
+    .registerWrapper {
+      display: flex;
+      align-items: center;
+
+      p {
+        color: #0066ff;
+        font-size: 1.3rem;
+      }
+      span {
+        color: #0066ff;
+        font-size: 2rem;
+      }
+    }
+  }
+}
