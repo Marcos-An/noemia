@@ -221,7 +221,6 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
       return item
     })
 
-    console.log(newPaymentMethods)
     setPaymentMethods([...newPaymentMethods])
   }
 

@@ -30,7 +30,7 @@ export default function Product() {
 
   useEffect(() => {
     updateHeaderText('')
-    updateFooterType('detailProduct')
+    updateFooterType('productDetail')
 
     if (!(addingCardItem.id === itemSelected.id)) {
       const newCardItem = {

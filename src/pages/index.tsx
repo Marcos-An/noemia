@@ -12,7 +12,7 @@ export default function Home() {
 
   useEffect(() => {
     updateFooterType('main')
-  }, [])
+  }, [updateFooterType])
 
   return (
     <div className={styles.container}>

@@ -19,6 +19,9 @@ export default function Payment() {
   const router = useRouter()
 
   useEffect(() => {
+    if (!localStorage.getItem('@noemia:user')) {
+      router.push('/')
+    }
     updateHeaderText('Payment')
     updateFooterType('payment')
   }, [updateHeaderText, updateFooterType])

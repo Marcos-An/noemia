@@ -14,7 +14,7 @@ export default function Header() {
 
   const headerShow = () => {
     const path = router.asPath
-    if (path === '/' || path === '/profile' || path === '/search' || path === '/login') {
+    if (path === '/' || path === '/profile' || path === '/search' || path === '/login' || path === '/register') {
       if (path === '/') {
         return <HeaderHome />
       }
@@ -25,6 +25,9 @@ export default function Header() {
         return <HeaderSearch />
       }
       if (path === '/login') {
+        return <div />
+      }
+      if (path === '/register') {
         return <div />
       }
     } else {

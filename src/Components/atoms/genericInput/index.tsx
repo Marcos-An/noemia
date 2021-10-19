@@ -14,7 +14,7 @@ export default function GenericInput({ max = 9999, type = "text", label, value =
   return (
     <div className={value ? styles.input : styles.inputEmpety}>
       <input
-        id={id}
+        id={id ? id : null}
         type={type}
         maxLength={max}
         autoComplete="off"

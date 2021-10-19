@@ -15,8 +15,8 @@ export default function ButtonFooter() {
   const { footerType } = controllersContext
 
   const selectFooter = () => {
-    if (footerType === 'detailProduct') {
-      return <DetailProduct controllersContext={controllersContext} />
+    if (footerType === 'productDetail') {
+      return <ProductDetail controllersContext={controllersContext} />
     }
 
     if (footerType === 'cartDetail') {
@@ -32,7 +32,7 @@ export default function ButtonFooter() {
 }
 
 // FOOTER PRODUCT DETAIL
-function DetailProduct({ controllersContext }) {
+function ProductDetail({ controllersContext }) {
   const { addingCardItem, updateMyCart } = controllersContext
 
   const addToCart = () => {
@@ -59,6 +59,7 @@ function DetailProduct({ controllersContext }) {
 // FOOTER MY CART DETAIL
 function CartDetail({ controllersContext }) {
   const { myCartItems } = controllersContext
+  const hasUser = localStorage.getItem('@noemia:user')
 
   const currentPrice = () => {
     var subTotal = 0
@@ -70,13 +71,34 @@ function CartDetail({ controllersContext }) {
     return myCartItems.length > 0 ? subTotal + 5 : subTotal
   }
 
+  const redirect = () => {
+    if (hasUser) {
+      Router.push('/my-cart/payment')
+    } else {
+      Router.push('/login')
+    }
+  }
+
+  const disableButton = () => {
+    if (!hasUser) {
+      return true
+    } else {
+      if (myCartItems.length > 0) {
+        return false
+      } else true
+    }
+  }
+
   return (
     <div className={styles.footer}>
       <div className={styles.totalPrice}>
         <GenericText>Total</GenericText>
         <GenericTitle>{formatCurrency(currentPrice())}</GenericTitle>
       </div>
-      <GenericButton disabled={myCartItems.length > 0 ? false : true} text="Payment" onClick={() => Router.push('/my-cart/payment')} />
+      <GenericButton
+        disabled={disableButton ? false : true}
+        text={hasUser ? "Payment" : "Do Login"}
+        onClick={() => redirect()} />
     </div>
   )
 }
