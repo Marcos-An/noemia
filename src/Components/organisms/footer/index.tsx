@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { ControllersContext } from '../../../Contexts/ControllersContext'
+import { ControllersContext } from '../../../contexts/ControllersContext'
 import styles from './footer.module.scss'
 import MainFooter from '../mainFooter'
 import ButtonFooter from '../buttonFooter'

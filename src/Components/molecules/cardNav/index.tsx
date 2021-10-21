@@ -3,10 +3,10 @@ import GenericText from '../../atoms/genericText'
 import styles from './cardNav.module.scss'
 
 export default function CardNav({ itemMenu, onClick }) {
-  const { name, path, isActive, gradient } = itemMenu
+  const { name, isActive, gradient } = itemMenu
 
   const menuItem = () => {
-    return `${isActive ? 'linear-gradient(0deg, rgba(36, 28, 0, 0.8), rgba(36, 28, 0, 0.8))' : gradient},url(${path})`
+    return `${isActive ? 'linear-gradient(0deg, rgba(36, 28, 0, 0.8), rgba(36, 28, 0, 0.8))' : gradient},url('/menu/${name.toLowerCase()}.jpg')`
   }
 
   return (

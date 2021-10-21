@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styles from './register.module.scss'
-import { ControllersContext } from '../../Contexts/ControllersContext';
-import { AuthContext } from '../../Contexts/AuthContext';
-import ContainerSpaceBetween from '../../Components/atoms/containerSpaceBetween';
-import GenericButton from '../../Components/atoms/genericButton';
-import GenericButtonGoogle from '../../Components/atoms/genericButtonGoogle';
-import GenericTitle from '../../Components/atoms/genericTitle';
-import GenericInput from '../../Components/atoms/genericInput';
-import GenericMaskedInput from '../../Components/atoms/genericMaskedInput';
-import GenericText from '../../Components/atoms/genericText';
+import { ControllersContext } from '../../contexts/ControllersContext';
+import { AuthContext } from '../../contexts/AuthContext';
+import ContainerSpaceBetween from '../../components/atoms/containerSpaceBetween';
+import GenericButton from '../../components/atoms/genericButton';
+import GenericButtonGoogle from '../../components/atoms/genericButtonGoogle';
+import GenericTitle from '../../components/atoms/genericTitle';
+import GenericInput from '../../components/atoms/genericInput';
+import GenericMaskedInput from '../../components/atoms/genericMaskedInput';
+import GenericText from '../../components/atoms/genericText';
 import Image from 'next/image'
 import Router from 'next/router'
 

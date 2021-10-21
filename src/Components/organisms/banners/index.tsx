@@ -3,7 +3,7 @@ import PizzaBanner from '../pizzaBanner'
 import StarterBanner from '../starterBanner'
 import WineBanner from '../wineBanner'
 import DrinksBanner from '../drinksBanner'
-import { ControllersContext } from '../../../Contexts/ControllersContext'
+import { ControllersContext } from '../../../contexts/ControllersContext'
 
 export default function Banners() {
   const controllersContext = useContext(ControllersContext)

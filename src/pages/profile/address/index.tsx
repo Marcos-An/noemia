@@ -1,9 +1,9 @@
 import styles from './address.module.scss'
 import React, { useEffect, useContext } from 'react'
-import { ControllersContext } from '../../../Contexts/ControllersContext'
-import CardAddress from '../../../Components/molecules/cardAddress'
-import GenericText from '../../../Components/atoms/genericText'
-import GenericButton from '../../../Components/atoms/genericButton'
+import { ControllersContext } from '../../../contexts/ControllersContext'
+import CardAddress from '../../../components/molecules/cardAddress'
+import GenericText from '../../../components/atoms/genericText'
+import GenericButton from '../../../components/atoms/genericButton'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 

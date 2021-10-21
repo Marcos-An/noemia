@@ -1,7 +1,7 @@
 import styles from './profile.module.scss'
 import React, { useEffect, useContext } from 'react'
-import { ControllersContext } from '../../Contexts/ControllersContext'
-import ItemProfileMenu from '../../Components/molecules/itemProfileMenu'
+import { ControllersContext } from '../../contexts/ControllersContext'
+import ItemProfileMenu from '../../components/molecules/itemProfileMenu'
 
 export default function Profile() {
   const controllersContext = useContext(ControllersContext)

@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './genericSearchInput.module.scss'
-import useDebounce from '../../../utils/deBounce';
+import useDebounce from '../../../utils/useDebounce';
 import GenericIcon from '../genericIcon'
 
 export default function GenericSearchInput({ value = '', setValue, onFocus, onBlur, onChange }) {

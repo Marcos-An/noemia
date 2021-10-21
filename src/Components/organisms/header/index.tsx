@@ -6,7 +6,7 @@ import BackButton from '../../molecules/backButton'
 import { useRouter } from 'next/router'
 import GenericTitle from '../../atoms/genericTitle'
 import GenericText from '../../atoms/genericText'
-import { ControllersContext } from '../../../Contexts/ControllersContext'
+import { ControllersContext } from '../../../contexts/ControllersContext'
 
 export default function Header() {
   const controllersContext = useContext(ControllersContext)

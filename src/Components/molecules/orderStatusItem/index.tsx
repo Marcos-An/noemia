@@ -1,7 +1,7 @@
 import styles from './orderStatusItem.module.scss'
 import React from 'react'
-import GenericIcon from '../../../Components/atoms/genericIcon'
-import GenericText from '../../../Components/atoms/genericText'
+import GenericIcon from '../../../components/atoms/genericIcon'
+import GenericText from '../../../components/atoms/genericText'
 import GenericDescription from '../../atoms/genericDescription'
 
 

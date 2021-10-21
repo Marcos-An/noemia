@@ -3,7 +3,7 @@ import styles from './resumeCart.module.scss'
 import GenericTitle from '../../atoms/genericTitle'
 import GenericText from '../../atoms/genericText'
 import { formatCurrency } from '../../../utils/formatData'
-import { ControllersContext } from '../../../Contexts/ControllersContext'
+import { ControllersContext } from '../../../contexts/ControllersContext'
 
 
 export default function Payment() {
