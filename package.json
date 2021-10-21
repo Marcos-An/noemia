@@ -9,10 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/react-hooks": "^4.0.0",
+    "apollo-client": "^2.6.10",
     "card-validator": "^8.1.1",
     "date-fns": "^2.25.0",
+    "deepmerge": "^4.2.2",
     "feather-icons-react": "^0.4.3",
     "firebase": "^9.1.3",
+    "graphql-tag": "^2.12.5",
+    "lodash": "^4.17.21",
     "next": "11.1.2",
     "prettier": "^2.4.1",
     "react": "17.0.2",

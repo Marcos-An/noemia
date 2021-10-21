@@ -10,7 +10,7 @@ export default function GenericButtonGoogle({ text = "", onClick = () => { } }) 
       <div className={styles.imageContainer}>
         <Image
           src='/google-logo.png'
-          alt="napoletana"
+          alt="google-login"
           layout="fill"
           objectFit="contain"
         />
