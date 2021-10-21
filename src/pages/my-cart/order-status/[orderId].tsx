@@ -1,9 +1,9 @@
 import styles from './orderStatus.module.scss'
 import React, { useContext, useEffect, useState } from 'react'
-import { ControllersContext } from '../../../Contexts/ControllersContext'
-import OrderStatusItem from '../../../Components/molecules/orderStatusItem'
-import GenericTitle from '../../../Components/atoms/genericTitle'
-import GenericText from '../../../Components/atoms/genericText'
+import { ControllersContext } from '../../../contexts/ControllersContext'
+import OrderStatusItem from '../../../components/molecules/orderStatusItem'
+import GenericTitle from '../../../components/atoms/genericTitle'
+import GenericText from '../../../components/atoms/genericText'
 import { useRouter } from 'next/router'
 
 

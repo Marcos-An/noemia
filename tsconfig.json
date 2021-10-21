@@ -5,7 +5,7 @@
       "dom",
       "dom.iterable",
       "esnext"
-    ],
+    ], 
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -16,7 +16,15 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["./src/components/*"],
+      "@contexts/*": ["./src/contexts/*"],
+      "@graphql/*": ["./src/graphql/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@api": ["./src/services/api"]
+    },
   },
   "include": [
     "next-env.d.ts",

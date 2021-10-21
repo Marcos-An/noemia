@@ -1,6 +1,6 @@
 import styles from './currentAddress.module.scss'
 import React, { useContext } from 'react'
-import { ControllersContext } from '../../../Contexts/ControllersContext'
+import { ControllersContext } from '../../../contexts/ControllersContext'
 import GenericDescription from '../../atoms/genericDescription'
 import Image from 'next/image'
 import GenericText from '../../atoms/genericText'

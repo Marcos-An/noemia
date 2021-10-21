@@ -1,6 +1,6 @@
 import styles from './cardPaymentMethods.module.scss'
 import React, { useEffect, useContext } from 'react'
-import { ControllersContext } from '../../../Contexts/ControllersContext'
+import { ControllersContext } from '../../../contexts/ControllersContext'
 import Image from 'next/image'
 import GenericTitle from '../../atoms/genericTitle'
 import GenericText from '../../atoms/genericText'

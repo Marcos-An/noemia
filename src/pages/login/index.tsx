@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { ControllersContext } from '../../Contexts/ControllersContext';
+import { ControllersContext } from '../../contexts/ControllersContext';
 import Image from 'next/image'
 import styles from './login.module.scss'
-import { AuthContext } from '../../Contexts/AuthContext';
-import ContainerSpaceBetween from '../../Components/atoms/containerSpaceBetween';
-import GenericButton from '../../Components/atoms/genericButton';
-import GenericButtonGoogle from '../../Components/atoms/genericButtonGoogle';
-import GenericTitle from '../../Components/atoms/genericTitle';
-import GenericInput from '../../Components/atoms/genericInput';
-import GenericText from '../../Components/atoms/genericText';
+import { AuthContext } from '../../contexts/AuthContext';
+import ContainerSpaceBetween from '../../components/atoms/containerSpaceBetween';
+import GenericButton from '../../components/atoms/genericButton';
+import GenericButtonGoogle from '../../components/atoms/genericButtonGoogle';
+import GenericTitle from '../../components/atoms/genericTitle';
+import GenericInput from '../../components/atoms/genericInput';
+import GenericText from '../../components/atoms/genericText';
 import Router from 'next/router'
 
 export default function Login() {

@@ -1,8 +1,8 @@
 import styles from './addAdress.module.scss'
 import React, { useState, useEffect, useContext } from 'react'
-import { ControllersContext } from '../../../../Contexts/ControllersContext'
-import GenericInput from '../../../../Components/atoms/genericInput'
-import GenericButton from '../../../../Components/atoms/genericButton'
+import { ControllersContext } from '../../../../contexts/ControllersContext'
+import GenericInput from '../../../../components/atoms/genericInput'
+import GenericButton from '../../../../components/atoms/genericButton'
 import { useRouter } from 'next/router'
 
 export default function AddAdress() {

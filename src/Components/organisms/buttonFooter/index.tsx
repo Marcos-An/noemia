@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import styles from './buttonFooter.module.scss'
 import GenericButton from '../../atoms/genericButton'
-import { ControllersContext } from '../../../Contexts/ControllersContext'
+import { ControllersContext } from '../../../contexts/ControllersContext'
 import UpdateItemCartButton from '../../organisms/updateItemCartButton'
 import { formatCurrency } from '../../../utils/formatData'
 import Router from 'next/router'

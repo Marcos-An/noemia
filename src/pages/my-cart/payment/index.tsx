@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { ControllersContext } from '../../../Contexts/ControllersContext'
-import MainPaymentMethod from '../../../Components/molecules/mainPaymentMethod';
-import CurrentAddress from '../../../Components/molecules/currentAddress';
-import ContainerSpaceBetween from '../../../Components/atoms/containerSpaceBetween';
-import GenericTitle from '../../../Components/atoms/genericTitle';
-import GenericIcon from '../../../Components/atoms/genericIcon';
-import GenericButton from '../../../Components/atoms/genericButton';
-import CardPaymentMethod from '../../../Components/molecules/cardPaymentMethod';
-import ResumeCart from '../../../Components/molecules/resumeCart'
-import Drawer from '../../../Components/molecules/drawer'
+import { ControllersContext } from '../../../contexts/ControllersContext'
+import MainPaymentMethod from '../../../components/molecules/mainPaymentMethod';
+import CurrentAddress from '../../../components/molecules/currentAddress';
+import ContainerSpaceBetween from '../../../components/atoms/containerSpaceBetween';
+import GenericTitle from '../../../components/atoms/genericTitle';
+import GenericIcon from '../../../components/atoms/genericIcon';
+import GenericButton from '../../../components/atoms/genericButton';
+import CardPaymentMethod from '../../../components/molecules/cardPaymentMethod';
+import ResumeCart from '../../../components/molecules/resumeCart'
+import Drawer from '../../../components/molecules/drawer'
 import { useRouter } from 'next/router';
 import styles from './payment.module.scss'
 

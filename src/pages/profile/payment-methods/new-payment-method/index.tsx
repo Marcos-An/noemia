@@ -1,9 +1,9 @@
 import styles from './newPaymentMethod.module.scss'
 import React, { useState, useEffect, useContext } from 'react'
-import { ControllersContext } from '../../../../Contexts/ControllersContext'
-import GenericInput from '../../../../Components/atoms/genericInput'
-import GenericMaskedInput from '../../../../Components/atoms/genericMaskedInput'
-import GenericButton from '../../../../Components/atoms/genericButton'
+import { ControllersContext } from '../../../../contexts/ControllersContext'
+import GenericInput from '../../../../components/atoms/genericInput'
+import GenericMaskedInput from '../../../../components/atoms/genericMaskedInput'
+import GenericButton from '../../../../components/atoms/genericButton'
 import Cards from 'react-credit-cards';
 import { useRouter } from 'next/router'
 import 'react-credit-cards/es/styles-compiled.css';

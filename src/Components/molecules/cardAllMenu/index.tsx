@@ -8,26 +8,19 @@ import Link from 'next/link'
 import { formatCurrency } from '../../../utils/formatData'
 
 
-export default function CardAllMenu() {
-  const number = 1.3
-  const product = {
-    id: 1,
-    name: 'Napoletana',
-    pathImage: '/napoletana.jpg',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
-    type: 'pizza',
-    price: 33.99
-  }
+export default function CardAllMenu({product}) {
 
-  const { id, name, pathImage, description, type, price } = product
+  console.log(product) 
+
+  const { id, name, path_image, description, category, price, hate } = product
 
 
-  return (
-    <Link href={`/products/${type}?id:${id}`} passHref>
+  return ( 
+    <Link href={`/products/${category.name.toLowerCase()}?id:${id}`} passHref>
       <div className={styles.cardAllMenu}>
         <div className={styles.imageContainer}>
           <Image
-            src={pathImage}
+            src={path_image}
             alt="napoletana"
             layout="fill"
             objectFit="cover"
@@ -43,7 +36,7 @@ export default function CardAllMenu() {
             </div>
             <div className={styles.hateWrapper}>
               <GenericIcon icon="star" size="12" />
-              <GenericText>{number.toFixed(1).replace('.', ',')}</GenericText>
+              <GenericText>{hate.toFixed(1).replace('.', ',')}</GenericText>
             </div>
           </div>
         </div>

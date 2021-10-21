@@ -1,27 +1,33 @@
 import styles from './mainMenu.module.scss'
 import React, { useState, useContext, useEffect } from 'react'
-import { ControllersContext } from '../../../Contexts/ControllersContext'
-import { CARDS_MENU } from '../../../utils/datas'
-import CardNav from '../../molecules/cardNav'
+import { ControllersContext } from '@contexts/ControllersContext'
+import CardNav from '@components/molecules/cardNav'
 import GenericCarousel from '../../molecules/genericCarousel'
-
-
-export default function MainMenu() {
-  const [menuItems, setMenuItems] = useState(CARDS_MENU)
+ 
+export default function MainMenu({categories}) {
+  const [menuItems, setMenuItems] = useState(categories)
   const controllersContext = useContext(ControllersContext)
   const { updateSelectedItemMenu, selectedItemMenu } = controllersContext
 
   useEffect(() => {
     const newMenuItems = menuItems
 
+    newMenuItems.forEach(item => {
+      if(item.name === 'Pizza' && !selectedItemMenu.isActive){
+        item.isActive = true
+      }else {
+        item.isActive = false
+      }
+    }) 
+
     newMenuItems.forEach((item) => {
       if (item.isActive) {
         updateSelectedItemMenu(item)
       }
-    })
+    }) 
   }, [])
 
-  useEffect(() => {
+  useEffect(() => { 
     if (selectedItemMenu.name) {
       const newMenuItems = menuItems
 
@@ -64,4 +70,4 @@ export default function MainMenu() {
       </GenericCarousel>
     </div>
   )
-}
+} 

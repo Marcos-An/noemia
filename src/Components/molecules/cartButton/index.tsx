@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import GenericIcon from '../../atoms/genericIcon'
 import styles from './cartButton.module.scss'
 import { useRouter } from 'next/router'
-import { ControllersContext } from '../../../Contexts/ControllersContext'
+import { ControllersContext } from '../../../contexts/ControllersContext'
 
 export default function CartButton() {
   const controllersContext = useContext(ControllersContext)
