@@ -2,7 +2,7 @@ import React, { useState, useEffect , useContext} from 'react'
 import styles from './allMenu.module.scss'
 import GenericTitle from '../../atoms/genericTitle'
 import CardAllMenu from '../../molecules/cardAllMenu'
-import { ControllersContext } from '@contexts/ControllersContext'
+import { ControllersContext } from '../../../contexts/ControllersContext'
 
 export default function AllMenu({ products }) {
   const controllersContext = useContext(ControllersContext)

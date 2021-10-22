@@ -1,10 +1,10 @@
 import '../../styles/globals.css'
-import { ControllersContextProvider } from '@contexts/ControllersContext'
-import { AuthContextProvider } from '@contexts/AuthContext'
+import { ControllersContextProvider } from '../contexts/ControllersContext'
+import { AuthContextProvider } from '../contexts/AuthContext'
 import { ApolloProvider } from '@apollo/client'
-import { useApollo } from '@graphql/apollo'
-import Header from '@components/organisms/header'
-import Footer from '@components/organisms/footer'
+import { useApollo } from '../graphql/apollo'
+import Header from '../components/organisms/header'
+import Footer from '../components/organisms/footer'
 
 function MyApp({ Component, pageProps }) {
 

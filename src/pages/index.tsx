@@ -1,33 +1,36 @@
 import React, { useContext, useEffect } from 'react'
-import { ControllersContext } from '@contexts/ControllersContext'
+import { ControllersContext } from '../contexts/ControllersContext'
 import styles from './home.module.scss'
-import MainMenu from '@components/organisms/mainMenu'
-import Suggestions from '@components/organisms/suggestions'
-import Banners from '@components/organisms/banners'
-import AllMenu from '@components/organisms/allMenu'
-import { GET_CATEGORY_QUERY, GET_PRODUCTS_QUERY } from '@graphql/queries'
-import { initializeApollo } from '@graphql/apollo'
+import HomeLoading from '../components/atoms/homeLoading'
+import MainMenu from '../components/organisms/mainMenu'
+import Suggestions from '../components/organisms/suggestions'
+import Banners from '../components/organisms/banners'
+import AllMenu from '../components/organisms/allMenu'
+import { GET_CATEGORY_QUERY, GET_PRODUCTS_QUERY } from '../graphql/queries'
+import { initializeApollo } from '../graphql/apollo'
 import { useQuery } from '@apollo/client'
 
 
 export default function Home({ categories, products }) {
   const controllersContext = useContext(ControllersContext)
-  const { updateFooterType } = controllersContext
+  const { updateFooterType, selectedItemMenu } = controllersContext
   const { loading: categoryLoading } = useQuery(GET_CATEGORY_QUERY)
   const { loading: productLoading } = useQuery(GET_PRODUCTS_QUERY)
 
 
+  console.log(selectedItemMenu)
   useEffect(() => {
     updateFooterType('main')
   }, [updateFooterType])
 
   return (
-    <div className={styles.container}>
-      <MainMenu categories={categories} />
-      <Banners />
-      <Suggestions />
-      <AllMenu products={products} />
-    </div>
+    productLoading && categoryLoading ? <HomeLoading /> :
+      <div className={styles.container}>
+        <MainMenu categories={categories} />
+        <Banners />
+        {selectedItemMenu.name !== 'Drink' && <Suggestions />}
+        <AllMenu products={products} />
+      </div>
   )
 }
 

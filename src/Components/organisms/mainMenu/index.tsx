@@ -1,7 +1,7 @@
 import styles from './mainMenu.module.scss'
 import React, { useState, useContext, useEffect } from 'react'
-import { ControllersContext } from '@contexts/ControllersContext'
-import CardNav from '@components/molecules/cardNav'
+import { ControllersContext } from '../../../contexts/ControllersContext'
+import CardNav from '../../../components/molecules/cardNav'
 import GenericCarousel from '../../molecules/genericCarousel'
  
 export default function MainMenu({categories}) {
