@@ -24,3 +24,21 @@ export const GET_PRODUCTS_QUERY = gql`
     }
   } 
 `;
+
+
+export const GET_USERS_BY_UID = gql`
+  query getUser($uid: String!) { 
+    users(where: {uid: {_eq: $uid}}) {
+      name
+      uid
+      email
+      id
+      city
+      neighbourhood
+      number
+      phone
+      street
+      zipCode
+    }
+  } 
+`;

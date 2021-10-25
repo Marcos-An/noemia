@@ -1,5 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styles from './register.module.scss'
+import { useMutation } from '@apollo/react-hooks';
+import { CREATE_USER } from '@graphql/mutations'
+import toastMessage from '@utils/toastMessage'
 import { ControllersContext } from '../../contexts/ControllersContext';
 import { AuthContext } from '../../contexts/AuthContext';
 import ContainerSpaceBetween from '../../components/atoms/containerSpaceBetween';
@@ -16,7 +19,7 @@ export default function Register() {
   const controllersContext = useContext(ControllersContext)
   const authContext = useContext(AuthContext)
   const { updateFooterType } = controllersContext
-  const { createAccount, signInAccountWithGoogle, authIsLoading } = authContext
+  const { createAccount, signInAccountWithGoogle, authIsLoading, updateLoading } = authContext
 
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
@@ -24,19 +27,67 @@ export default function Register() {
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
 
+
+  const [createUser] = useMutation(CREATE_USER);
+
   useEffect(() => {
     updateFooterType('none')
   }, [updateFooterType])
 
 
-  const create = () => {
+
+
+  const redirect = () => {
+    Router.replace('/login', '/login', { shallow: true });
+  }
+
+  const emailSignUp = ({ name, email, password, phone }) => {
     if ((email && password) && (password === passwordConfirm) && password.length >= 6) {
-      createAccount({ name, email, password, phone })
+      createAccount({ name, email, password, phone }).then((response) => {
+        updateLoading(true)
+
+        if (response.code === 'auth/email-already-in-use') {
+          toastMessage('This email already in use', "error")
+          updateLoading(false)
+        }
+
+        if (!response.code) {
+          const { uid, email } = response;
+
+          createUser({
+            variables: {
+              users: { uid, email, phone, name },
+            }
+          }).then(() => {
+            updateLoading(false)
+            Router.replace('/my-cart/payment', '/my-cart', { shallow: true })
+          })
+        }
+      })
     }
   }
 
-  const redirect = () => {
-    Router.replace('/register', '/register', { shallow: true });
+  const goolgeSignIn = () => {
+    signInAccountWithGoogle().then((response) => {
+      const { uid, email } = response;
+
+      createUser({
+        variables: {
+          users: { uid, email, phone, name },
+        }
+      }).then(() => {
+        updateLoading(false)
+        Router.replace('/my-cart/payment', '/my-cart', { shallow: true })
+      })
+    })
+  }
+
+
+  const isDisabled = () => {
+    if ((email && password) && (password === passwordConfirm) && password.length >= 6) {
+      return false;
+    }
+    return true;
   }
 
   return (
@@ -68,7 +119,7 @@ export default function Register() {
             setValue={setName}
           />
           <GenericMaskedInput
-            label='Phone'
+            label='Phone (opitional)'
             mask={['(99) 9 9999-9999']}
             value={phone}
             setValue={setPhone}
@@ -79,7 +130,7 @@ export default function Register() {
             setValue={setEmail}
           />
           <GenericInput
-            label='Passord'
+            label='Password'
             type='password'
             value={password}
             setValue={setPassword}
@@ -90,14 +141,14 @@ export default function Register() {
             </ul>
           </div>
           <GenericInput
-            label='Passord Confirm'
+            label='Password Confirm'
             type='password'
             value={passwordConfirm}
             setValue={setPasswordConfirm}
           />
         </form>
         <div className={styles.button}>
-          <GenericButton text="Register" onClick={create} loading={authIsLoading} />
+          <GenericButton disabled={isDisabled()} text="Register" onClick={() => emailSignUp({ name, email, password, phone })} loading={authIsLoading} />
         </div>
         <br />
         <ContainerSpaceBetween>
@@ -106,7 +157,8 @@ export default function Register() {
           <hr />
         </ContainerSpaceBetween>
         <br />
-        <GenericButtonGoogle text="Login with Google" onClick={() => signInAccountWithGoogle()} />
+        <GenericButtonGoogle text="Login with Google" onClick={() => goolgeSignIn()} />
+        <br />
       </div>
     </div>
   )

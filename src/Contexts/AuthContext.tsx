@@ -1,4 +1,4 @@
-import { createContext, useState, ReactNode, useEffect } from 'react';
+import { createContext, useState, ReactNode } from 'react';
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -9,7 +9,6 @@ import {
 import { initializeApp, getApps } from 'firebase/app'
 import 'firebase/auth';
 import 'firebase/firestore';
-import { useRouter } from 'next/router';
 
 if (!getApps().length) {
   initializeApp({
@@ -29,9 +28,10 @@ const auth = getAuth();
 type AuthControlerData = {
   user: any;
   authIsLoading: boolean;
-  createAccount: (data: SignUpData) => void;
-  signIn: (data: SignInData) => void;
-  signInAccountWithGoogle: () => void;
+  createAccount: (data: SignUpData) => any;
+  signIn: (data: SignInData) => any;
+  signInAccountWithGoogle: () => any;
+  updateLoading: (isLoading: boolean) => any;
 }
 
 
@@ -57,23 +57,32 @@ type AuthContextProviderProps = {
 }
 
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
-  const router = useRouter()
   const [user, setUser] = useState<any>()
   const [authIsLoading, setAuthIsLoading] = useState(false)
 
 
   const createAccount = async (data: SignUpData) => {
     setAuthIsLoading(true)
-    await createUserWithEmailAndPassword(auth, data.email, data.password)
+    const response = await createUserWithEmailAndPassword(auth, data.email, data.password)
       .then(() => {
-        signIn({ email: data.email, password: data.password })
         setAuthIsLoading(false)
+        return signIn({ email: data.email, password: data.password })
+      }).catch((error) => {
+        setAuthIsLoading(false)
+        return error
       });
+
+    return response
+  }
+
+  const updateLoading = (isLoading: boolean) => {
+    setAuthIsLoading(isLoading)
   }
 
   const signIn = async (data: SignInData) => {
     setAuthIsLoading(true)
-    await signInWithEmailAndPassword(auth, data.email, data.password)
+
+    const response = await signInWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
         const user = userCredential.user;
 
@@ -83,10 +92,15 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
           const { uid, email } = user;
           localStorage.setItem('@noemia:user', JSON.stringify({ uid, email }));
         }
-        setAuthIsLoading(false)
-        router.replace('/my-cart/payment', '/my-cart', { shallow: true });
-      })
 
+        setAuthIsLoading(false)
+        return user
+      }).catch((error) => {
+        setAuthIsLoading(false)
+        return error
+      });
+
+    return response
   }
 
   const signInAccountWithGoogle = async () => {
@@ -94,7 +108,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     const provider = new GoogleAuthProvider();
     auth.languageCode = 'it';
 
-    await signInWithPopup(auth, provider).then(result => {
+    const response = await signInWithPopup(auth, provider).then(result => {
       const user = result.user;
 
       setUser(user);
@@ -105,8 +119,14 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       }
 
       setAuthIsLoading(false)
-      router.push('/my-cart/payment')
-    })
+
+      return user;
+    }).catch((error) => {
+      setAuthIsLoading(false)
+      return error
+    });
+
+    return response
   }
 
   return (
@@ -115,6 +135,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         user,
         authIsLoading,
         signIn,
+        updateLoading,
         createAccount,
         signInAccountWithGoogle,
       }}

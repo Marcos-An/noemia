@@ -26,6 +26,7 @@
     "react-credit-cards": "^0.8.3",
     "react-dom": "17.0.2",
     "react-loading-skeleton": "^3.0.0",
+    "react-toastify": "^8.0.3",
     "remask": "0.1.0-alpha.5",
     "sass": "^1.42.1"
   },

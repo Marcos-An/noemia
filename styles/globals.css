@@ -38,6 +38,10 @@ button:hover {
   cursor: pointer;
 }
 
+.Toastify__toast-body {
+  font-size: 1.3rem;
+}
+
 input {
   font-family: "Poppins", sans-serif;
   font-size: 1.6rem;
