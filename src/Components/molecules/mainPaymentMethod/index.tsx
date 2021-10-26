@@ -7,7 +7,7 @@ import GenericText from '../../atoms/genericText'
 
 export default function MainPaymentMethod() {
   const controllersContext = useContext(ControllersContext)
-  const { mainPaymentMethod } = controllersContext
+  const { mainPaymentMethod }: { mainPaymentMethod: any } = controllersContext
 
   const hideNumber = (number) => {
     return number.replace(/\d{4}(?= \d{4})/g, "****");

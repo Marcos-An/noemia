@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { ControllersContext } from '../../../contexts/ControllersContext'
+import { AuthContext } from '../../../contexts/AuthContext'
 import MainPaymentMethod from '../../../components/molecules/mainPaymentMethod';
 import CurrentAddress from '../../../components/molecules/currentAddress';
 import ContainerSpaceBetween from '../../../components/atoms/containerSpaceBetween';
@@ -14,7 +15,11 @@ import styles from './payment.module.scss'
 
 export default function Payment() {
   const controllersContext = useContext(ControllersContext)
-  const { address, paymentMethods, updateHeaderText, updateFooterType, } = controllersContext
+  const authContext = useContext(AuthContext)
+
+  const { paymentMethods, updateHeaderText, updateFooterType, } = controllersContext
+  const { user } = authContext
+
   const [drawerActive, setDrawerIsActive] = useState(false)
   const router = useRouter()
 
@@ -24,7 +29,7 @@ export default function Payment() {
     }
     updateHeaderText('Payment')
     updateFooterType('payment')
-  }, [updateHeaderText, updateFooterType])
+  }, [updateHeaderText, updateFooterType, router])
 
 
   return (
@@ -33,7 +38,7 @@ export default function Payment() {
         <GenericTitle>Address</GenericTitle>
         <ContainerSpaceBetween>
           <CurrentAddress />
-          {address.street ?
+          {user.street ?
             <GenericIcon icon="chevron-right" color="yellow" /> :
             <span onClick={() => router.push('/profile/address/add-address')}>Add Address</span>
           }

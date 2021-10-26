@@ -6,7 +6,7 @@ import GenericTitle from '../../atoms/genericTitle'
 import GenericText from '../../atoms/genericText'
 import GenericIcon from '../../atoms/genericIcon'
 
-export default function CardPaymentMethods({ card, edit = true, updatePayment }) {
+export default function CardPaymentMethods({ card, edit = true, updatePayment = null }) {
   const controllersContext = useContext(ControllersContext)
   const { updateFooterType, updateHeaderText, updateMainPaymentMethod, mainPaymentMethod } = controllersContext
 

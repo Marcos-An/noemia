@@ -1,24 +1,24 @@
 import styles from './currentAddress.module.scss'
 import React, { useContext } from 'react'
-import { ControllersContext } from '../../../contexts/ControllersContext'
+import { AuthContext } from '@contexts/AuthContext'
 import GenericDescription from '../../atoms/genericDescription'
 import Image from 'next/image'
 import GenericText from '../../atoms/genericText'
 
 export default function CurrentAddress() {
-  const controllersContext = useContext(ControllersContext)
-  const { address } = controllersContext
+  const authContext = useContext(AuthContext)
+  const { user } = authContext
 
   const formatAddres = () => {
-    const newAddress = `${address.neighbourhood}, ${address.city} - ${address.state}`
-    if (!address.neighbourhood) {
+    const newAddress = `${user.neighbourhood}, ${user.city} - ${user.state}`
+    if (!user.neighbourhood) {
       return newAddress.replace(',', '')
     }
     return newAddress
   }
 
   return (
-    address.street ?
+    user.street ?
       <div className={styles.currentAddress}>
         <div className={styles.imageContainer}>
           <Image
@@ -29,7 +29,7 @@ export default function CurrentAddress() {
           />
         </div>
         <div className={styles.address}>
-          <GenericText weight="bold">{`${address.street}, ${address.number}`}</GenericText>
+          <GenericText weight="bold">{`${user.street}, ${user.number}`}</GenericText>
           <GenericDescription>{formatAddres()}</GenericDescription>
         </div>
       </div> :
