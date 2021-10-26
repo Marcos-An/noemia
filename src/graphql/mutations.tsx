@@ -10,3 +10,30 @@ export const CREATE_USER = gql`
     }
   } 
 `;
+
+export const UPDATE_USER = gql`
+  mutation updateUsers($uid: String!,$name: String!,$email: String!, $phone: String!) {
+    update_users(where: {uid: {_eq: $uid}}, _set: {name: $name, email: $email, phone: $phone}) {
+      returning { 
+        email 
+        name 
+        phone 
+      }
+    }
+  } 
+`;
+
+export const UPDATE_USER_ADDRESS = gql`
+  mutation updateAddress($uid: String!, $city: String!, $neighbourhood: String!, $number: String!, $street: String!, $state: String!, $zipCode: String!) {
+    update_users(where: {uid: {_eq: $uid}}, _set: {street: $street, city: $city, state: $state neighbourhood: $neighbourhood, number: $number, zipCode: $zipCode}) {
+      returning {
+        city  
+        state
+        neighbourhood
+        number 
+        street 
+        zipCode
+      }
+    }
+  } 
+`;

@@ -1,6 +1,7 @@
 import styles from './address.module.scss'
 import React, { useEffect, useContext } from 'react'
 import { ControllersContext } from '../../../contexts/ControllersContext'
+import { AuthContext } from '../../../contexts/AuthContext'
 import CardAddress from '../../../components/molecules/cardAddress'
 import GenericText from '../../../components/atoms/genericText'
 import GenericButton from '../../../components/atoms/genericButton'
@@ -10,17 +11,19 @@ import Image from 'next/image'
 export default function Address() {
   const router = useRouter()
   const controllersContext = useContext(ControllersContext)
-  const { updateFooterType, updateHeaderText, address } = controllersContext
+  const authContext = useContext(AuthContext)
+  const { updateFooterType, updateHeaderText } = controllersContext
+  const { user } = authContext
 
   useEffect(() => {
     updateHeaderText('Address')
     updateFooterType('none')
-  }, [updateHeaderText, updateFooterType, address, router])
+  }, [updateHeaderText, updateFooterType])
 
   return (
     <div className={styles.adress}>
-      {address.street ?
-        <CardAddress address={address} /> :
+      {user.street ?
+        <CardAddress address={user} /> :
         <div className={styles.noAddress}>
           <div className={styles.imageContainer}>
             <Image

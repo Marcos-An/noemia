@@ -8,14 +8,12 @@ import Link from 'next/link'
 import { formatCurrency } from '../../../utils/formatData'
 
 
-export default function CardAllMenu({product}) {
-
-  console.log(product) 
+export default function CardAllMenu({ product }) {
 
   const { id, name, path_image, description, category, price, hate } = product
 
 
-  return ( 
+  return (
     <Link href={`/products/${category.name.toLowerCase()}?id:${id}`} passHref>
       <div className={styles.cardAllMenu}>
         <div className={styles.imageContainer}>

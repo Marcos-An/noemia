@@ -5,13 +5,14 @@
   border: 1px solid #e6e6e6;
   display: flex;
   margin-bottom: 1rem;
+  position: relative;
 
   .imageContainer {
     position: relative;
     width: 30%;
     right: 0px;
     img {
-      border-radius: 0rem  0.8rem  0.8rem 0rem;
+      border-radius: 0rem 0.8rem 0.8rem 0rem;
     }
     .quantity {
       height: 2.5rem;
@@ -68,6 +69,5 @@
         }
       }
     }
-   
   }
 }

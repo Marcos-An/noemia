@@ -32,6 +32,7 @@ type AuthControlerData = {
   signIn: (data: SignInData) => any;
   signInAccountWithGoogle: () => any;
   updateLoading: (isLoading: boolean) => any;
+  updateUser: (user: any) => any;
 }
 
 
@@ -57,7 +58,7 @@ type AuthContextProviderProps = {
 }
 
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
-  const [user, setUser] = useState<any>()
+  const [user, setUser] = useState<any>({})
   const [authIsLoading, setAuthIsLoading] = useState(false)
 
 
@@ -86,8 +87,6 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       .then((userCredential) => {
         const user = userCredential.user;
 
-        setUser(user);
-
         if (typeof window !== 'undefined') {
           const { uid, email } = user;
           localStorage.setItem('@noemia:user', JSON.stringify({ uid, email }));
@@ -111,8 +110,6 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     const response = await signInWithPopup(auth, provider).then(result => {
       const user = result.user;
 
-      setUser(user);
-
       if (typeof window !== 'undefined') {
         const { uid, email } = user;
         localStorage.setItem('@noemia:user', JSON.stringify({ uid, email }));
@@ -129,6 +126,11 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     return response
   }
 
+  const updateUser = (data: any) => {
+    const newDatasUser = { ...user, ...data }
+    setUser({ ...newDatasUser })
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -138,6 +140,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         updateLoading,
         createAccount,
         signInAccountWithGoogle,
+        updateUser
       }}
     >
       {children}

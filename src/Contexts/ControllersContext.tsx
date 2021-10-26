@@ -8,7 +8,6 @@ type ControllersContextData = {
   headerText: string;
   footerType: string;
   address: address;
-  myInformations: myInformations;
   paymentMethods: Array<paymentMethod>;
   mainPaymentMethod: paymentMethod;
   order: Array<order>;
@@ -19,7 +18,6 @@ type ControllersContextData = {
   updateFooterType: (type: string) => void;
   removingItemFromCart: (selectedItem: newCardItem) => void;
   updateAddress: (address: address) => void;
-  updateMyInformations: (myInformations: myInformations) => void;
   updatePaymentMethods: (paymentMethod: paymentMethod) => void;
   updateMainPaymentMethod: (paymentMethod: paymentMethod) => void;
   removingPaymentMethod: (paymentMethod: paymentMethod) => void;
@@ -127,11 +125,6 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
       nameOwner: ''
     }
   ])
-  const [myInformations, setMyInformations] = useState({
-    name: "Marcos Antonio da Silva Junior",
-    email: "marcos.silva@gmail.com",
-    phone: "67999290375",
-  })
   const [addingCardItem, setAddingCardItem] = useState({
     id: 0,
     name: '',
@@ -196,9 +189,6 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
     }])
   }
 
-  const updateMyInformations = (myInformations: myInformations) => {
-    setMyInformations(myInformations)
-  }
 
   const removingItemFromCart = (selectedItem: newCardItem) => {
     const newItems = myCartItems.filter(item => item.id !== selectedItem.id)
@@ -258,7 +248,6 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
         headerText,
         footerType,
         address,
-        myInformations,
         paymentMethods,
         mainPaymentMethod,
         order,
@@ -269,7 +258,6 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
         updateFooterType,
         removingItemFromCart,
         updateAddress,
-        updateMyInformations,
         updatePaymentMethods,
         updatePaymentMethod,
         updateMainPaymentMethod,

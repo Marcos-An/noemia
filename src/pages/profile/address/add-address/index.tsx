@@ -3,6 +3,10 @@ import React, { useState, useEffect, useContext } from 'react'
 import { ControllersContext } from '../../../../contexts/ControllersContext'
 import GenericInput from '../../../../components/atoms/genericInput'
 import GenericButton from '../../../../components/atoms/genericButton'
+import { AuthContext } from '../../../../contexts/AuthContext'
+import { useMutation } from '@apollo/react-hooks';
+import { UPDATE_USER_ADDRESS } from '@graphql/mutations'
+import toastMessage from '@utils/toastMessage';
 import { useRouter } from 'next/router'
 
 export default function AddAdress() {
@@ -11,12 +15,18 @@ export default function AddAdress() {
   const [zipCode, setZipCode] = useState('')
   const [state, setState] = useState('')
   const [city, setCity] = useState('')
-  const [neighbourhood, setNeighbourhood] = useState('')
+  const [neighbourhood, setneighbourhood] = useState('')
 
   const router = useRouter()
-  const [disabled, setDisabled] = useState(true)
+
+  const [updateAddress] = useMutation(UPDATE_USER_ADDRESS);
+
+  const [isDisabled, setIsDisabled] = useState(true)
+  const authContext = useContext(AuthContext)
   const controllersContext = useContext(ControllersContext)
-  const { updateFooterType, updateHeaderText, updateAddress } = controllersContext
+
+  const { updateFooterType, updateHeaderText } = controllersContext
+  const { updateUser, user } = authContext
 
   useEffect(() => {
     updateHeaderText('Add Adress')
@@ -25,24 +35,43 @@ export default function AddAdress() {
 
   useEffect(() => {
     if (street !== '' && number !== '' && zipCode !== '' && state !== '' && city !== '') {
-      setDisabled(false)
+      setIsDisabled(false)
     } else {
-      setDisabled(true)
+      setIsDisabled(true)
     }
   }, [street, number, zipCode, state, city, neighbourhood])
 
-  const saveAddAdress = () => {
+  const saveAddAdress = async () => {
     const newAdress = {
       street,
-      number: number.toString(),
+      number,
       zipCode,
       state,
       city,
       neighbourhood
     }
 
-    updateAddress(newAdress)
-    router.back()
+    updateUser(newAdress)
+
+    const userUpdated = { ...user, ...newAdress }
+
+    if (userUpdated !== user) {
+      updateAddress({
+        variables: {
+          uid: user.uid,
+          street: userUpdated.street,
+          number: userUpdated.number,
+          zipCode: userUpdated.zipCode,
+          state: userUpdated.state,
+          city: userUpdated.city,
+          neighbourhood: userUpdated.neighbourhood,
+        }
+      }).then(() => {
+        toastMessage('Your adrress was created!', 'success')
+        router.back()
+      }).catch(() => { toastMessage('Something went wrong!', 'error') })
+    }
+
   }
 
   return (
@@ -82,14 +111,14 @@ export default function AddAdress() {
           setValue={setCity}
         />
         <GenericInput
-          id="Neighbourhood"
-          label='Neighbourhood'
+          id="neighbourhood"
+          label='neighbourhood'
           value={neighbourhood}
-          setValue={setNeighbourhood}
+          setValue={setneighbourhood}
         />
       </form>
       <div className={styles.button}>
-        <GenericButton text="save" disabled={disabled} onClick={() => saveAddAdress()} />
+        <GenericButton text="save" isDisabled={isDisabled} onClick={() => saveAddAdress()} />
       </div>
     </div>
   )

@@ -38,7 +38,14 @@ export const GET_USERS_BY_UID = gql`
       number
       phone
       street
+      state
       zipCode
+      paymentMethods {
+        number
+        nickname
+        name
+        user_uid
+      }
     }
   } 
 `;

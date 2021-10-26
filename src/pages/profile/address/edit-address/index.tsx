@@ -3,21 +3,28 @@ import React, { useState, useEffect, useContext } from 'react'
 import { ControllersContext } from '../../../../contexts/ControllersContext'
 import GenericInput from '../../../../components/atoms/genericInput'
 import GenericButton from '../../../../components/atoms/genericButton'
+import { AuthContext } from '../../../../contexts/AuthContext'
+import { useMutation } from '@apollo/react-hooks';
+import { UPDATE_USER_ADDRESS } from '@graphql/mutations'
+import toastMessage from '@utils/toastMessage';
 import { useRouter } from 'next/router'
 
 
 export default function EditAddress() {
   const controllersContext = useContext(ControllersContext)
-  const { updateFooterType, updateHeaderText, updateAddress, address } = controllersContext
+  const authContext = useContext(AuthContext)
+  const { updateFooterType, updateHeaderText } = controllersContext
+  const { user, updateUser } = authContext
   const router = useRouter()
 
-  const [street, setStreet] = useState(address.street)
-  const [number, setNumber] = useState(address.number)
-  const [zipCode, setZipCode] = useState(address.zipCode)
-  const [state, setState] = useState(address.state)
-  const [city, setCity] = useState(address.city)
-  const [neighbourhood, setNeighbourhood] = useState(address.neighbourhood)
+  const [street, setStreet] = useState(user.street)
+  const [number, setNumber] = useState(user.number)
+  const [zipCode, setZipCode] = useState(user.zipCode)
+  const [state, setState] = useState(user.state)
+  const [city, setCity] = useState(user.city)
+  const [neighbourhood, setNeighbourhood] = useState(user.neighbourhood)
 
+  const [updateAddress] = useMutation(UPDATE_USER_ADDRESS);
 
   useEffect(() => {
     updateHeaderText('Edit Address')
@@ -25,10 +32,11 @@ export default function EditAddress() {
   }, [updateFooterType, updateHeaderText])
 
   useEffect(() => {
-    if (!address.street) {
-      router.push('/profile/address')
+    if (!user.street) {
+      toastMessage('You dont have a adrress to update!', 'warning')
+      router.replace('/profile/address', '/profile/address', { shallow: true })
     }
-  }, [address, router])
+  }, [user, router])
 
 
   const saveAddAdress = () => {
@@ -41,8 +49,27 @@ export default function EditAddress() {
       neighbourhood
     }
 
-    updateAddress(newAdress)
-    router.back()
+    updateUser(newAdress)
+
+    const userUpdated = { ...user, ...newAdress }
+
+    if (userUpdated !== user) {
+      updateAddress({
+        variables: {
+          uid: user.uid,
+          street: userUpdated.street,
+          number: userUpdated.number,
+          zipCode: userUpdated.zipCode,
+          state: userUpdated.state,
+          city: userUpdated.city,
+          neighbourhood: userUpdated.neighbourhood,
+        }
+      }).then((response) => {
+        toastMessage('Your adrress has was updated!', 'success')
+        router.back()
+      }).catch(() => { toastMessage('Something went wrong!', 'error') })
+    }
+
   }
 
   return (
@@ -89,7 +116,7 @@ export default function EditAddress() {
         />
       </form>
       <div className={styles.button}>
-        <GenericButton text="save" disabled={false} onClick={() => saveAddAdress()} />
+        <GenericButton text="save" isDisabled={false} onClick={() => saveAddAdress()} />
       </div>
     </div>
   )

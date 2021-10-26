@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { ControllersContext } from '@contexts/ControllersContext';
-import { useMutation, useQuery } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/react-hooks';
 import { CREATE_USER } from '@graphql/mutations'
 import { GET_USERS_BY_UID } from '@graphql/queries'
 import { initializeApollo } from '@graphql/apollo'
@@ -20,7 +20,7 @@ export default function Login() {
   const controllersContext = useContext(ControllersContext)
   const authContext = useContext(AuthContext)
   const { updateFooterType } = controllersContext
-  const { signIn, signInAccountWithGoogle, authIsLoading, updateLoading } = authContext
+  const { signIn, signInAccountWithGoogle, authIsLoading, updateLoading, updateUser } = authContext
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -38,14 +38,23 @@ export default function Login() {
 
   const emailSignIn = ({ email, password }) => {
     signIn({ email, password }).then((response) => {
-      updateLoading(true)
-
+      const { uid, email, displayName } = response
+      updateLoading(false)
       if (response.code === 'auth/user-not-found') {
         toastMessage('User not found! Do a signUp with this email', "error")
       }
+
       if (response.code === 'auth/wrong-password') {
         toastMessage('Wrong password or email! Please try again', "error")
       }
+
+      if (!!response.code) {
+        updateUser({
+          uid, email, phone: '', name: displayName
+        })
+      }
+
+      Router.back()
     })
   }
 
@@ -60,6 +69,7 @@ export default function Login() {
           uid: uid,
         }
       }).then(({ data }) => data.users)
+
       updateLoading(false)
 
       if (user.length === 0) {
@@ -114,7 +124,7 @@ export default function Login() {
           />
         </form>
         <div className={styles.button}>
-          <GenericButton text="Login" onClick={() => emailSignIn({ email, password })} loading={authIsLoading} />
+          <GenericButton text="Login" onClick={() => emailSignIn({ email, password })} isLoading={authIsLoading} />
         </div>
         <br />
         <ContainerSpaceBetween>

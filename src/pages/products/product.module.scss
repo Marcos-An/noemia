@@ -1,5 +1,7 @@
 .container {
   margin-bottom: calc(10vh - 2rem);
+  position: relative;
+  z-index: -1;
 
   .imageContainer {
     position: relative !important;

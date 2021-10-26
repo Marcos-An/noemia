@@ -4,13 +4,13 @@ import GenericButton from '../../atoms/genericButton'
 import AddItemButton from '../../molecules/addItemButton'
 import { formatCurrency } from '../../../utils/formatData'
 
-export default function UpdateItemCartButton({ text, onClick, price = null, disabled = false }) {
+export default function UpdateItemCartButton({ text, onClick, price = null, isDisabled = false }) {
 
   return (
     <div className={styles.footer}>
       <AddItemButton />
       <GenericButton
-        disabled={disabled}
+        isDisabled={isDisabled}
         text={text}
         price={price ? formatCurrency(price) : false}
         onClick={() => onClick()}

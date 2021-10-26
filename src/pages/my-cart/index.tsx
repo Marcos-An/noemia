@@ -111,7 +111,7 @@ function CartWithItems({ controllersContext }) {
           </div>
         )}
         <UpdateItemCartButton
-          disabled={false}
+          isDisabled={false}
           price={addingCardItem.quantity * addingCardItem.price}
           text="Update cart"
           onClick={updateCart}

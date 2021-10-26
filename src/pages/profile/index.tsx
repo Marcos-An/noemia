@@ -1,15 +1,47 @@
 import styles from './profile.module.scss'
 import React, { useEffect, useContext } from 'react'
 import { ControllersContext } from '../../contexts/ControllersContext'
+import { AuthContext } from '../../contexts/AuthContext'
 import ItemProfileMenu from '../../components/molecules/itemProfileMenu'
+import EmptyMessage from '../../components/molecules/emptyMessage'
+import GenericButton from '@components/atoms/genericButton'
+import Router from 'next/router'
+
 
 export default function Profile() {
   const controllersContext = useContext(ControllersContext)
+  const authContext = useContext(AuthContext)
   const { updateFooterType } = controllersContext
+  const { user } = authContext
 
   useEffect(() => {
     updateFooterType('main')
-  }, [updateFooterType])
+  }, [])
+
+
+  return user.uid ? <ProfileWithLogin /> : <WithoutLogin />
+}
+
+function WithoutLogin() {
+  const redirect = () => {
+    Router.push('/login')
+  }
+
+  return (
+    <div className={styles.container}>
+      <EmptyMessage
+        title="You dont do your login!"
+        text=" "
+      />
+      <GenericButton
+        isDisabled={false}
+        text={"Login"}
+        onClick={() => redirect()} />
+    </div>
+  )
+}
+
+function ProfileWithLogin() {
 
   return (
     <div className={styles.profile}>

@@ -50,7 +50,7 @@ function ProductDetail({ controllersContext }) {
         price={currentPrice()}
         onClick={addToCart}
         text="Add to cart"
-        disabled={addingCardItem.size ? false : true}
+        isDisabled={addingCardItem.size ? false : true}
       />
     </div>
   )
@@ -80,13 +80,10 @@ function CartDetail({ controllersContext }) {
   }
 
   const disableButton = () => {
-    if (!hasUser) {
+    console.log(!!hasUser && myCartItems.length > 0)
+    if (!!hasUser && myCartItems.length > 0) {
       return true
-    } else {
-      if (myCartItems.length > 0) {
-        return false
-      } else true
-    }
+    } else false
   }
 
   return (
@@ -96,8 +93,8 @@ function CartDetail({ controllersContext }) {
         <GenericTitle>{formatCurrency(currentPrice())}</GenericTitle>
       </div>
       <GenericButton
-        disabled={disableButton ? false : true}
-        text={hasUser ? "Payment" : "Do Login"}
+        isDisabled={disableButton() ? false : true}
+        text={!hasUser ? "Do Login" : myCartItems.length > 0 ? "Payment" : "Any Items"}
         onClick={() => redirect()} />
     </div>
   )
@@ -107,7 +104,7 @@ function CartDetail({ controllersContext }) {
 function CartPayment({ controllersContext }) {
   const { address, myCartItems, updateOrder } = controllersContext
 
-  const disabled = () => {
+  const isDisabled = () => {
     return address.street && myCartItems.length > 0 ? false : true
   }
 
@@ -128,7 +125,7 @@ function CartPayment({ controllersContext }) {
 
   return (
     <div className={styles.cartPayment}>
-      <GenericButton disabled={disabled()} text="Place Order" onClick={() => saveOrderStatus()} />
+      <GenericButton isDisabled={isDisabled()} text="Place Order" onClick={() => saveOrderStatus()} />
     </div>
   )
 }

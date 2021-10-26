@@ -8,6 +8,7 @@ import Footer from '@components/organisms/footer'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
+
 function MyApp({ Component, pageProps }) {
 
   const apolloClient = useApollo(pageProps)

@@ -3,13 +3,15 @@ import styles from './genericButton.module.scss'
 import GenericText from '../genericText'
 import Spinner from '../spinner'
 
-export default function GenericButton({ text, price = null, disabled = false, onClick, loading = false }) {
+export default function GenericButton({ text, price = null, isDisabled = false, onClick, isLoading = false }) {
 
   return (
     <button
-      className={styles[`genericButton${disabled ? 'Disabled' : ''}${loading ? 'Loading' : ''}`]}
-      onClick={() => onClick()} disabled={disabled}>
-      {loading ? <Spinner /> : (
+      className={styles[`genericButton${isDisabled ? 'Disabled' : ''}${isLoading ? 'Loading' : ''}`]}
+      onClick={() => onClick()}
+      disabled={isDisabled}
+    >
+      {isLoading ? <Spinner /> : (
         <>
           <GenericText weight="bold">
             {text}

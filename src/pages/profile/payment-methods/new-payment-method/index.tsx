@@ -18,7 +18,7 @@ export default function NewPaymentMethod() {
   const [nickName, setNickName] = useState('')
 
   const router = useRouter()
-  const [disabled, setDisabled] = useState(true)
+  const [isDisabled, setIsDisabled] = useState(true)
   const [cardValidation, setCardValidation] = useState({
     card: { type: '', niceType: '' },
     isValid: false
@@ -33,7 +33,7 @@ export default function NewPaymentMethod() {
 
   useEffect(() => {
     const newValidation = validationCard.number(cardNumber)
-    setDisabled(newValidation.isValid)
+    setIsDisabled(newValidation.isValid)
     setCardValidation(newValidation)
   }, [cardNumber])
 
@@ -102,7 +102,7 @@ export default function NewPaymentMethod() {
         />
       </form>
       <div className={styles.button}>
-        <GenericButton text="save" disabled={!disabled} onClick={() => savePayment()} />
+        <GenericButton text="save" isDisabled={!isDisabled} onClick={() => savePayment()} />
       </div>
     </div>
   )

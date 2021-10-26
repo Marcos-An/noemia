@@ -60,7 +60,7 @@ export default function Register() {
             }
           }).then(() => {
             updateLoading(false)
-            Router.replace('/my-cart/payment', '/my-cart', { shallow: true })
+            Router.back()
           })
         }
       })
@@ -77,13 +77,13 @@ export default function Register() {
         }
       }).then(() => {
         updateLoading(false)
-        Router.replace('/my-cart/payment', '/my-cart', { shallow: true })
+        Router.back()
       })
     })
   }
 
 
-  const isDisabled = () => {
+  const isisDisabled = () => {
     if ((email && password) && (password === passwordConfirm) && password.length >= 6) {
       return false;
     }
@@ -148,7 +148,7 @@ export default function Register() {
           />
         </form>
         <div className={styles.button}>
-          <GenericButton disabled={isDisabled()} text="Register" onClick={() => emailSignUp({ name, email, password, phone })} loading={authIsLoading} />
+          <GenericButton isDisabled={isisDisabled()} text="Register" onClick={() => emailSignUp({ name, email, password, phone })} isLoading={authIsLoading} />
         </div>
         <br />
         <ContainerSpaceBetween>

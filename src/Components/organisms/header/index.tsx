@@ -1,16 +1,45 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import styles from './header.module.scss'
 import SimpleAddress from '../../molecules/simpleAddress'
 import CardButton from '../../molecules/cartButton'
 import BackButton from '../../molecules/backButton'
 import { useRouter } from 'next/router'
+import { initializeApollo } from '@graphql/apollo'
+import { GET_USERS_BY_UID } from '@graphql/queries'
+import { AuthContext } from '../../../contexts/AuthContext'
 import GenericTitle from '../../atoms/genericTitle'
 import GenericText from '../../atoms/genericText'
 import { ControllersContext } from '../../../contexts/ControllersContext'
 
 export default function Header() {
   const controllersContext = useContext(ControllersContext)
+  const authContext = useContext(AuthContext)
+  const { updateUser, user } = authContext
+
   const router = useRouter()
+
+  useEffect(() => {
+    const client = initializeApollo()
+    const userStorage: any = JSON.parse(localStorage.getItem('@noemia:user'))
+
+    async function fetchMyAPI() {
+      if (userStorage) {
+        await client.query({
+          query: GET_USERS_BY_UID,
+          variables: {
+            uid: userStorage.uid,
+          }
+        }).then(({ data }) => {
+          console.log(data.users[0])
+          updateUser(data.users[0])
+        })
+      }
+    }
+
+    if (!user.uid) {
+      fetchMyAPI()
+    }
+  }, [])
 
   const headerShow = () => {
     const path = router.asPath
@@ -19,7 +48,7 @@ export default function Header() {
         return <HeaderHome />
       }
       if (path === '/profile') {
-        return <HeaderProfile controllersContext={controllersContext} />
+        return <HeaderProfile authContext={authContext} />
       }
       if (path === '/search') {
         return <HeaderSearch />
@@ -48,14 +77,14 @@ function HeaderHome() {
   )
 }
 
-function HeaderProfile({ controllersContext }) {
-  const { myInformations } = controllersContext
+function HeaderProfile({ authContext }) {
+  const { user } = authContext
 
   return (
-    <div className={styles.headerProfile}>
+    user.uid ? <div className={styles.headerProfile}>
       <GenericText>User configurations</GenericText>
-      <GenericTitle>{myInformations.name}</GenericTitle>
-    </div>
+      <GenericTitle>{user.name}</GenericTitle>
+    </div> : <div />
   )
 }
 
