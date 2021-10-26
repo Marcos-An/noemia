@@ -7,22 +7,23 @@ type ControllersContextData = {
   myCartItems: Array<newCardItem>;
   headerText: string;
   footerType: string;
-  address: address;
   paymentMethods: Array<paymentMethod>;
   mainPaymentMethod: paymentMethod;
   order: Array<order>;
+  isLoading: boolean;
   updateSelectedItemMenu: (selectedItem: object) => void;
   updateAddingCartItem: (newCardItem: newCardItem) => void;
   updateMyCart: (newCardItem: newCardItem) => void;
   updateHeaderText: (text: string) => void;
   updateFooterType: (type: string) => void;
   removingItemFromCart: (selectedItem: newCardItem) => void;
-  updateAddress: (address: address) => void;
   updatePaymentMethods: (paymentMethod: paymentMethod) => void;
+  initializePaymentMethods: (paymentMethods: Array<paymentMethod>) => void;
   updateMainPaymentMethod: (paymentMethod: paymentMethod) => void;
   removingPaymentMethod: (paymentMethod: paymentMethod) => void;
   updatePaymentMethod: (paymentMethod: paymentMethod, nickName: string) => void;
   updateOrder: (order: order) => void;
+  updateLoading: (isLoading: boolean) => void;
 }
 
 export const ControllersContext = createContext({} as ControllersContextData)
@@ -50,24 +51,9 @@ type selectedItemMenu = {
   path: string
 }
 
-type address = {
-  street: string,
-  number: string,
-  zipCode: string,
-  state: string,
-  city: string,
-  neighbourhood: string
-}
-
-type myInformations = {
-  name: string,
-  email: string,
-  phone: string,
-}
-
 type paymentMethod = {
   nickName: string,
-  cardNumber: string,
+  number: string,
   type: string,
   niceType: string,
   valid: string,
@@ -94,37 +80,20 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
     name: '',
     path: ''
   })
-  const [address, setAddress] = useState({
-    street: '',
-    number: '',
-    zipCode: '',
-    state: '',
-    city: '',
-    neighbourhood: ''
-  })
+  const [isLoading, setIsLoading] = useState(true)
   const [myCartItems, setMyCart] = useState([])
   const [headerText, setHeaderText] = useState('')
   const [footerType, setFooterType] = useState('main')
   const [mainPaymentMethod, setMainPaymentMethod] = useState({
     nickName: 'Money',
-    cardNumber: "",
+    number: "",
     type: 'Money',
     niceType: 'Money',
     valid: '',
     CVC: '',
     nameOwner: ''
   })
-  const [paymentMethods, setPaymentMethods] = useState([
-    {
-      nickName: 'Money',
-      cardNumber: "",
-      type: 'Money',
-      niceType: 'Money',
-      valid: '',
-      CVC: '',
-      nameOwner: ''
-    }
-  ])
+  const [paymentMethods, setPaymentMethods] = useState([])
   const [addingCardItem, setAddingCardItem] = useState({
     id: 0,
     name: '',
@@ -138,8 +107,18 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
   })
   const [order, setOrder] = useState([])
 
+
+  const updateLoading = (isLoading: boolean) => {
+    setIsLoading(isLoading)
+  }
+
   const updateSelectedItemMenu = (selectedItem: selectedItemMenu) => {
     setSelectedItem(selectedItem)
+  }
+
+
+  const initializePaymentMethods = (paymentMethods: Array<paymentMethod>) => {
+    setPaymentMethods(paymentMethods)
   }
 
   const updatePaymentMethods = (paymentMethod: paymentMethod) => {
@@ -162,9 +141,6 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
     setFooterType(footerType)
   }
 
-  const updateAddress = (address: address) => {
-    setAddress(address)
-  }
 
   const updateOrder = (newOrder: order) => {
     setOrder([...order, {
@@ -197,20 +173,21 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
   }
 
   const removingPaymentMethod = (paymentMethod: paymentMethod) => {
-    const newPaymentMethods = paymentMethods.filter(item => item.cardNumber !== paymentMethod.cardNumber)
+    const newPaymentMethods = paymentMethods.filter(item => item.number !== paymentMethod.number)
 
     setPaymentMethods([...newPaymentMethods])
   }
 
-  const updatePaymentMethod = (paymentMethod: paymentMethod, nickname: string) => {
+  const updatePaymentMethod = (paymentMethod: paymentMethod, nickName: string) => {
     const newPaymentMethods = paymentMethods.map(item => {
-      if (item.cardNumber === paymentMethod.cardNumber) {
-        item.nickName = nickname
+      if (item.number === paymentMethod.number) {
+        item = { ...item, nickName: nickName }
         return item
       }
       return item
     })
 
+    console.log(paymentMethods)
     setPaymentMethods([...newPaymentMethods])
   }
 
@@ -247,9 +224,9 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
         myCartItems,
         headerText,
         footerType,
-        address,
         paymentMethods,
         mainPaymentMethod,
+        isLoading,
         order,
         updateSelectedItemMenu,
         updateAddingCartItem,
@@ -257,12 +234,13 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
         updateHeaderText,
         updateFooterType,
         removingItemFromCart,
-        updateAddress,
         updatePaymentMethods,
         updatePaymentMethod,
         updateMainPaymentMethod,
         removingPaymentMethod,
-        updateOrder
+        initializePaymentMethods,
+        updateOrder,
+        updateLoading
       }}
     >
       {children}

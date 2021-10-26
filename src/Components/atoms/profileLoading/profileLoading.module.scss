@@ -1,0 +1,40 @@
+.container {
+  .header {
+    padding: 2rem 2.4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0px 4px 6px rgb(0 0 0 / 4%);
+
+    .skeletonText {
+      height: 1.3rem;
+      width: 35%;
+      border-radius: 1rem;
+    }
+    .skeletonName {
+      margin-top: 1rem;
+      height: 2rem;
+      width: 50%;
+      border-radius: 1rem;
+    }
+  }
+
+  .itemMenu {
+    padding: 0rem 2.4rem;
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 0.4fr 1.6fr;
+    grid-gap: 2rem;
+    align-items: center;
+
+    .skeletonIcon {
+      height: 4rem;
+      border-radius: 1rem;
+    }
+
+    .skeletonOption {
+      height: 4rem;
+      border-radius: 1rem;
+    }
+  }
+}

@@ -6,7 +6,7 @@ import GenericTitle from '../../atoms/genericTitle'
 import GenericText from '../../atoms/genericText'
 import GenericIcon from '../../atoms/genericIcon'
 
-export default function CardPaymentMethods({ card, edit = true, onClick = () => { } }) {
+export default function CardPaymentMethods({ card, edit = true, updatePayment }) {
   const controllersContext = useContext(ControllersContext)
   const { updateFooterType, updateHeaderText, updateMainPaymentMethod, mainPaymentMethod } = controllersContext
 
@@ -20,8 +20,11 @@ export default function CardPaymentMethods({ card, edit = true, onClick = () => 
   }
 
   const isPaymentEqual = () => {
-    return JSON.stringify(mainPaymentMethod) === JSON.stringify(card)
+    if (mainPaymentMethod.number === card.number) {
+      return true;
+    } return false;
   }
+
   return (
     <div
       className={isPaymentEqual() ? styles.cardPaymentMethodsMain : styles.cardPaymentMethods}
@@ -37,10 +40,10 @@ export default function CardPaymentMethods({ card, edit = true, onClick = () => 
       </div>
       <div className={styles.nameNumber}>
         <GenericTitle>{card.nickName ? card.nickName : card.niceType}{isPaymentEqual() && <span>- Main</span>} </GenericTitle>
-        {card.cardNumber && <GenericText>{hideNumber(card.cardNumber)}</GenericText>}
+        {card.number && <GenericText>{hideNumber(card.number)}</GenericText>}
       </div>
       <div className={styles.icon}>
-        {card.cardNumber && edit && <GenericIcon icon="edit-3" size="16" color="grey" onClick={() => onClick()} />}
+        {card.number && edit && <GenericIcon icon="edit-3" size="16" color="grey" onClick={updatePayment} />}
       </div>
     </div>
   )

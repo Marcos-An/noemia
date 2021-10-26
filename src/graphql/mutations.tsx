@@ -3,10 +3,35 @@ import { gql } from '@apollo/client'
 export const CREATE_USER = gql`
   mutation createUser($users: users_insert_input!) {
     insert_users_one(object: $users) {
-      uid
-      name
+      id
+      city
       email
+      mainPaymentMethod {
+        nameOwner
+        niceType
+        nickName
+        number
+        type
+        user_uid
+        valid
+      }
+      name
+      neighbourhood
+      number
+      paymentMethods {
+        nameOwner
+        niceType
+        nickName
+        number
+        type
+        user_uid
+        valid
+      }
       phone
+      state
+      street
+      uid
+      zipCode
     }
   } 
 `;
@@ -33,6 +58,47 @@ export const UPDATE_USER_ADDRESS = gql`
         number 
         street 
         zipCode
+      }
+    }
+  } 
+`;
+
+export const CREATE_USER_PAYMENT_METHOD = gql`
+  mutation updatePaymentMethods($paymentMethod: paymentMethod_insert_input! ) {
+    insert_paymentMethod_one(object: $paymentMethod) {
+      nameOwner
+      niceType
+      number
+      type
+      user_uid
+      valid
+      nickName
+    }
+  } 
+`;
+
+export const UPDATE_USER_PAYMENT_METHOD = gql`
+  mutation updatePaymentMethodMutation($uid: String!, $nickName: String!) {
+    update_paymentMethod(where: {user_uid: {_eq: $uid}}, _set: {nickName: $nickName}) {
+      returning {
+        nameOwner
+        niceType
+        nickName
+        number
+        type
+        user_uid
+        valid
+      }
+    }
+  } 
+`;
+
+export const REMOVE_USER_PAYMENT_METHOD = gql`
+  mutation updatePaymentMethods($number: String!) {
+    delete_paymentMethod(where: {number: {_eq: $number}}) {
+      returning {
+        number
+        user_uid
       }
     }
   } 

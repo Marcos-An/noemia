@@ -75,7 +75,31 @@ export default function Login() {
       if (user.length === 0) {
         createUsers({
           variables: {
-            users: { uid, email, phone: '', name: displayName },
+            users: {
+              uid,
+              email,
+              name: displayName,
+              paymentMethods: {
+                data: {
+                  nickName: 'Money',
+                  number: "",
+                  type: 'Money',
+                  niceType: 'Money',
+                  valid: '',
+                  nameOwner: ''
+                }
+              },
+              mainPaymentMethod: {
+                data: {
+                  nickName: 'Money',
+                  number: "",
+                  type: 'Money',
+                  niceType: 'Money',
+                  valid: '',
+                  nameOwner: ''
+                }
+              }
+            },
           }
         }).then(() => {
           updateLoading(false)

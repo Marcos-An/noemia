@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styles from './header.module.scss'
 import SimpleAddress from '../../molecules/simpleAddress'
 import CardButton from '../../molecules/cartButton'
@@ -14,11 +14,13 @@ import { ControllersContext } from '../../../contexts/ControllersContext'
 export default function Header() {
   const controllersContext = useContext(ControllersContext)
   const authContext = useContext(AuthContext)
+  const { updateMainPaymentMethod, isLoading, updateLoading } = controllersContext
   const { updateUser, user } = authContext
 
   const router = useRouter()
 
   useEffect(() => {
+    updateLoading(true)
     const client = initializeApollo()
     const userStorage: any = JSON.parse(localStorage.getItem('@noemia:user'))
 
@@ -30,16 +32,19 @@ export default function Header() {
             uid: userStorage.uid,
           }
         }).then(({ data }) => {
-          console.log(data.users[0])
+          updateLoading(false)
           updateUser(data.users[0])
+          updateMainPaymentMethod(data.users[0].mainPaymentMethod[0])
         })
       }
     }
 
     if (!user.uid) {
       fetchMyAPI()
+    } else {
+      updateLoading(false)
     }
-  }, [])
+  }, [updateLoading, updateMainPaymentMethod, updateUser, user.uid])
 
   const headerShow = () => {
     const path = router.asPath
@@ -64,7 +69,7 @@ export default function Header() {
     }
   }
 
-  return headerShow()
+  return isLoading ? <div /> : headerShow()
 
 }
 

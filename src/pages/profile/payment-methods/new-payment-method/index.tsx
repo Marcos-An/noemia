@@ -1,58 +1,87 @@
 import styles from './newPaymentMethod.module.scss'
 import React, { useState, useEffect, useContext } from 'react'
 import { ControllersContext } from '../../../../contexts/ControllersContext'
+import { useMutation } from '@apollo/react-hooks';
+import { CREATE_USER_PAYMENT_METHOD } from '@graphql/mutations'
 import GenericInput from '../../../../components/atoms/genericInput'
 import GenericMaskedInput from '../../../../components/atoms/genericMaskedInput'
 import GenericButton from '../../../../components/atoms/genericButton'
 import Cards from 'react-credit-cards';
 import { useRouter } from 'next/router'
 import 'react-credit-cards/es/styles-compiled.css';
+import { AuthContext } from '@contexts/AuthContext'
+import toastMessage from '@utils/toastMessage';
 
 const validationCard = require("card-validator");
 
 export default function NewPaymentMethod() {
-  const [cardNumber, setCardNumber] = useState('')
+  const [number, setCardNumber] = useState('')
   const [valid, setValid] = useState('')
   const [CVC, setCVC] = useState('')
   const [nameOwner, setNameOwner] = useState('')
   const [nickName, setNickName] = useState('')
 
   const router = useRouter()
+
+  const [updateAddress, { loading }] = useMutation(CREATE_USER_PAYMENT_METHOD);
+
+
   const [isDisabled, setIsDisabled] = useState(true)
   const [cardValidation, setCardValidation] = useState({
     card: { type: '', niceType: '' },
     isValid: false
   })
   const controllersContext = useContext(ControllersContext)
-  const { updateFooterType, updateHeaderText, updatePaymentMethods } = controllersContext
+  const authContext = useContext(AuthContext)
+  const { updateFooterType, updateHeaderText, updatePaymentMethods, paymentMethods } = controllersContext
+  const { user } = authContext
 
   useEffect(() => {
     updateHeaderText('Add Payment Methods')
     updateFooterType('none')
-  }, [updateHeaderText, updateFooterType])
+
+    if (!!!user) {
+      router.replace('/payment', '/payment', { shallow: true })
+    }
+  }, [updateHeaderText, updateFooterType, user, router])
 
   useEffect(() => {
-    const newValidation = validationCard.number(cardNumber)
+    const newValidation = validationCard.number(number)
     setIsDisabled(newValidation.isValid)
     setCardValidation(newValidation)
-  }, [cardNumber])
+  }, [number])
+
+  useEffect(() => {
+    if (!!user.paymentMethods) {
+      if (paymentMethods.length > user.paymentMethods.length) {
+        router.back()
+      }
+    } else {
+      router.replace('/profile', '/profile', { shallow: true })
+    }
+  }, [paymentMethods, user, router])
 
 
   const savePayment = () => {
     if (cardValidation.isValid) {
       const newPaymentMethod = {
-        cardNumber,
+        user_uid: user.uid,
+        number,
         valid,
-        CVC,
         nameOwner,
         nickName,
         type: cardValidation.card.type,
         niceType: cardValidation.card.niceType,
-
       }
 
-      updatePaymentMethods(newPaymentMethod)
-      router.back()
+      updateAddress({
+        variables: {
+          paymentMethod: newPaymentMethod
+        }
+      }).then(({ data: { insert_paymentMethod_one } }) => {
+        toastMessage('Your card was updated successfully', 'success')
+        updatePaymentMethods(insert_paymentMethod_one)
+      }).catch(err => { console.log(err) });
     }
   }
   return (
@@ -61,13 +90,13 @@ export default function NewPaymentMethod() {
         cvc={CVC}
         expiry={valid}
         name={nameOwner}
-        number={cardNumber}
+        number={number}
       />
       <form className={styles.form}>
         <GenericMaskedInput
           label='Card Number'
           id='card-number'
-          value={cardNumber}
+          value={number}
           setValue={setCardNumber}
           mask={['9999 9999 9999 9999', '9999 999999 99999']}
         />
@@ -102,7 +131,7 @@ export default function NewPaymentMethod() {
         />
       </form>
       <div className={styles.button}>
-        <GenericButton text="save" isDisabled={!isDisabled} onClick={() => savePayment()} />
+        <GenericButton text="save" isDisabled={!isDisabled} isLoading={loading} onClick={() => savePayment()} />
       </div>
     </div>
   )

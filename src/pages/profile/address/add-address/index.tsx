@@ -19,7 +19,7 @@ export default function AddAdress() {
 
   const router = useRouter()
 
-  const [updateAddress] = useMutation(UPDATE_USER_ADDRESS);
+  const [updateAddress, { loading }] = useMutation(UPDATE_USER_ADDRESS);
 
   const [isDisabled, setIsDisabled] = useState(true)
   const authContext = useContext(AuthContext)
@@ -118,7 +118,7 @@ export default function AddAdress() {
         />
       </form>
       <div className={styles.button}>
-        <GenericButton text="save" isDisabled={isDisabled} onClick={() => saveAddAdress()} />
+        <GenericButton text="save" isDisabled={isDisabled} isLoading={loading} onClick={() => saveAddAdress()} />
       </div>
     </div>
   )

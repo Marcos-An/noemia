@@ -29,21 +29,32 @@ export const GET_PRODUCTS_QUERY = gql`
 export const GET_USERS_BY_UID = gql`
   query getUser($uid: String!) { 
     users(where: {uid: {_eq: $uid}}) {
-      name
       uid
-      email
-      id
-      city
-      neighbourhood
-      number
-      phone
+      zipCode
       street
       state
-      zipCode
+      phone
+      number
+      neighbourhood
+      name
+      email
+      city
       paymentMethods {
+        nameOwner
         number
-        nickname
-        name
+        valid
+        nickName
+        user_uid
+        type
+        niceType
+      }
+      mainPaymentMethod {
+        nameOwner
+        niceType
+        nickName
+        number
+        type
+        valid
         user_uid
       }
     }

@@ -19,7 +19,14 @@ export default function Register() {
   const controllersContext = useContext(ControllersContext)
   const authContext = useContext(AuthContext)
   const { updateFooterType } = controllersContext
-  const { createAccount, signInAccountWithGoogle, authIsLoading, updateLoading } = authContext
+  const {
+    createAccount,
+    signInAccountWithGoogle,
+    authIsLoading,
+    updateLoading,
+    updateUser,
+    user
+  } = authContext
 
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
@@ -33,6 +40,13 @@ export default function Register() {
   useEffect(() => {
     updateFooterType('none')
   }, [updateFooterType])
+
+
+  useEffect(() => {
+    if (user.uid) {
+      Router.back()
+    }
+  }, [user])
 
 
 
@@ -56,11 +70,37 @@ export default function Register() {
 
           createUser({
             variables: {
-              users: { uid, email, phone, name },
+              users: {
+                uid,
+                email,
+                name,
+                phone,
+                paymentMethods: {
+                  data: {
+                    nickName: 'Money',
+                    number: "",
+                    type: 'Money',
+                    niceType: 'Money',
+                    valid: '',
+                    nameOwner: ''
+                  }
+                },
+                mainPaymentMethod: {
+                  data: {
+                    nickName: 'Money',
+                    number: "",
+                    type: 'Money',
+                    niceType: 'Money',
+                    valid: '',
+                    nameOwner: ''
+                  }
+                }
+              },
             }
-          }).then(() => {
+
+          }).then(({ data }) => {
             updateLoading(false)
-            Router.back()
+            updateUser(data.insert_users_one)
           })
         }
       })
@@ -73,11 +113,35 @@ export default function Register() {
 
       createUser({
         variables: {
-          users: { uid, email, phone, name },
+          users: {
+            uid,
+            email,
+            name,
+            paymentMethods: {
+              data: {
+                nickName: 'Money',
+                number: "",
+                type: 'Money',
+                niceType: 'Money',
+                valid: '',
+                nameOwner: ''
+              }
+            },
+            mainPaymentMethod: {
+              data: {
+                nickName: 'Money',
+                number: "",
+                type: 'Money',
+                niceType: 'Money',
+                valid: '',
+                nameOwner: ''
+              }
+            }
+          },
         }
-      }).then(() => {
+      }).then(({ data }) => {
         updateLoading(false)
-        Router.back()
+        updateUser(data.insert_users_one)
       })
     })
   }
