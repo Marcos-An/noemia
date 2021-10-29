@@ -34,7 +34,7 @@ export default function NewPaymentMethod() {
   const controllersContext = useContext(ControllersContext)
   const authContext = useContext(AuthContext)
   const { updateFooterType, updateHeaderText, updatePaymentMethods, paymentMethods } = controllersContext
-  const { user } = authContext
+  const { user, updateUser } = authContext
 
   useEffect(() => {
     updateHeaderText('Add Payment Methods')
@@ -63,9 +63,11 @@ export default function NewPaymentMethod() {
 
 
   const savePayment = () => {
+    const userStorage: any = JSON.parse(localStorage.getItem('@noemia:user'))
+
     if (cardValidation.isValid) {
       const newPaymentMethod = {
-        user_uid: user.uid,
+        user_uid: userStorage.uid,
         number,
         valid,
         nameOwner,
@@ -80,8 +82,10 @@ export default function NewPaymentMethod() {
         }
       }).then(({ data: { insert_paymentMethod_one } }) => {
         toastMessage('Your card was updated successfully', 'success')
+        updateUser({ paymentMethods: [...user.paymentMethods, insert_paymentMethod_one] })
         updatePaymentMethods(insert_paymentMethod_one)
-      }).catch(err => { console.log(err) });
+        router.back()
+      })
     }
   }
   return (

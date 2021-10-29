@@ -2,7 +2,6 @@ import styles from './profile.module.scss'
 import React, { useEffect, useContext } from 'react'
 import { ControllersContext } from '../../contexts/ControllersContext'
 import { AuthContext } from '../../contexts/AuthContext'
-import ProfileLoading from '../../components/atoms/profileLoading'
 import ItemProfileMenu from '../../components/molecules/itemProfileMenu'
 import EmptyMessage from '../../components/molecules/emptyMessage'
 import GenericButton from '@components/atoms/genericButton'
@@ -20,7 +19,7 @@ export default function Profile() {
   }, [updateFooterType])
 
 
-  return isLoading ? <ProfileLoading /> : user.uid ? <ProfileWithLogin /> : <WithoutLogin />
+  return user.uid ? <ProfileWithLogin /> : <WithoutLogin />
 }
 
 function WithoutLogin() {

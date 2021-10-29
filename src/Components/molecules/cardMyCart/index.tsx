@@ -3,18 +3,17 @@ import styles from './cardMyCart.module.scss'
 import GenericText from '../../atoms/genericText'
 import { formatCurrency } from '../../../utils/formatData'
 import Image from 'next/image'
-import Link from 'next/link'
 
-export default function CardMyCart({ product, onClick }) {
+export default function CardMyCart({ product, openDrawer }) {
 
-  const { price, name, quantity } = product
+  const { priceBySize, name, quantity, path_image } = product
 
   const currentPrice = () => {
-    return quantity * price
+    return quantity * priceBySize
   }
 
   return (
-    <div className={styles.cardMyCart} onClick={() => onClick()}>
+    <div className={styles.cardMyCart} onClick={openDrawer}>
       <div className={styles.infoContainer}>
         <GenericText weight="bold">{name}</GenericText>
         <div className={styles.priceHateWrapper}>
@@ -25,8 +24,8 @@ export default function CardMyCart({ product, onClick }) {
       </div>
       <div className={styles.imageContainer}>
         <Image
-          src="/napoletana.jpg"
-          alt="napoletana"
+          src={path_image}
+          alt={name}
           layout="fill"
           objectFit="cover"
         />

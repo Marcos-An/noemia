@@ -50,7 +50,7 @@ export const CARDS_MENU_DRINKS = [
 export const SIZE_OPTIONS = [
   {
     label: "Large Round",
-    value: "large",
+    value: "Large",
     isActive: false,
   },
   {

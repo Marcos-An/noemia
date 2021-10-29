@@ -1,7 +1,11 @@
 import styles from './myCart.module.scss'
 import React, { useState, useEffect, useContext } from 'react'
 import { ControllersContext } from '../../contexts/ControllersContext'
+import { AuthContext } from '../../contexts/AuthContext'
 import CardMyCart from '../../components/molecules/cardMyCart'
+import { initializeApollo } from '@graphql/apollo'
+import { GET_CART_BY_UID } from '@graphql/queries'
+import { REMOVE_USER_CART_ITEM } from '@graphql/mutations'
 import GenericTitle from '../../components/atoms/genericTitle'
 import Drawer from '../../components/molecules/drawer'
 import TrashButton from '../../components/molecules/trashButton'
@@ -10,31 +14,54 @@ import UpdateItemCartButton from '../../components/organisms/updateItemCartButto
 import { SIZE_OPTIONS } from '../../utils/datas'
 import EmptyMessage from '../../components/molecules/emptyMessage'
 import ResumeCart from '../../components/molecules/resumeCart'
+import { useMutation } from '@apollo/react-hooks';
 
 export default function MyCart() {
   const controllersContext = useContext(ControllersContext)
-  const { myCartItems, updateHeaderText, updateFooterType, } = controllersContext
+  const client = initializeApollo()
+  const authContext = useContext(AuthContext)
+  const { myCartItems, updateHeaderText, updateFooterType, initializeMyCart } = controllersContext
+  const [removeCartItem] = useMutation(REMOVE_USER_CART_ITEM);
+
+  const { user, updateUser } = authContext
+
 
   useEffect(() => {
     updateHeaderText('Your Cart')
     updateFooterType('cartDetail')
   }, [updateHeaderText, updateFooterType])
 
-  return myCartItems.length > 0 ? <CartWithItems controllersContext={controllersContext} /> : <CartWithoutItems />
+  useEffect(() => {
+    const userStorage: any = JSON.parse(localStorage.getItem('@noemia:user'))
+
+    async function fetchCartUser() {
+      if (userStorage) {
+        await client.query({
+          query: GET_CART_BY_UID,
+          variables: {
+            uid: userStorage.uid,
+          }
+        }).then(({ data }) => {
+          updateUser(data.users[0].cart)
+          initializeMyCart(data.users[0].cart)
+        })
+      }
+    }
+    if (userStorage.uid) {
+      fetchCartUser()
+    }
+  }, [])
+
+
+  return myCartItems.length > 0 ?
+    <CartWithItems
+      controllersContext={controllersContext}
+      authContext={authContext}
+      removeCartItem={removeCartItem}
+    /> : <CartWithoutItems />
 }
 
-function CartWithoutItems() {
-  return (
-    <div className={styles.container}>
-      <EmptyMessage
-        title="Dishes is clear!"
-        text="We don't find any items in your cart, add an item and come back here."
-      />
-    </div>
-  )
-}
-
-function CartWithItems({ controllersContext }) {
+function CartWithItems({ controllersContext, authContext, removeCartItem }) {
   const [drawerIsActive, setDrawerIsActive] = useState(false)
   const [options, setOptions] = useState(SIZE_OPTIONS)
 
@@ -60,24 +87,44 @@ function CartWithItems({ controllersContext }) {
     setOptions(() => [...newOptions])
   }, [])
 
-
   const handleDrawerActive = (selectedItem) => {
     updateAddingCartItem(selectedItem)
     setDrawerIsActive(!drawerIsActive)
   }
 
-  const handleActiveOption = selectedItem => {
+  const handleActiveOption = itemSeleted => {
     const newOptions = [...options]
+    var newAddingCartItem = addingCardItem
 
     newOptions.forEach((currentItem) => {
-      if (currentItem === selectedItem) {
+      if (currentItem === itemSeleted) {
         currentItem.isActive = true;
       } else {
         currentItem.isActive = false;
       }
     })
 
+    var percentPice: number
+
+    if (itemSeleted.value === 'Large') {
+      newAddingCartItem = { ...newAddingCartItem, priceBySize: newAddingCartItem.price }
+    }
+    if (itemSeleted.value === 'Medium') {
+      percentPice = parseInt((newAddingCartItem.price * 0.8).toFixed(2))
+      newAddingCartItem = { ...newAddingCartItem, priceBySize: percentPice }
+    }
+
+    if (itemSeleted.value === 'Mini') {
+      percentPice = parseInt((newAddingCartItem.price * 0.7).toFixed(2))
+      newAddingCartItem = { ...newAddingCartItem, priceBySize: percentPice }
+    }
+
+    newAddingCartItem.size = itemSeleted.value
+    newAddingCartItem = { ...newAddingCartItem, size: itemSeleted.value }
+
+    console.log(newAddingCartItem)
     setOptions(() => [...newOptions])
+    updateAddingCartItem({ ...newAddingCartItem })
   }
 
   const updateCart = () => {
@@ -86,15 +133,24 @@ function CartWithItems({ controllersContext }) {
   }
 
   const removeItem = () => {
-    removingItemFromCart(addingCardItem)
-    setDrawerIsActive(!drawerIsActive)
+    const userStorage: any = JSON.parse(localStorage.getItem('@noemia:user'))
+
+    removeCartItem({
+      variables: {
+        uid: userStorage.uid,
+        id: addingCardItem.id
+      }
+    }).then(() => {
+      removingItemFromCart(addingCardItem)
+      setDrawerIsActive(!drawerIsActive)
+    })
   }
 
 
   return (
     <div className={styles.container}>
       {myCartItems.map(item =>
-        <CardMyCart key={item.name} product={item} onClick={() => handleDrawerActive(item)} />
+        <CardMyCart key={item.id} product={item} openDrawer={() => handleDrawerActive(item)} />
       )}
 
       <ResumeCart />
@@ -104,10 +160,10 @@ function CartWithItems({ controllersContext }) {
           <GenericTitle>{addingCardItem.name}</GenericTitle>
           <TrashButton onClick={removeItem} />
         </div>
-        {addingCardItem.type === 'pizza' && (
+        {addingCardItem.type === 'Pizza' && (
           <div className={styles.chooseSize}>
             <GenericTitle>Choose a size</GenericTitle>
-            <RadioSelector options={options} onClick={handleActiveOption} />
+            <RadioSelector options={options} changeOption={handleActiveOption} />
           </div>
         )}
         <UpdateItemCartButton
@@ -118,5 +174,18 @@ function CartWithItems({ controllersContext }) {
         />
       </Drawer>
     </div >
+  )
+}
+
+
+
+function CartWithoutItems() {
+  return (
+    <div className={styles.container}>
+      <EmptyMessage
+        title="Dishes is clear!"
+        text="We don't find any items in your cart, add an item and come back here."
+      />
+    </div>
   )
 }

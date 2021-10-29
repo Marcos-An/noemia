@@ -4,17 +4,21 @@ import { ControllersContext } from '../../../contexts/ControllersContext'
 import { AuthContext } from '../../../contexts/AuthContext'
 import { useMutation } from '@apollo/react-hooks';
 import { UPDATE_USER } from '@graphql/mutations'
+import { GET_USER_EMAIL_PHONE_BY_UID } from '@graphql/queries'
 import GenericInput from '../../../components/atoms/genericInput'
 import GenericMaskedInput from '../../../components/atoms/genericMaskedInput'
 import GenericButton from '../../../components/atoms/genericButton'
 import toastMessage from '@utils/toastMessage';
+import { initializeApollo } from '@graphql/apollo'
 import Router from 'next/router'
 
 export default function MyInformations() {
+  const client = initializeApollo()
   const controllersContext = useContext(ControllersContext)
   const authContext = useContext(AuthContext)
   const { updateFooterType, updateHeaderText } = controllersContext
-  const { user, updateUser } = authContext
+  const { updateUser, user } = authContext
+
 
   const [name, setName] = useState(user.name)
   const [email, setEmail] = useState(user.email)
@@ -25,10 +29,25 @@ export default function MyInformations() {
   useEffect(() => {
     updateHeaderText('My informations')
     updateFooterType('none')
+    const userStorage: any = JSON.parse(localStorage.getItem('@noemia:user'))
+
+    client.query({
+      query: GET_USER_EMAIL_PHONE_BY_UID,
+      variables: {
+        uid: userStorage.uid,
+      }
+    }).then(({ data }) => {
+      setName(data.users[0].name)
+      setEmail(data.users[0].email)
+      setPhone(data.users[0].phone)
+    })
+
+
   }, [updateHeaderText, updateFooterType])
 
 
   const saveMyInformations = async () => {
+    const userStorage: any = JSON.parse(localStorage.getItem('@noemia:user'))
     const newInformations = {
       name,
       email,
@@ -42,7 +61,7 @@ export default function MyInformations() {
     if (userUpdated !== user) {
       updateUsers({
         variables: {
-          uid: user.uid,
+          uid: userStorage.uid,
           name: userUpdated.name,
           email: userUpdated.email,
           phone: userUpdated.phone,
@@ -83,3 +102,4 @@ export default function MyInformations() {
     </div>
   )
 }
+

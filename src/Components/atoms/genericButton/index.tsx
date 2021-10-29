@@ -8,7 +8,7 @@ export default function GenericButton({ text, price = null, isDisabled = false, 
   return (
     <button
       className={styles[`genericButton${isDisabled ? 'Disabled' : ''}${isLoading ? 'Loading' : ''}`]}
-      onClick={() => onClick()}
+      onClick={onClick}
       disabled={isDisabled}
     >
       {isLoading ? <Spinner /> : (

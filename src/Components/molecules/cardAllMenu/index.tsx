@@ -1,7 +1,6 @@
 import React from 'react'
 import styles from './cardAllMenu.module.scss'
 import GenericText from '../../atoms/genericText'
-import GenericIcon from '../../atoms/genericIcon'
 import Image from 'next/image'
 import GenericDescription from '../../atoms/genericDescription'
 import Link from 'next/link'
@@ -10,11 +9,11 @@ import { formatCurrency } from '../../../utils/formatData'
 
 export default function CardAllMenu({ product }) {
 
-  const { id, name, path_image, description, category, price, hate } = product
+  const { id, name, path_image, description, category, price } = product
 
 
   return (
-    <Link href={`/products/${category.name.toLowerCase()}?id:${id}`} passHref>
+    <Link href={`/${category.name.toLowerCase()}/${id}`} passHref>
       <div className={styles.cardAllMenu}>
         <div className={styles.imageContainer}>
           <Image
@@ -31,10 +30,6 @@ export default function CardAllMenu({ product }) {
             <div className={styles.priceWrapper}>
               <GenericText>{formatCurrency(price)}</GenericText>
               <GenericDescription>30-40 min</GenericDescription>
-            </div>
-            <div className={styles.hateWrapper}>
-              <GenericIcon icon="star" size="12" />
-              <GenericText>{hate.toFixed(1).replace('.', ',')}</GenericText>
             </div>
           </div>
         </div>

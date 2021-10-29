@@ -1,5 +1,7 @@
 import { gql } from '@apollo/client'
 
+
+//USER MUTATIONS 
 export const CREATE_USER = gql`
   mutation createUser($users: users_insert_input!) {
     insert_users_one(object: $users) {
@@ -63,6 +65,9 @@ export const UPDATE_USER_ADDRESS = gql`
   } 
 `;
 
+
+// PAYMENT MUTATIONS 
+
 export const CREATE_USER_PAYMENT_METHOD = gql`
   mutation updatePaymentMethods($paymentMethod: paymentMethod_insert_input! ) {
     insert_paymentMethod_one(object: $paymentMethod) {
@@ -78,8 +83,8 @@ export const CREATE_USER_PAYMENT_METHOD = gql`
 `;
 
 export const UPDATE_USER_PAYMENT_METHOD = gql`
-  mutation updatePaymentMethodMutation($uid: String!, $nickName: String!) {
-    update_paymentMethod(where: {user_uid: {_eq: $uid}}, _set: {nickName: $nickName}) {
+  mutation updatePaymentMethodMutation($uid: String!, $nickName: String!, $number: String!) {
+    update_paymentMethod(where: {user_uid: {_eq: $uid}, number: {_eq: $number}}, _set: {nickName: $nickName}) {
       returning {
         nameOwner
         niceType
@@ -93,13 +98,70 @@ export const UPDATE_USER_PAYMENT_METHOD = gql`
   } 
 `;
 
-export const REMOVE_USER_PAYMENT_METHOD = gql`
-  mutation updatePaymentMethods($number: String!) {
-    delete_paymentMethod(where: {number: {_eq: $number}}) {
+export const UPDATE_MAIN_METHOD = gql`
+  mutation updateMainPaymentMethod($uid: String!, $paymentMethod: mainPaymentMethod_set_input!) {
+    update_mainPaymentMethod(where: {user_uid: {_eq: $uid}}, _set: $paymentMethod ) {
       returning {
-        number
         user_uid
+        nameOwner
+        number
       }
     }
   } 
 `;
+
+export const REMOVE_USER_PAYMENT_METHOD = gql`
+  mutation removePaymentMethodMutation($uid: String!, $number: String!) {
+    delete_paymentMethod(where: {user_uid: {_eq: $uid}, number: {_eq: $number}}) {
+      returning {
+        nameOwner
+        niceType
+        nickName
+        number
+        type
+        user_uid
+        valid
+      }
+    }
+  } 
+`;
+
+
+//CART MUTATIONS
+export const CREATE_USER_CART_ITEM = gql`
+  mutation createUserCartItem($cartItem: userCart_insert_input!) {
+    insert_userCart_one(object: $cartItem) {
+      name
+      description
+      path_image
+      observation
+    }
+  } 
+`;
+
+export const UPDATE_USER_CART_ITEM = gql`
+  mutation updateUserCartItem($uid: String!, $id: Int!, $cartItem: userCart_set_input!) {
+    update_userCart(where: {user_id: {_eq: $uid}, id: {_eq: $id}}, _set: $cartItem) {
+      returning {
+        name
+        description
+        path_image
+        observation
+      } 
+    }
+  } 
+`;
+
+export const REMOVE_USER_CART_ITEM = gql`
+  mutation removeUserCartItem($uid: String!, $id: Int!) {
+    delete_userCart(where: {id: {_eq: $id}, user_id: {_eq:$uid}}) {
+      returning {
+        name
+        description
+        path_image
+        observation
+      } 
+    }
+  } 
+`;
+

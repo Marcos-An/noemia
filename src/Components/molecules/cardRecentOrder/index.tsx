@@ -1,11 +1,10 @@
 import React from 'react'
 import styles from './cardRecentOrder.module.scss'
 import GenericText from '../../atoms/genericText'
-import GenericIcon from '../../atoms/genericIcon'
+import GenericDescription from '../../atoms/genericDescription'
 import Image from 'next/image'
 
 export default function CardRecentOrder() {
-  const number = 1.3
 
   return (
     <div className={styles.cardRecentOrder}>
@@ -22,8 +21,7 @@ export default function CardRecentOrder() {
         <div className={styles.priceHateWrapper}>
           <GenericText >$51,99</GenericText>
           <div className={styles.hateWrapper}>
-            <GenericIcon icon="star" size="12" />
-            <GenericText>{number.toFixed(1).replace('.', ',')}</GenericText>
+            <GenericDescription>30-40 min</GenericDescription>
           </div>
         </div>
       </div>

@@ -6,18 +6,22 @@ import GenericButton from '../../../../components/atoms/genericButton'
 import { AuthContext } from '../../../../contexts/AuthContext'
 import { useMutation } from '@apollo/react-hooks';
 import { UPDATE_USER_ADDRESS } from '@graphql/mutations'
+import { initializeApollo } from '@graphql/apollo'
+import { GET_USER_ADDRESS_BY_UID } from '@graphql/queries'
 import toastMessage from '@utils/toastMessage';
 import { useRouter } from 'next/router'
 
 export default function AddAdress() {
+  const router = useRouter()
+  const client = initializeApollo()
+
   const [street, setStreet] = useState('')
   const [number, setNumber] = useState('')
   const [zipCode, setZipCode] = useState('')
   const [state, setState] = useState('')
   const [city, setCity] = useState('')
-  const [neighbourhood, setneighbourhood] = useState('')
+  const [neighbourhood, setNeighbourhood] = useState('')
 
-  const router = useRouter()
 
   const [updateAddress, { loading }] = useMutation(UPDATE_USER_ADDRESS);
 
@@ -31,6 +35,23 @@ export default function AddAdress() {
   useEffect(() => {
     updateHeaderText('Add Adress')
     updateFooterType('none')
+
+    const userStorage: any = JSON.parse(localStorage.getItem('@noemia:user'))
+
+    client.query({
+      query: GET_USER_ADDRESS_BY_UID,
+      variables: {
+        uid: userStorage.uid,
+      }
+    }).then(({ data }) => {
+      setStreet(data.users[0].street);
+      setNumber(data.users[0].number)
+      setZipCode(data.users[0].zipCode)
+      setState(data.users[0].state)
+      setCity(data.users[0].city)
+      setNeighbourhood(data.users[0].neighbourhood)
+    })
+
   }, [updateFooterType, updateHeaderText])
 
   useEffect(() => {
@@ -114,7 +135,7 @@ export default function AddAdress() {
           id="neighbourhood"
           label='neighbourhood'
           value={neighbourhood}
-          setValue={setneighbourhood}
+          setValue={setNeighbourhood}
         />
       </form>
       <div className={styles.button}>

@@ -1,5 +1,5 @@
 import { createContext, useState, ReactNode } from 'react';
-
+import _ from 'lodash'
 
 type ControllersContextData = {
   selectedItemMenu: selectedItemMenu;
@@ -23,6 +23,7 @@ type ControllersContextData = {
   removingPaymentMethod: (paymentMethod: paymentMethod) => void;
   updatePaymentMethod: (paymentMethod: paymentMethod, nickName: string) => void;
   updateOrder: (order: order) => void;
+  initializeMyCart: (newCardItem: any) => void;
   updateLoading: (isLoading: boolean) => void;
 }
 
@@ -39,6 +40,7 @@ type newCardItem = {
   description: string,
   type: string,
   price: number,
+  priceBySize: number,
   quantity: number,
   size: string,
   observation: string,
@@ -101,6 +103,7 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
     description: '',
     type: '',
     price: 0,
+    priceBySize: 0,
     quantity: 0,
     size: '',
     observation: ''
@@ -179,6 +182,7 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
   }
 
   const updatePaymentMethod = (paymentMethod: paymentMethod, nickName: string) => {
+
     const newPaymentMethods = paymentMethods.map(item => {
       if (item.number === paymentMethod.number) {
         item = { ...item, nickName: nickName }
@@ -187,8 +191,14 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
       return item
     })
 
-    console.log(paymentMethods)
+
     setPaymentMethods([...newPaymentMethods])
+  }
+
+  const initializeMyCart = (newCardItem: any) => {
+    const newCardItems = _.uniqBy([...myCartItems, ...newCardItem], 'id')
+
+    setMyCart([...newCardItems])
   }
 
   const updateMyCart = (newCardItem: newCardItem) => {
@@ -196,23 +206,20 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
 
     if (myCartItems.length > 0) {
       arr = myCartItems.map(item => {
-        if (item.name === newCardItem.name) {
+        if (item.id === newCardItem.id) {
           item = newCardItem
         }
         return item
       })
 
-      const index = arr.findIndex(item => item.name !== newCardItem.name)
+      const newItem = _.uniq([...arr, newCardItem])
 
-
-      if (index !== -1) {
-        setMyCart([...arr, newCardItem])
-      } else {
-        setMyCart([...arr])
-      }
+      setMyCart([...newItem])
 
     } else {
-      setMyCart([...myCartItems, newCardItem])
+      const newItem = _.uniq([...myCartItems, newCardItem])
+
+      setMyCart([...newItem])
     }
   }
 
@@ -228,6 +235,7 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
         mainPaymentMethod,
         isLoading,
         order,
+        initializeMyCart,
         updateSelectedItemMenu,
         updateAddingCartItem,
         updateMyCart,

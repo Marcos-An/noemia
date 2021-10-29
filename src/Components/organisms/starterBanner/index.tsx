@@ -9,7 +9,7 @@ export default function Starter() {
     <div className={styles.starter}>
       <div className={styles.starterWrapper}>
         <GenericText color="white">
-          Do you know the better winne for your Pizza?
+          A good starter is a good start
         </GenericText>
       </div>
     </div>

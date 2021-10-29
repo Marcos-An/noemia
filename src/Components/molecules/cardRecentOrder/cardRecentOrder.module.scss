@@ -26,12 +26,10 @@
       }
       .hateWrapper {
         display: flex;
-        align-items: center;
+        align-items: flex-end;
         justify-content: flex-end;
         p {
-          color: var(--yellow);
-          font-weight: 700;
-          font-size: 1.2rem;
+          font-size: 1rem;
           margin-left: 5px;
         }
         svg {

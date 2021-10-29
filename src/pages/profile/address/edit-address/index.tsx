@@ -6,16 +6,22 @@ import GenericButton from '../../../../components/atoms/genericButton'
 import { AuthContext } from '../../../../contexts/AuthContext'
 import { useMutation } from '@apollo/react-hooks';
 import { UPDATE_USER_ADDRESS } from '@graphql/mutations'
+import { initializeApollo } from '@graphql/apollo'
+import { GET_USER_ADDRESS_BY_UID } from '@graphql/queries'
 import toastMessage from '@utils/toastMessage';
 import { useRouter } from 'next/router'
 
 
 export default function EditAddress() {
+  const router = useRouter()
+  const client = initializeApollo()
+
+
   const controllersContext = useContext(ControllersContext)
   const authContext = useContext(AuthContext)
   const { updateFooterType, updateHeaderText } = controllersContext
   const { user, updateUser } = authContext
-  const router = useRouter()
+
 
   const [street, setStreet] = useState(user.street)
   const [number, setNumber] = useState(user.number)
@@ -23,23 +29,35 @@ export default function EditAddress() {
   const [state, setState] = useState(user.state)
   const [city, setCity] = useState(user.city)
   const [neighbourhood, setNeighbourhood] = useState(user.neighbourhood)
+  const [isLoading, setIsLoading] = useState(false)
 
   const [updateAddress] = useMutation(UPDATE_USER_ADDRESS);
 
   useEffect(() => {
     updateHeaderText('Edit Address')
     updateFooterType('none')
+    const userStorage: any = JSON.parse(localStorage.getItem('@noemia:user'))
+
+    client.query({
+      query: GET_USER_ADDRESS_BY_UID,
+      variables: {
+        uid: userStorage.uid,
+      }
+    }).then(({ data }) => {
+      setStreet(data.users[0].street);
+      setNumber(data.users[0].number)
+      setZipCode(data.users[0].zipCode)
+      setState(data.users[0].state)
+      setCity(data.users[0].city)
+      setNeighbourhood(data.users[0].neighbourhood)
+    })
+
   }, [updateFooterType, updateHeaderText])
 
-  useEffect(() => {
-    if (!user.street) {
-      toastMessage('You dont have a adrress to update!', 'warning')
-      router.replace('/profile/address', '/profile/address', { shallow: true })
-    }
-  }, [user, router])
-
-
   const saveAddAdress = () => {
+    setIsLoading(true)
+
+    const userStorage: any = JSON.parse(localStorage.getItem('@noemia:user'))
     const newAdress = {
       street,
       number,
@@ -49,14 +67,15 @@ export default function EditAddress() {
       neighbourhood
     }
 
-    updateUser(newAdress)
 
     const userUpdated = { ...user, ...newAdress }
+
+    updateUser(userUpdated)
 
     if (userUpdated !== user) {
       updateAddress({
         variables: {
-          uid: user.uid,
+          uid: userStorage.uid,
           street: userUpdated.street,
           number: userUpdated.number,
           zipCode: userUpdated.zipCode,
@@ -64,12 +83,12 @@ export default function EditAddress() {
           city: userUpdated.city,
           neighbourhood: userUpdated.neighbourhood,
         }
-      }).then((response) => {
+      }).then(({ data }) => {
         toastMessage('Your adrress has was updated!', 'success')
         router.back()
       }).catch(() => { toastMessage('Something went wrong!', 'error') })
     }
-
+    setIsLoading(false)
   }
 
   return (
@@ -116,7 +135,12 @@ export default function EditAddress() {
         />
       </form>
       <div className={styles.button}>
-        <GenericButton text="save" isDisabled={false} onClick={() => saveAddAdress()} />
+        <GenericButton
+          text="save"
+          isDisabled={false}
+          isLoading={isLoading}
+          onClick={() => saveAddAdress()}
+        />
       </div>
     </div>
   )
