@@ -3,14 +3,16 @@ import styles from './header.module.scss'
 import SimpleAddress from '../../molecules/simpleAddress'
 import CardButton from '../../molecules/cartButton'
 import BackButton from '../../molecules/backButton'
-import { useRouter } from 'next/router'
+import Router, { useRouter } from 'next/router'
 import { initializeApollo } from '@graphql/apollo'
-import { GET_USER_NAME_BY_UID } from '@graphql/queries'
+import { GET_USER_NAME_BY_UID, GET_USER_ADDRESS_BY_UID } from '@graphql/queries'
 import { AuthContext } from '../../../contexts/AuthContext'
 import GenericTitle from '../../atoms/genericTitle'
 import GenericText from '../../atoms/genericText'
+import GenericButton from '../../atoms/genericButton'
 import { ControllersContext } from '../../../contexts/ControllersContext'
 import _ from 'lodash'
+
 
 export default function Header() {
   const controllersContext = useContext(ControllersContext)
@@ -25,7 +27,7 @@ export default function Header() {
     const path = router.asPath
     if (path === '/' || path === '/profile' || path === '/search' || path === '/login' || path === '/register') {
       if (path === '/') {
-        return <HeaderHome />
+        return <HeaderHome authContext={authContext} />
       }
       if (path === '/profile') {
         return <HeaderProfile authContext={authContext} />
@@ -48,11 +50,62 @@ export default function Header() {
 
 }
 
-function HeaderHome() {
+function HeaderHome({ authContext }) {
+  const { updateUser, user } = authContext
+
+  useEffect(() => {
+    const userStorage: any = JSON.parse(localStorage.getItem('@noemia:user'))
+    const client = initializeApollo()
+
+    async function fetchMyUserName() {
+      if (userStorage) {
+        await client.query({
+          query: GET_USER_ADDRESS_BY_UID,
+          variables: {
+            uid: userStorage.uid,
+          }
+        }).then(({ data }) => {
+          updateUser(data.users[0])
+        })
+      }
+    }
+
+    if (userStorage && !user.uid) {
+      fetchMyUserName()
+    }
+  }, [])
+
+
+  const address = () => {
+    if ((user.street && user.number) && user.uid) {
+      return (
+        <div>
+          <SimpleAddress>{`${user.street} - ${user.number}`}</SimpleAddress>
+        </div>
+      )
+    }
+
+    if ((!user.street && !user.number) && user.uid) {
+      return (
+        <div onClick={() => Router.push('/profile/address/add-address')}>
+          <SimpleAddress>Create Address</SimpleAddress>
+        </div>
+      )
+    }
+
+    if ((!user.street && !user.number) && !user.uid) {
+      return (
+        <div className={styles.login} onClick={() => Router.push('/login')}>
+          <GenericText>Login</GenericText>
+          <span>&#8594;</span>
+        </div>
+      )
+    }
+  }
 
   return (
     <div className={styles.headerContainer}>
-      <SimpleAddress>R. Dourado, 2565</SimpleAddress>
+      {address()}
       <CardButton />
     </div>
   )
@@ -78,10 +131,11 @@ function HeaderProfile({ authContext }) {
       }
     }
 
-    if (!user.uid) {
+    if (!user.name) {
       fetchMyUserName()
     }
   }, [])
+
 
   return (
     user.uid ? <div className={styles.headerProfile}>

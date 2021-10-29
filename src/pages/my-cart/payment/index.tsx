@@ -33,6 +33,7 @@ export default function Payment() {
     updateFooterType('payment')
 
     const userStorage: any = JSON.parse(localStorage.getItem('@noemia:user'))
+
     if (!user.street) {
       client.query({
         query: GET_USER_ADDRESS_PAYEMENT_BY_UID,
@@ -40,7 +41,6 @@ export default function Payment() {
           uid: userStorage.uid,
         }
       }).then(({ data }) => {
-        console.log(data)
         updateUser(data.users[0])
       })
     }

@@ -27,17 +27,26 @@ export default function GenericCarousel({ children, padding = true, size, limit 
     if (moving) {
       const currentPosition = changedTouches[0].pageX
       const diff = currentPosition - initialPosition
-      document.getElementById(id).style.transform = `translateX(${(trasnform + diff) * 1.3}px)`
+      if (limit === 9) {
+        document.getElementById(id).style.transform = `translateX(${(trasnform + diff) * 1.5}px)`
+      } else {
+        document.getElementById(id).style.transform = `translateX(${(trasnform + diff) * 1.7}px)`
+      }
       setDifference(trasnform + diff)
-
     }
   }
 
   const endTheRoll = () => {
     if (Math.sign(difference) === 1) {
       document.getElementById(id).style.transform = `translateX(0px)`
-    } if (difference < -90) {
-      document.getElementById(id).style.transform = `translateX(-${limit}rem)`
+    } if (limit === 9) {
+      if (difference < -90) {
+        document.getElementById(id).style.transform = `translateX(-${limit}rem)`
+      }
+    } else {
+      if (difference < -240) {
+        document.getElementById(id).style.transform = `translateX(-${limit}rem)`
+      }
     }
     setMoving(false)
   }

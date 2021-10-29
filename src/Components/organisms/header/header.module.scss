@@ -4,6 +4,18 @@
   justify-content: space-between;
   align-items: center;
   padding: 0rem 2.4rem;
+
+  .login {
+    display: flex;
+    align-items: center;
+    span {
+      font-size: 1.7rem;
+    }
+    p {
+      font-size: 1.4rem;
+      margin-right: 1rem;
+    }
+  }
 }
 
 .headerProfile {

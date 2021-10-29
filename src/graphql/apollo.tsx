@@ -11,7 +11,7 @@ function createApolloClient() {
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
     link: new HttpLink({
-      uri: 'https://noemia-hasura.herokuapp.com/v1/graphql',
+      uri: process.env.NEXT_PUBLIC_DEFAULT_URI_APOLLO,
       headers: {
         'Content-Type': 'application/json'
       },

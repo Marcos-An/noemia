@@ -4,22 +4,22 @@ import {
   createUserWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 import { initializeApp, getApps } from 'firebase/app'
 import 'firebase/auth';
 import 'firebase/firestore';
+import toastMessage from '@utils/toastMessage';
 
 if (!getApps().length) {
   initializeApp({
-    apiKey: "AIzaSyAFJ9qFccj345DhmDF34OKVBiz5x5VQbK4",
-    authDomain: "noemia-d766f.firebaseapp.com",
-    projectId: "noemia-d766f",
-    storageBucket: "noemia-d766f.appspot.com",
-    messagingSenderId: "295921300881",
-    appId: "1:295921300881:web:612a4ea0f83a4e32dc1630"
+    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SANDER_ID,
+    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
   });
-
 }
 
 const auth = getAuth();
@@ -33,6 +33,7 @@ type AuthControlerData = {
   signInAccountWithGoogle: () => any;
   updateLoading: (isLoading: boolean) => any;
   updateUser: (user: any) => any;
+  signOut: () => any;
 }
 
 
@@ -126,6 +127,24 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     return response
   }
 
+  const signOut = async () => {
+    setAuthIsLoading(true)
+
+    const response = await auth.signOut()
+      .then((response) => {
+        setUser(false);
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('@noemia:user');
+          setAuthIsLoading(false)
+        }
+        return response;
+      }).catch((response) => {
+        return response;
+      });
+
+    return response
+  };
+
   const updateUser = (data: any) => {
     const newDatasUser = { ...user, ...data }
     setUser({ ...newDatasUser })
@@ -140,7 +159,8 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         updateLoading,
         createAccount,
         signInAccountWithGoogle,
-        updateUser
+        updateUser,
+        signOut
       }}
     >
       {children}

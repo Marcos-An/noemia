@@ -18,13 +18,13 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 1rem;
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
 
     p {
       overflow: hidden;
       text-transform: capitalize;
       text-overflow: ellipsis;
-      max-height: 4rem;
+      max-height: 3rem;
     }
 
     .priceHateWrapper {
@@ -32,19 +32,11 @@
       justify-content: space-between;
       margin-top: 10px;
 
-      .hateWrapper {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
+      .nameDescription {
         p {
-          color: var(--yellow);
-          font-weight: 700;
-          font-size: 1.2rem;
-          margin-left: 3px;
-        }
-        svg {
-          color: var(--yellow);
-          fill: var(--yellow);
+          overflow: hidden;
+          text-transform: capitalize;
+          text-overflow: ellipsis;
         }
       }
 
@@ -53,7 +45,7 @@
         align-items: flex-end;
         justify-content: flex-end;
         p:first-child {
-          font-size: 1.3rem;
+          font-size: 1.5rem;
           margin-right: 7px;
         }
       }

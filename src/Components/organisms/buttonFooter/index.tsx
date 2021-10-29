@@ -88,7 +88,7 @@ function ProductDetail({ controllersContext, authContext, price }) {
       size,
       id,
       type,
-      user_id: userStorage.uid,
+      user_id: userStorage ? userStorage.uid : user.id,
     }
 
     var hasInCart = false
@@ -169,7 +169,7 @@ function CartDetail({ controllersContext, authContext }) {
         })
       }
     }
-    if (userStorage.uid && !user.cart) {
+    if (userStorage && !user.cart) {
       fetchCartUser()
     }
   }, [])

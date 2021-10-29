@@ -6,25 +6,17 @@ import Image from 'next/image'
 import GenericDescription from '../../atoms/genericDescription'
 import Link from 'next/link'
 
-export default function cardSuggestions() {
-  const product = {
-    id: 1,
-    name: 'Napoletana',
-    pathImage: '/napoletana.jpg',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
-    type: 'Pizza',
-    price: 33.99
-  }
+export default function cardSuggestions({ product }) {
 
-  const { type, id, name, pathImage, price, description } = product
+  const { id, name, path_image, price, description, category } = product
 
   return (
-    <Link href={`/${type}/${id}`} passHref>
+    <Link href={`/${category.name.toLowerCase()}/${id}`} passHref>
       <div className={styles.cardSuggestions}>
         <div className={styles.imageContainer}>
           <Image
-            src={pathImage}
-            alt="napoletana"
+            src={path_image}
+            alt={name}
             layout="fill"
             objectFit="cover"
           />

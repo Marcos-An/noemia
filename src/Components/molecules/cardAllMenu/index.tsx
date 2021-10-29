@@ -4,7 +4,7 @@ import GenericText from '../../atoms/genericText'
 import Image from 'next/image'
 import GenericDescription from '../../atoms/genericDescription'
 import Link from 'next/link'
-import { formatCurrency } from '../../../utils/formatData'
+import { formatCurrency } from '@utils/formatData'
 
 
 export default function CardAllMenu({ product }) {
@@ -18,14 +18,16 @@ export default function CardAllMenu({ product }) {
         <div className={styles.imageContainer}>
           <Image
             src={path_image}
-            alt="napoletana"
+            alt={name}
             layout="fill"
             objectFit="cover"
           />
         </div>
         <div className={styles.infoContainer}>
-          <GenericText weight="bold">{name}</GenericText>
-          <GenericDescription>{description}</GenericDescription>
+          <div className={styles.nameDescription}>
+            <GenericText weight="bold">{name}</GenericText>
+            <GenericDescription>{description}</GenericDescription>
+          </div>
           <div className={styles.priceHateWrapper}>
             <div className={styles.priceWrapper}>
               <GenericText>{formatCurrency(price)}</GenericText>

@@ -47,7 +47,7 @@ export default function MyCart() {
         })
       }
     }
-    if (userStorage.uid) {
+    if (userStorage && user.uid) {
       fetchCartUser()
     }
   }, [])

@@ -1,15 +1,13 @@
 .cardRecentOrder {
-  height: 15rem;
-  width: 38vw;
+  min-height: fit-content;
+  max-height: 100%;
+  width: 40vw;
   border-radius: 0.8rem;
   background-color: var(--white);
-  position: relative;
-  p {
-    margin-bottom: 3px;
-  }
+
   .imageContainer {
     position: relative;
-    height: 50%;
+    height: 9rem;
     img {
       border-radius: 0.8rem 0.8rem 0rem 0rem;
     }
@@ -17,13 +15,17 @@
 
   .infoContainer {
     padding: 1rem;
-
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 50%;
+    p {
+      font-size: 1.5rem;
+      text-transform: capitalize;
+    }
     .priceHateWrapper {
       display: flex;
       justify-content: space-between;
-      p {
-        font-size: 1.5rem;
-      }
       .hateWrapper {
         display: flex;
         align-items: flex-end;

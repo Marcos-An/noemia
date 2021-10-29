@@ -8,7 +8,7 @@ import { AuthContext } from '@contexts/AuthContext';
 import { initializeApollo } from '@graphql/apollo'
 import { GET_CART_BY_UID } from '@graphql/queries'
 
-export default function Payment() {
+export default function ResumeCart() {
   const client = initializeApollo()
   const controllersContext = useContext(ControllersContext)
   const authContext = useContext(AuthContext)
@@ -32,17 +32,24 @@ export default function Payment() {
         })
       }
     }
-    if (userStorage.uid && !user.cart) {
+    if (userStorage && !user.cart) {
       fetchCartUser()
     }
   }, [])
 
   const currentPrice = () => {
     var subTotal = 0
+    if (user.cart) {
+      user.cart.forEach(({ quantity, priceBySize }) => {
+        subTotal = subTotal + (quantity * priceBySize)
+      })
+    } else {
+      myCartItems.forEach(({ quantity, priceBySize }) => {
+        subTotal = subTotal + (quantity * priceBySize)
+      })
+    }
 
-    user.cart.forEach(({ quantity, priceBySize }) => {
-      subTotal = subTotal + (quantity * priceBySize)
-    })
+
 
     return subTotal
   }
@@ -56,7 +63,7 @@ export default function Payment() {
   }
 
 
-  return user.cart ? (<div className={styles.resumeCart}>
+  return user.cart || myCartItems.length > 0 ? (<div className={styles.resumeCart}>
     <GenericTitle>Your Resume</GenericTitle>
     {myCartItems.map(item => (
       <div key={item.id} className={styles.resumeItems}>

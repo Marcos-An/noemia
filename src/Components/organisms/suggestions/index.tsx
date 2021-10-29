@@ -1,10 +1,35 @@
-import React from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import GenericTitle from '../../atoms/genericTitle'
 import CardSuggestions from '../../molecules/cardSuggestions'
 import styles from './suggestions.module.scss'
+import { ControllersContext } from '@contexts/ControllersContext'
 
+export default function Suggestions({ products }) {
 
-export default function Suggestions() {
+  const controllersContext = useContext(ControllersContext)
+  const { selectedItemMenu } = controllersContext
+
+  const [starterProducts, setStarterProducts] = useState([])
+  const [pizzaProducts, setPizzaProducts] = useState([])
+  const [wineProducts, setWineProducts] = useState([])
+  const [drinkProducts, setDrinkProducts] = useState([])
+
+  useEffect(() => {
+    const newStarters = products.filter(({ category }) => category.name === 'Starter')
+    const newPizzas = products.filter(({ category }) => category.name === 'Pizza')
+    const newWine = products.filter(({ category }) => category.name === 'Wine')
+    const newDrinks = products.filter(({ category }) => category.name === 'Drink')
+
+    const starterSugestions = [newStarters[4], newStarters[2], newStarters[1], newStarters[3]]
+
+    const pizzaSugestions = [newPizzas[0], newPizzas[4], newPizzas[6], newPizzas[10]]
+
+    setStarterProducts(starterSugestions)
+    setPizzaProducts(pizzaSugestions)
+    setDrinkProducts(newDrinks)
+    setWineProducts(newWine)
+  }, [])
+
 
   return (
     <div className={styles.suggestions}>
@@ -12,10 +37,10 @@ export default function Suggestions() {
       <GenericTitle>Suggestions</GenericTitle>
       <br />
       <div className={styles.suggestionsWrapper}>
-        <CardSuggestions />
-        <CardSuggestions />
-        <CardSuggestions />
-        <CardSuggestions />
+        {selectedItemMenu.name === 'Starter' && starterProducts.map(product => <CardSuggestions key={product.id} product={product} />)}
+        {selectedItemMenu.name === 'Pizza' && pizzaProducts.map(product => <CardSuggestions key={product.id} product={product} />)}
+        {selectedItemMenu.name === 'Winne' && wineProducts.map(product => <CardSuggestions key={product.id} product={product} />)}
+        {selectedItemMenu.name === 'drink' && drinkProducts.map(product => <CardSuggestions key={product.id} product={product} />)}
       </div>
     </div>
   )

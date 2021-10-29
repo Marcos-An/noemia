@@ -26,8 +26,8 @@ export default function Home({ categories, products }) {
     productLoading && categoryLoading ? <HomeLoading /> :
       <div className={styles.container}>
         <MainMenu categories={categories} />
-        <Banners />
-        {selectedItemMenu.name !== 'Drink' && <Suggestions />}
+        <Banners products={products} />
+        {selectedItemMenu.name !== 'Drink' && selectedItemMenu.name !== 'Wine' && <Suggestions products={products} />}
         <AllMenu products={products} />
       </div>
   )

@@ -5,7 +5,7 @@ import WineBanner from '../wineBanner'
 import DrinksBanner from '../drinksBanner'
 import { ControllersContext } from '../../../contexts/ControllersContext'
 
-export default function Banners() {
+export default function Banners({ products }) {
   const controllersContext = useContext(ControllersContext)
   const { selectedItemMenu } = controllersContext
 
@@ -13,7 +13,7 @@ export default function Banners() {
 
   return (
     <>
-      {name === 'Pizza' && <PizzaBanner />}
+      {name === 'Pizza' && <PizzaBanner products={products} />}
       {name === 'Starter' && <StarterBanner />}
       {name === 'Wine' && <WineBanner />}
       {name === 'Drink' && <DrinksBanner />}
