@@ -12,7 +12,7 @@ export default function OrderStatus() {
   const { updateHeaderText, updateFooterType, order } = controllersContext
   const [currentOrder, setCurrrentOrder] = useState({
     dateOrder: "",
-    myCartItems: [],
+    cartItems: [],
     orderId: 0,
     orderStatus: []
   })

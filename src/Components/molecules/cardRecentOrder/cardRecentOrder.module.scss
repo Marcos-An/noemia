@@ -7,7 +7,11 @@
 
   .imageContainer {
     position: relative;
-    height: 9rem;
+    min-width: 100%;
+    max-width: 100%;
+
+    min-height: 9rem;
+    max-height: 9rem;
     img {
       border-radius: 0.8rem 0.8rem 0rem 0rem;
     }

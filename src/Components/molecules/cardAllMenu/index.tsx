@@ -21,6 +21,7 @@ export default function CardAllMenu({ product }) {
             alt={name}
             layout="fill"
             objectFit="cover"
+
           />
         </div>
         <div className={styles.infoContainer}>

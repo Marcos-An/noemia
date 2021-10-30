@@ -51,7 +51,7 @@ export default function Product({ product }) {
   const controllersContext = useContext(ControllersContext)
   const authContext = useContext(AuthContext)
 
-  const { addingCardItem, updateAddingCartItem, updateHeaderText, updateFooterType, myCartItems } = controllersContext
+  const { addingCardItem, updateAddingCartItem, updateHeaderText, updateFooterType, cartItems } = controllersContext
   const { user } = authContext
 
   useEffect(() => {
@@ -60,9 +60,9 @@ export default function Product({ product }) {
     var hasInCart = false
 
     if (user.uid && user.card) {
-      hasInCart = _.some([...myCartItems, ...user.card], product)
+      hasInCart = _.some([...cartItems, ...user.card], product)
     } else {
-      hasInCart = _.some([...myCartItems], product)
+      hasInCart = _.some([...cartItems], product)
     }
 
     if (!hasInCart) {
@@ -79,13 +79,13 @@ export default function Product({ product }) {
       }
     } else {
       if (user.card) {
-        [...myCartItems, ...user.card].forEach(item => {
+        [...cartItems, ...user.card].forEach(item => {
           if (item.id === product.id) {
             updateAddingCartItem(item)
           }
         })
       } else {
-        [...myCartItems].forEach(item => {
+        [...cartItems].forEach(item => {
           if (item.id === product.id) {
             updateAddingCartItem(item)
           }

@@ -72,7 +72,6 @@ export default function PaymentMethod() {
   const removeItem = () => {
     const userStorage: any = JSON.parse(localStorage.getItem('@noemia:user'))
 
-    console.log(selectedItem)
     deletePaymentMethod({
       variables: {
         uid: userStorage.uid,

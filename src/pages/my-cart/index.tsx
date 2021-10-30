@@ -14,13 +14,16 @@ import UpdateItemCartButton from '../../components/organisms/updateItemCartButto
 import { SIZE_OPTIONS } from '../../utils/datas'
 import EmptyMessage from '../../components/molecules/emptyMessage'
 import ResumeCart from '../../components/molecules/resumeCart'
+import { UPDATE_USER_CART_ITEM } from '@graphql/mutations'
 import { useMutation } from '@apollo/react-hooks';
+import Router from 'next/router'
+import toastMessage from '@utils/toastMessage'
 
 export default function MyCart() {
   const controllersContext = useContext(ControllersContext)
   const client = initializeApollo()
   const authContext = useContext(AuthContext)
-  const { myCartItems, updateHeaderText, updateFooterType, initializeMyCart } = controllersContext
+  const { cartItems, updateHeaderText, updateFooterType, initializeMyCart } = controllersContext
   const [removeCartItem] = useMutation(REMOVE_USER_CART_ITEM);
 
   const { user, updateUser } = authContext
@@ -53,7 +56,7 @@ export default function MyCart() {
   }, [])
 
 
-  return myCartItems.length > 0 ?
+  return cartItems.length > 0 ?
     <CartWithItems
       controllersContext={controllersContext}
       authContext={authContext}
@@ -62,11 +65,13 @@ export default function MyCart() {
 }
 
 function CartWithItems({ controllersContext, authContext, removeCartItem }) {
+  const { user } = authContext;
   const [drawerIsActive, setDrawerIsActive] = useState(false)
   const [options, setOptions] = useState(SIZE_OPTIONS)
+  const [updateUserCartItem] = useMutation(UPDATE_USER_CART_ITEM);
 
   const {
-    myCartItems,
+    cartItems,
     addingCardItem,
     updateAddingCartItem,
     updateMyCart,
@@ -122,34 +127,80 @@ function CartWithItems({ controllersContext, authContext, removeCartItem }) {
     newAddingCartItem.size = itemSeleted.value
     newAddingCartItem = { ...newAddingCartItem, size: itemSeleted.value }
 
-    console.log(newAddingCartItem)
     setOptions(() => [...newOptions])
     updateAddingCartItem({ ...newAddingCartItem })
   }
 
   const updateCart = () => {
-    updateMyCart(addingCardItem)
-    setDrawerIsActive(!drawerIsActive)
+    const userStorage: any = JSON.parse(localStorage.getItem('@noemia:user'))
+
+    const {
+      description,
+      name,
+      observation,
+      path_image,
+      price,
+      priceBySize,
+      quantity,
+      id,
+      type,
+      size
+    } = addingCardItem
+
+    const newItem = {
+      description,
+      name,
+      observation,
+      path_image,
+      price,
+      priceBySize,
+      quantity,
+      size,
+      id,
+      type,
+      user_id: userStorage ? userStorage.uid : user.id,
+    }
+
+    if (userStorage) {
+      updateUserCartItem({
+        variables: {
+          uid: userStorage.uid,
+          id: newItem.id,
+          cartItem: newItem
+        }
+      }).then(() => {
+        updateMyCart(addingCardItem)
+        setDrawerIsActive(!drawerIsActive)
+      }).catch(() => toastMessage('Something went wrong!', 'error'))
+    } else {
+      updateMyCart(addingCardItem)
+      setDrawerIsActive(!drawerIsActive)
+    }
+
   }
 
   const removeItem = () => {
     const userStorage: any = JSON.parse(localStorage.getItem('@noemia:user'))
-
-    removeCartItem({
-      variables: {
-        uid: userStorage.uid,
-        id: addingCardItem.id
-      }
-    }).then(() => {
+    if (userStorage) {
+      removeCartItem({
+        variables: {
+          uid: userStorage.uid,
+          id: addingCardItem.id
+        }
+      }).then(() => {
+        removingItemFromCart(addingCardItem)
+        setDrawerIsActive(!drawerIsActive)
+      })
+    } else {
       removingItemFromCart(addingCardItem)
       setDrawerIsActive(!drawerIsActive)
-    })
+    }
   }
 
 
   return (
     <div className={styles.container}>
-      {myCartItems.map(item =>
+      {cartItems.map(item =>
         <CardMyCart key={item.id} product={item} openDrawer={() => handleDrawerActive(item)} />
       )}
 

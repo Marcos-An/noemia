@@ -14,6 +14,7 @@ import { useMutation } from '@apollo/react-hooks';
 import _ from 'lodash'
 import { initializeApollo } from '@graphql/apollo'
 import { GET_CART_BY_UID } from '@graphql/queries'
+import toastMessage from '@utils/toastMessage'
 
 export default function ButtonFooter() {
   const controllersContext = useContext(ControllersContext)
@@ -56,7 +57,7 @@ function ProductDetail({ controllersContext, authContext, price }) {
   const [isLoading, setIsLoading] = useState(false)
   const [createUserCartItem] = useMutation(CREATE_USER_CART_ITEM);
   const [updateUserCartItem] = useMutation(UPDATE_USER_CART_ITEM);
-  const { addingCardItem, updateMyCart, myCartItems } = controllersContext
+  const { addingCardItem, updateMyCart, cartItems } = controllersContext
   const { user } = authContext
 
   const addToCart = () => {
@@ -94,9 +95,9 @@ function ProductDetail({ controllersContext, authContext, price }) {
     var hasInCart = false
 
     if (user.uid && user.card) {
-      hasInCart = _.includes([...myCartItems, ...user.card], newItem)
+      hasInCart = _.includes([...cartItems, ...user.card], newItem)
     } else {
-      hasInCart = _.includes([...myCartItems], newItem)
+      hasInCart = _.includes([...cartItems], newItem)
     }
 
 
@@ -107,10 +108,9 @@ function ProductDetail({ controllersContext, authContext, price }) {
             cartItem: newItem
           }
         }).then((data) => {
-          console.log(data)
           Router.push('/my-cart')
           updateMyCart(addingCardItem)
-        }).catch((error) => console.log(error))
+        }).catch(() => toastMessage('Something went wrong!', 'error'))
       } else {
         updateUserCartItem({
           variables: {
@@ -118,11 +118,10 @@ function ProductDetail({ controllersContext, authContext, price }) {
             id: newItem.id,
             cartItem: newItem
           }
-        }).then((data) => {
-          console.log(data)
+        }).then(() => {
           Router.push('/my-cart')
           updateMyCart(addingCardItem)
-        }).catch((error) => console.log(error))
+        }).catch(() => toastMessage('Something went wrong!', 'error'))
       }
     } else {
       Router.push('/my-cart')
@@ -148,14 +147,13 @@ function ProductDetail({ controllersContext, authContext, price }) {
 // FOOTER MY CART DETAIL
 function CartDetail({ controllersContext, authContext }) {
   const client = initializeApollo()
-  const { myCartItems, initializeMyCart } = controllersContext
+  const { cartItems, initializeMyCart } = controllersContext
   const { user, updateUser } = authContext
   const hasUser = localStorage.getItem('@noemia:user')
+  const userStorage: any = JSON.parse(localStorage.getItem('@noemia:user'))
 
 
   useEffect(() => {
-    const userStorage: any = JSON.parse(localStorage.getItem('@noemia:user'))
-
     async function fetchCartUser() {
       if (userStorage) {
         await client.query({
@@ -178,11 +176,17 @@ function CartDetail({ controllersContext, authContext }) {
   const currentPrice = () => {
     var subTotal = 0
 
-    user.cart.forEach(({ quantity, priceBySize }) => {
-      subTotal = subTotal + (quantity * priceBySize)
-    })
+    if (userStorage && user.cart > 0) {
+      user.cart.forEach(({ quantity, priceBySize }) => {
+        subTotal = subTotal + (quantity * priceBySize)
+      })
+    } else {
+      cartItems.forEach(({ quantity, priceBySize }) => {
+        subTotal = subTotal + (quantity * priceBySize)
+      })
+    }
 
-    return subTotal + 5
+    return subTotal > 0 ? subTotal + 5 : subTotal
   }
 
   const redirect = () => {
@@ -197,10 +201,10 @@ function CartDetail({ controllersContext, authContext }) {
     if (!hasUser) {
       return false
     }
-    if (hasUser && myCartItems.length > 0) {
+    if (hasUser && cartItems.length > 0) {
       return false
     }
-    if (hasUser && myCartItems.length === 0) {
+    if (hasUser && cartItems.length === 0) {
       return true
     }
   }
@@ -210,14 +214,11 @@ function CartDetail({ controllersContext, authContext }) {
 
       <div className={styles.totalPrice}>
         <GenericText>Total</GenericText>
-        {user.cart ?
-          <GenericTitle>{formatCurrency(currentPrice())}</GenericTitle> :
-          <GenericTitle>{formatCurrency(0)}</GenericTitle>
-        }
+        <GenericTitle>{formatCurrency(currentPrice())}</GenericTitle>
       </div>
       <GenericButton
         isDisabled={disableButton()}
-        text={!hasUser ? "Do Login" : myCartItems.length > 0 ? "Payment" : "Any Items"}
+        text={!hasUser ? "Do Login" : cartItems.length > 0 ? "Payment" : "Any Items"}
         onClick={() => redirect()} />
     </div>
   )
@@ -225,18 +226,18 @@ function CartDetail({ controllersContext, authContext }) {
 
 // FOOTER CART PAYMENT
 function CartPayment({ controllersContext, authContext }) {
-  const { myCartItems, updateOrder } = controllersContext
+  const { cartItems, updateOrder } = controllersContext
   const { user } = authContext
 
   const isDisabled = () => {
-    return user.street && (myCartItems.length > 0 || user.cart > 0) ? false : true
+    return user.street && (cartItems.length > 0 || user.cart > 0) ? false : true
   }
 
   const date = format(new Date(), 'PP')
 
   const saveOrderStatus = () => {
     const newOrder = {
-      myCartItems: myCartItems,
+      cartItems: cartItems,
       dateOrder: date,
       orderStatus: 'confirmed',
       orderId: Math.floor(Math.random() * 100) + 1

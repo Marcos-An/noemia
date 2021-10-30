@@ -14,6 +14,7 @@
     img {
       border-radius: 0rem 0.8rem 0.8rem 0rem;
     }
+
     .quantity {
       height: 2.5rem;
       width: 2.5rem;
@@ -38,6 +39,10 @@
     justify-content: space-between;
     padding: 1rem 1rem;
     flex: 1;
+
+    p {
+      text-transform: capitalize;
+    }
 
     .priceHateWrapper {
       display: flex;

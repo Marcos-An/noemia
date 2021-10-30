@@ -12,7 +12,7 @@ export default function ResumeCart() {
   const client = initializeApollo()
   const controllersContext = useContext(ControllersContext)
   const authContext = useContext(AuthContext)
-  const { myCartItems, initializeMyCart } = controllersContext
+  const { cartItems, initializeMyCart } = controllersContext
   const { user, updateUser } = authContext
 
 
@@ -44,7 +44,7 @@ export default function ResumeCart() {
         subTotal = subTotal + (quantity * priceBySize)
       })
     } else {
-      myCartItems.forEach(({ quantity, priceBySize }) => {
+      cartItems.forEach(({ quantity, priceBySize }) => {
         subTotal = subTotal + (quantity * priceBySize)
       })
     }
@@ -63,9 +63,9 @@ export default function ResumeCart() {
   }
 
 
-  return user.cart || myCartItems.length > 0 ? (<div className={styles.resumeCart}>
+  return user.cart || cartItems.length > 0 ? (<div className={styles.resumeCart}>
     <GenericTitle>Your Resume</GenericTitle>
-    {myCartItems.map(item => (
+    {cartItems.map(item => (
       <div key={item.id} className={styles.resumeItems}>
         <GenericText>{item.name}</GenericText>
         <GenericTitle>{formatCurrency(itemPrice(item))}</GenericTitle>

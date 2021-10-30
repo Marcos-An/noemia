@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { ControllersContext } from '@contexts/ControllersContext';
 import { useMutation } from '@apollo/react-hooks';
-import { CREATE_USER } from '@graphql/mutations'
+import { CREATE_USER, CREATE_USER_CART_ITEM } from '@graphql/mutations'
 import { GET_USERS_BY_UID } from '@graphql/queries'
 import { initializeApollo } from '@graphql/apollo'
 import Image from 'next/image'
@@ -19,7 +19,7 @@ import Router from 'next/router'
 export default function Login() {
   const controllersContext = useContext(ControllersContext)
   const authContext = useContext(AuthContext)
-  const { updateFooterType } = controllersContext
+  const { updateFooterType, cartItems } = controllersContext
   const { signIn, signInAccountWithGoogle, authIsLoading, updateLoading, updateUser } = authContext
 
   const [email, setEmail] = useState('')
@@ -27,6 +27,7 @@ export default function Login() {
 
 
   const [createUsers] = useMutation(CREATE_USER);
+  const [createUserCartItem] = useMutation(CREATE_USER_CART_ITEM);
 
   useEffect(() => {
     updateFooterType('none')
@@ -48,10 +49,49 @@ export default function Login() {
         toastMessage('Wrong password or email! Please try again', "error")
       }
 
-      if (!!response.code) {
+      if (!!!response.code) {
         updateUser({
           uid, email, phone: '', name: displayName
         })
+
+        if (cartItems.length > 0) {
+          cartItems.forEach((item: any) => {
+            const {
+              description,
+              name,
+              observation,
+              path_image,
+              price,
+              priceBySize,
+              quantity,
+              id,
+              type,
+              size
+            } = item
+
+            const newItem = {
+              description,
+              name,
+              observation,
+              path_image,
+              price,
+              priceBySize,
+              quantity,
+              size,
+              id,
+              type,
+              user_id: uid,
+            }
+
+            createUserCartItem({
+              variables: {
+                uid: uid,
+                id: newItem.id,
+                cartItem: newItem
+              }
+            }).catch(err => console.log(err));
+          })
+        }
       }
 
       Router.back()

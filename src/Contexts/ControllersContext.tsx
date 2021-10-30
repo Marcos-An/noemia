@@ -4,7 +4,7 @@ import _ from 'lodash'
 type ControllersContextData = {
   selectedItemMenu: selectedItemMenu;
   addingCardItem: newCardItem;
-  myCartItems: Array<newCardItem>;
+  cartItems: Array<newCardItem>;
   headerText: string;
   footerType: string;
   paymentMethods: Array<paymentMethod>;
@@ -64,7 +64,7 @@ type paymentMethod = {
 }
 
 type order = {
-  myCartItems: Array<newCardItem>,
+  cartItems: Array<newCardItem>,
   dateOrder: string,
   orderStatus: Array<stepOrderStatus>,
   orderId: number,
@@ -83,7 +83,7 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
     path: ''
   })
   const [isLoading, setIsLoading] = useState(true)
-  const [myCartItems, setMyCart] = useState([])
+  const [cartItems, setMyCart] = useState([])
   const [headerText, setHeaderText] = useState('')
   const [footerType, setFooterType] = useState('main')
   const [mainPaymentMethod, setMainPaymentMethod] = useState({
@@ -170,7 +170,7 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
 
 
   const removingItemFromCart = (selectedItem: newCardItem) => {
-    const newItems = myCartItems.filter(item => item.id !== selectedItem.id)
+    const newItems = cartItems.filter(item => item.id !== selectedItem.id)
 
     setMyCart([...newItems])
   }
@@ -196,7 +196,7 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
   }
 
   const initializeMyCart = (newCardItem: any) => {
-    const newCardItems = _.uniqBy([...myCartItems, ...newCardItem], 'id')
+    const newCardItems = _.uniqBy([...cartItems, ...newCardItem], 'id')
 
     setMyCart([...newCardItems])
   }
@@ -204,8 +204,8 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
   const updateMyCart = (newCardItem: newCardItem) => {
     var arr = []
 
-    if (myCartItems.length > 0) {
-      arr = myCartItems.map(item => {
+    if (cartItems.length > 0) {
+      arr = cartItems.map(item => {
         if (item.id === newCardItem.id) {
           item = newCardItem
         }
@@ -217,7 +217,7 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
       setMyCart([...newItem])
 
     } else {
-      const newItem = _.uniq([...myCartItems, newCardItem])
+      const newItem = _.uniq([...cartItems, newCardItem])
 
       setMyCart([...newItem])
     }
@@ -228,7 +228,7 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
       value={{
         selectedItemMenu,
         addingCardItem,
-        myCartItems,
+        cartItems,
         headerText,
         footerType,
         paymentMethods,

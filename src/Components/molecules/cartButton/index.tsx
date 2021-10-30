@@ -6,15 +6,15 @@ import { ControllersContext } from '../../../contexts/ControllersContext'
 
 export default function CartButton() {
   const controllersContext = useContext(ControllersContext)
-  const { myCartItems } = controllersContext
+  const { cartItems } = controllersContext
 
   const router = useRouter()
 
   return (
-    <div className={myCartItems.length > 0 ? styles.wrapperActive : styles.wrapperDefault} onClick={() => { router.push('/my-cart') }}>
-      {myCartItems.length > 0 &&
+    <div className={cartItems.length > 0 ? styles.wrapperActive : styles.wrapperDefault} onClick={() => { router.push('/my-cart') }}>
+      {cartItems.length > 0 &&
         <div className={styles.notification}>
-          <span>{myCartItems.length}</span>
+          <span>{cartItems.length}</span>
         </div>
       }
       <GenericIcon icon="shopping-cart" size="16" />
