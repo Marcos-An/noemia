@@ -3,7 +3,7 @@ import styles from './genericSearchInput.module.scss'
 import useDebounce from '../../../utils/useDebounce';
 import GenericIcon from '../genericIcon'
 
-export default function GenericSearchInput({ value = '', setValue, onFocus, onBlur, onChange }) {
+export default function GenericSearchInput({ value = '', setValue, onFocus, onChange }) {
 
   const debounceChange = useDebounce(onChange, 1000)
 
@@ -27,7 +27,6 @@ export default function GenericSearchInput({ value = '', setValue, onFocus, onBl
         value={value}
         onChange={(e) => changeValue(e)}
         onFocus={() => onFocus()}
-        onBlur={() => onBlur()}
       />
     </div>
   )

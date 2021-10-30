@@ -11,14 +11,10 @@ export default function Suggestions({ products }) {
 
   const [starterProducts, setStarterProducts] = useState([])
   const [pizzaProducts, setPizzaProducts] = useState([])
-  const [wineProducts, setWineProducts] = useState([])
-  const [drinkProducts, setDrinkProducts] = useState([])
 
   useEffect(() => {
     const newStarters = products.filter(({ category }) => category.name === 'Starter')
     const newPizzas = products.filter(({ category }) => category.name === 'Pizza')
-    const newWine = products.filter(({ category }) => category.name === 'Wine')
-    const newDrinks = products.filter(({ category }) => category.name === 'Drink')
 
     const starterSugestions = [newStarters[4], newStarters[2], newStarters[1], newStarters[3]]
 
@@ -26,8 +22,6 @@ export default function Suggestions({ products }) {
 
     setStarterProducts(starterSugestions)
     setPizzaProducts(pizzaSugestions)
-    setDrinkProducts(newDrinks)
-    setWineProducts(newWine)
   }, [])
 
 
@@ -39,8 +33,6 @@ export default function Suggestions({ products }) {
       <div className={styles.suggestionsWrapper}>
         {selectedItemMenu.name === 'Starter' && starterProducts.map(product => <CardSuggestions key={product.id} product={product} />)}
         {selectedItemMenu.name === 'Pizza' && pizzaProducts.map(product => <CardSuggestions key={product.id} product={product} />)}
-        {selectedItemMenu.name === 'Winne' && wineProducts.map(product => <CardSuggestions key={product.id} product={product} />)}
-        {selectedItemMenu.name === 'drink' && drinkProducts.map(product => <CardSuggestions key={product.id} product={product} />)}
       </div>
     </div>
   )

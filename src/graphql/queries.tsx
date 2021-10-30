@@ -41,6 +41,25 @@ export const GET_PRODUCT_BY_ID = gql`
   } 
 `;
 
+
+// SERCH A PRODUCT
+
+export const GET_SEARCH_PRODUCTS_QUERY = gql`
+  query MyQuery($search: String!) {
+    product(where: {name: {_similar: $search}}){
+      name
+      id
+      description 
+      price
+      path_image
+      category {
+        name
+      }
+    }
+  } 
+`;
+
+
 //USER INFORMATIONS 
 export const GET_USERS_BY_UID = gql`
   query getUser($uid: String!) { 
