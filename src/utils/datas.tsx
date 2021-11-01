@@ -30,18 +30,22 @@ export const CARDS_MENU = [
 ];
 
 export const CARDS_MENU_DRINKS = [
+
   {
-    name: "Soda",
+    name: "Cocktails",
+    value: "cocktails",
     isActive: true,
-    path: "/menuDrinks/soda-option.jpg",
-  },
-  {
-    name: "Drinks",
-    isActive: false,
     path: "/menuDrinks/drinks-option.jpg",
   },
   {
+    name: "Soda",
+    value: "sodas",
+    isActive: false,
+    path: "/menuDrinks/soda-option.jpg",
+  },
+  {
     name: "Others",
+    value: "others",
     isActive: false,
     path: "/menuDrinks/others-option.jpg",
   },

@@ -26,7 +26,7 @@ export default function MyCart() {
   const { cartItems, updateHeaderText, updateFooterType, initializeMyCart } = controllersContext
   const [removeCartItem] = useMutation(REMOVE_USER_CART_ITEM);
 
-  const { user, updateUser } = authContext
+  const { updateUser } = authContext
 
 
   useEffect(() => {
@@ -37,20 +37,19 @@ export default function MyCart() {
   useEffect(() => {
     const userStorage: any = JSON.parse(localStorage.getItem('@noemia:user'))
 
-    async function fetchCartUser() {
-      if (userStorage) {
-        await client.query({
-          query: GET_CART_BY_UID,
-          variables: {
-            uid: userStorage.uid,
-          }
-        }).then(({ data }) => {
-          updateUser(data.users[0].cart)
-          initializeMyCart(data.users[0].cart)
-        })
-      }
-    }
-    if (userStorage && user.uid) {
+    async function fetchCartUser() { 
+      await client.query({
+        query: GET_CART_BY_UID,
+        variables: {
+          uid: userStorage.uid,
+        }
+      }).then(({ data }) => { 
+        updateUser(data.users[0].cart)
+        initializeMyCart(data.users[0].cart)
+      }) 
+    } 
+
+    if (!!userStorage) {
       fetchCartUser()
     }
   }, [])

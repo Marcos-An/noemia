@@ -14,7 +14,7 @@ import { useMutation } from '@apollo/react-hooks';
 import _ from 'lodash'
 import { initializeApollo } from '@graphql/apollo'
 import { GET_CART_BY_UID } from '@graphql/queries'
-import toastMessage from '@utils/toastMessage'
+import toastMessage from '@utils/toastMessage'   
 
 export default function ButtonFooter() {
   const controllersContext = useContext(ControllersContext)
@@ -53,15 +53,38 @@ export default function ButtonFooter() {
 }
 
 // FOOTER PRODUCT DETAIL
-function ProductDetail({ controllersContext, authContext, price }) {
+export function ProductDetail({ controllersContext, authContext, price }) {
+  const client = initializeApollo()
   const [isLoading, setIsLoading] = useState(false)
   const [createUserCartItem] = useMutation(CREATE_USER_CART_ITEM);
   const [updateUserCartItem] = useMutation(UPDATE_USER_CART_ITEM);
-  const { addingCardItem, updateMyCart, cartItems } = controllersContext
-  const { user } = authContext
+  const { addingCardItem, updateMyCart, cartItems, initializeMyCart } = controllersContext
+  const { user, updateUser } = authContext
+  var hasInCart = false
+ 
+  useEffect(() => {
+    const userStorage: any = JSON.parse(localStorage.getItem('@noemia:user'))
+
+    async function fetchCartUser() {
+      if (userStorage) {
+        await client.query({
+          query: GET_CART_BY_UID,
+          variables: {
+            uid: userStorage.uid,
+          }
+        }).then(({ data }) => {
+          updateUser({ cart: data.users[0].cart })
+          initializeMyCart(data.users[0].cart)
+        })
+      }
+    }
+    if (userStorage && !user.cart) {
+      fetchCartUser()
+    }
+  }, [])
 
   const addToCart = () => {
-    const userStorage: any = JSON.parse(localStorage.getItem('@noemia:user'))
+    const userStorage: any = JSON.parse(localStorage.getItem('@noemia:user')) 
 
     setIsLoading(true)
 
@@ -89,25 +112,22 @@ function ProductDetail({ controllersContext, authContext, price }) {
       size,
       id,
       type,
-      user_id: userStorage ? userStorage.uid : user.id,
+      user_id: !!userStorage ? userStorage.uid : user.id,
     }
-
-    var hasInCart = false
-
-    if (user.uid && user.card) {
-      hasInCart = _.includes([...cartItems, ...user.card], newItem)
+     
+    if (user.cart) { 
+      hasInCart = _.includes([...cartItems, ...user.cart], newItem)
     } else {
       hasInCart = _.includes([...cartItems], newItem)
-    }
+    }  
 
-
-    if (user.uid && user.cart && userStorage.uid) {
-      if (hasInCart) {
+    if (!!userStorage) { 
+      if (!hasInCart) {
         createUserCartItem({
           variables: {
             cartItem: newItem
           }
-        }).then((data) => {
+        }).then(() => { 
           Router.push('/my-cart')
           updateMyCart(addingCardItem)
         }).catch(() => toastMessage('Something went wrong!', 'error'))
@@ -118,17 +138,29 @@ function ProductDetail({ controllersContext, authContext, price }) {
             id: newItem.id,
             cartItem: newItem
           }
-        }).then(() => {
+        }).then(() => { 
           Router.push('/my-cart')
           updateMyCart(addingCardItem)
         }).catch(() => toastMessage('Something went wrong!', 'error'))
       }
-    } else {
+    } else {   
       Router.push('/my-cart')
       updateMyCart(addingCardItem)
     }
 
     setIsLoading(false)
+  }
+
+  const isDisabled = () => {  
+    if(addingCardItem.category.name === 'Pizza'){ 
+      if(addingCardItem.size){
+        return true
+      } else {
+        return false
+      }
+    } else{
+      return true 
+    }
   }
 
   return (
@@ -138,7 +170,7 @@ function ProductDetail({ controllersContext, authContext, price }) {
         onClick={addToCart}
         isLoading={isLoading}
         text="Add to cart"
-        isDisabled={addingCardItem.size ? false : true}
+        isDisabled={isDisabled() ? false : true}
       />
     </div>
   )

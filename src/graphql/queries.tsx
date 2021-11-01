@@ -19,6 +19,7 @@ export const GET_PRODUCTS_QUERY = gql`
       description 
       price
       path_image
+      drinkType
       category {
         name
       }

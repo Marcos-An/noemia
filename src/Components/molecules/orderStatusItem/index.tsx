@@ -1,8 +1,7 @@
 import styles from './orderStatusItem.module.scss'
 import React from 'react'
 import GenericIcon from '../../../components/atoms/genericIcon'
-import GenericText from '../../../components/atoms/genericText'
-import GenericDescription from '../../atoms/genericDescription'
+import GenericText from '../../../components/atoms/genericText' 
 
 
 export default function OrderStatusItem({ status }) {
@@ -33,7 +32,7 @@ export default function OrderStatusItem({ status }) {
       <div className={styles.statusDetail}>
         <GenericText weight="bold">{titleStatus()}</GenericText>
         <GenericText>{status.completeDate}</GenericText>
-      </div>
+      </div> 
     </div>
   )
 }

@@ -16,7 +16,7 @@ export default function Banners({ products }) {
       {name === 'Pizza' && <PizzaBanner products={products} />}
       {name === 'Starter' && <StarterBanner />}
       {name === 'Wine' && <WineBanner />}
-      {name === 'Drink' && <DrinksBanner />}
+      {name === 'Drink' && <DrinksBanner products={products} />}
     </>
   )
 }

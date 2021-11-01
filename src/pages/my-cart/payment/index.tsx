@@ -34,7 +34,7 @@ export default function Payment() {
 
     const userStorage: any = JSON.parse(localStorage.getItem('@noemia:user'))
 
-    if (!user.street) {
+    if (!user.street || !user.paymentMehods) {
       client.query({
         query: GET_USER_ADDRESS_PAYEMENT_BY_UID,
         variables: {

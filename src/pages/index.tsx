@@ -28,7 +28,7 @@ export default function Home({ categories, products }) {
         <MainMenu categories={categories} />
         <Banners products={products} />
         {selectedItemMenu.name !== 'Drink' && selectedItemMenu.name !== 'Wine' && <Suggestions products={products} />}
-        <AllMenu products={products} />
+        {selectedItemMenu.name !== 'Drink' && <AllMenu products={products} />}
       </div>
   )
 }

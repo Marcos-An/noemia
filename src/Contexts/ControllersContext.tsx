@@ -195,6 +195,7 @@ export function ControllersContextProvider({ children }: ControllersContextProvi
     setPaymentMethods([...newPaymentMethods])
   }
 
+  
   const initializeMyCart = (newCardItem: any) => {
     const newCardItems = _.uniqBy([...cartItems, ...newCardItem], 'id')
 

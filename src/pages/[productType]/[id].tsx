@@ -36,7 +36,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 
   const product = await client.query({ query: GET_PRODUCT_BY_ID, variables: { id } }).then(({ data }) => data.product[0])
-
+  
   return {
     props: {
       product
@@ -56,12 +56,13 @@ export default function Product({ product }) {
 
   useEffect(() => {
     updateHeaderText('')
-    updateFooterType('productDetail')
-    var hasInCart = false
+    updateFooterType('productDetail') 
 
-    if (user.uid && user.card) {
+    var hasInCart = false
+ 
+    if (user.card) {
       hasInCart = _.some([...cartItems, ...user.card], product)
-    } else {
+    } else { 
       hasInCart = _.some([...cartItems], product)
     }
 
