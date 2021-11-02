@@ -1,18 +1,24 @@
-import React from 'react';
-import styles from './genericSearchInput.module.scss'
-import useDebounce from '../../../utils/useDebounce';
-import GenericIcon from '../genericIcon'
+import React from "react";
+import styles from "./genericSearchInput.module.scss";
+import useDebounce from "@utils/useDebounce";
+import GenericIcon from "../genericIcon";
 
-export default function GenericSearchInput({ value = '', setValue, onFocus, onChange }) {
-
-  const debounceChange = useDebounce(onChange, 1000)
+export default function GenericSearchInput({
+  value = "",
+  setValue,
+  onFocus,
+  onChange,
+}) {
+  const debounceChange = useDebounce(onChange, 1000);
 
   const changeValue = (e) => {
-    const { target: { value } } = e
+    const {
+      target: { value },
+    } = e;
 
     setValue(value);
-    debounceChange(value)
-  }
+    debounceChange(value);
+  };
 
   return (
     <div className={value ? styles.input : styles.inputEmpety}>
@@ -20,7 +26,7 @@ export default function GenericSearchInput({ value = '', setValue, onFocus, onCh
         <GenericIcon icon="search" size="20" color="yellow" />
       </div>
       <input
-        id='search'
+        id="search"
         type="text"
         autoComplete="off"
         placeholder="What are you search?"
@@ -29,5 +35,5 @@ export default function GenericSearchInput({ value = '', setValue, onFocus, onCh
         onFocus={() => onFocus()}
       />
     </div>
-  )
+  );
 }
