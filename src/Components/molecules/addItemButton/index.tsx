@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import styles from './addItemButton.module.scss'
 import GenericIcon from '../../atoms/genericIcon'
-import { ControllersContext } from '@contexts/ControllersContext'
 import GenericText from '../../atoms/genericText'
+import { ControllersContext } from '@contexts/ControllersContext'
 
 export default function AddItemButton() {
   const controllersContext = useContext(ControllersContext)

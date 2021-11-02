@@ -15,14 +15,14 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <AuthContextProvider >
-      <ToastContainer />
-      <ApolloProvider client={apolloClient}>
-        <ControllersContextProvider>
-          <Header />
-          <Component {...pageProps} />
-          <Footer />
-        </ControllersContextProvider>
-      </ApolloProvider>
+      <ControllersContextProvider>
+        <ToastContainer />
+        <ApolloProvider client={apolloClient}>
+            <Header />
+            <Component {...pageProps} />
+            <Footer />
+        </ApolloProvider>
+      </ControllersContextProvider>
     </AuthContextProvider>
   )
 }
