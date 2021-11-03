@@ -40,9 +40,11 @@ export default function Login() {
   const emailSignIn = ({ email, password }) => {
     signIn({ email, password }).then((response) => {
       const { uid, email, displayName } = response
+
       updateLoading(false)
       if (response.code === 'auth/user-not-found') {
         toastMessage('User not found! Do a signUp with this email', "error")
+        Router.replace('/register', '/register', { shallow: true });
       }
 
       if (response.code === 'auth/wrong-password') {
@@ -92,9 +94,9 @@ export default function Login() {
             }).catch(err => console.log(err));
           })
         }
-      }
 
-      Router.back()
+        Router.back()
+      }
     })
   }
 
@@ -142,6 +144,44 @@ export default function Login() {
             },
           }
         }).then(() => {
+          if (cartItems.length > 0) {
+            cartItems.forEach((item: any) => {
+              const {
+                description,
+                name,
+                observation,
+                path_image,
+                price,
+                priceBySize,
+                quantity,
+                id,
+                type,
+                size
+              } = item
+
+              const newItem = {
+                description,
+                name,
+                observation,
+                path_image,
+                price,
+                priceBySize,
+                quantity,
+                size,
+                id,
+                type,
+                user_id: uid,
+              }
+
+              createUserCartItem({
+                variables: {
+                  uid: uid,
+                  id: newItem.id,
+                  cartItem: newItem
+                }
+              }).catch(err => console.log(err));
+            })
+          }
           updateLoading(false)
           Router.replace('/my-cart/payment', '/my-cart', { shallow: true })
         })

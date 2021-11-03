@@ -127,7 +127,7 @@ export default function NewPaymentMethod() {
           setValue={setNameOwner}
         />
         <GenericInput
-          label="Card’s Nick Name (opitional)"
+          label="Card’s Nick Name (optional)"
           id="nick"
           value={nickName}
           max={15}

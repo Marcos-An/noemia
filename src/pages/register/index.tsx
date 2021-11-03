@@ -79,8 +79,8 @@ export default function Register() {
                   data: {
                     nickName: "Money",
                     number: "",
-                    type: "Money",
-                    niceType: "Money",
+                    type: "money",
+                    niceType: "money",
                     valid: "",
                     nameOwner: "",
                   },
@@ -89,8 +89,8 @@ export default function Register() {
                   data: {
                     nickName: "Money",
                     number: "",
-                    type: "Money",
-                    niceType: "Money",
+                    type: "money",
+                    niceType: "money",
                     valid: "",
                     nameOwner: "",
                   },
@@ -100,6 +100,9 @@ export default function Register() {
           }).then(({ data }) => {
             updateLoading(false);
             updateUser(data.insert_users_one);
+            Router.back()
+          }).catch(() => {
+            updateLoading(false);
           });
         }
       });
@@ -120,8 +123,8 @@ export default function Register() {
               data: {
                 nickName: "Money",
                 number: "",
-                type: "Money",
-                niceType: "Money",
+                type: "money",
+                niceType: "money",
                 valid: "",
                 nameOwner: "",
               },
@@ -130,8 +133,8 @@ export default function Register() {
               data: {
                 nickName: "Money",
                 number: "",
-                type: "Money",
-                niceType: "Money",
+                type: "money",
+                niceType: "money",
                 valid: "",
                 nameOwner: "",
               },
@@ -141,11 +144,14 @@ export default function Register() {
       }).then(({ data }) => {
         updateLoading(false);
         updateUser(data.insert_users_one);
+        Router.back()
+      }).catch(() => {
+        updateLoading(false);
       });
     });
   };
 
-  const isisDisabled = () => {
+  const isDisabled = () => {
     if (
       email &&
       password &&
@@ -177,7 +183,7 @@ export default function Register() {
         <form>
           <GenericInput label="Your Name" value={name} setValue={setName} />
           <GenericMaskedInput
-            label="Phone (opitional)"
+            label="Phone (optional)"
             mask={["(99) 9 9999-9999"]}
             value={phone}
             setValue={setPhone}
@@ -203,7 +209,7 @@ export default function Register() {
         </form>
         <div className={styles.button}>
           <GenericButton
-            isDisabled={isisDisabled()}
+            isDisabled={isDisabled()}
             text="Register"
             onClick={() => emailSignUp({ name, email, password, phone })}
             isLoading={authIsLoading}

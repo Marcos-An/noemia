@@ -37,17 +37,18 @@ export default function MyCart() {
   useEffect(() => {
     const userStorage: any = JSON.parse(localStorage.getItem('@noemia:user'))
 
-    async function fetchCartUser() { 
+    async function fetchCartUser() {
       await client.query({
         query: GET_CART_BY_UID,
         variables: {
           uid: userStorage.uid,
         }
-      }).then(({ data }) => { 
+      }).then(({ data }) => {
+        console.log(data)
         updateUser(data.users[0].cart)
         initializeMyCart(data.users[0].cart)
-      }) 
-    } 
+      })
+    }
 
     if (!!userStorage) {
       fetchCartUser()
