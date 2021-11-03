@@ -10,6 +10,10 @@
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .cardDrinks-active {
@@ -27,4 +31,17 @@
 
   outline: 4px solid #ffd239;
   -moz-outline-radius: 6px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+@media (min-width: 720px) and (min-width: 1080px) {
+  .cardDrinks {
+    height: 10rem;
+  }
+  .cardDrinks-active {
+    height: 10rem;
+  }
 }

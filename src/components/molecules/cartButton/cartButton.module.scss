@@ -25,6 +25,9 @@
       color: var(--white);
     }
   }
+  :hover {
+    cursor: pointer;
+  }
 }
 .wrapperDefault {
   display: flex;
@@ -52,5 +55,8 @@
       padding: 0px;
       color: var(--white);
     }
+  }
+  :hover {
+    cursor: pointer;
   }
 }

@@ -14,4 +14,15 @@
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+@media (min-width: 720px) and (min-width: 1080px) {
+  .cardNav {
+    height: 8rem;
+    width: 23.5rem;
+  }
 }

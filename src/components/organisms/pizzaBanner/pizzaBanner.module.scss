@@ -9,3 +9,10 @@
     grid-gap: 15px !important;
   }
 }
+
+@media (min-width: 720px) and (min-width: 1080px) {
+  .pizzaBanner {
+    padding: 2rem 28rem;
+    background-size: 20%;
+  }
+}

@@ -1,5 +1,5 @@
 .starter {
-  padding: 0rem 2rem 0rem 2rem;
+  padding: 0rem 2rem;
 
   .starterWrapper {
     padding: 2rem;
@@ -19,6 +19,22 @@
       text-align: right;
       font-size: 2.1rem;
       font-weight: 600;
+    }
+  }
+}
+
+@media (min-width: 720px) and (min-width: 1080px) {
+  .starter {
+    padding: 0rem 28rem;
+
+    .starterWrapper {
+      height: 17vh;
+
+      p {
+        text-align: right;
+        font-size: 2.4rem;
+        font-weight: 600;
+      }
     }
   }
 }

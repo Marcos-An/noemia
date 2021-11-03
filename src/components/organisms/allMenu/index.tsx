@@ -30,7 +30,7 @@ export default function AllMenu({ products }) {
       <br />
       <GenericTitle>Our Menu</GenericTitle>
       <br />
-      <div>
+      <div className={styles.wrapperItems}>
         {selectedItemMenu.name === 'Starter' && starterProducts.map(product => <CardAllMenu key={product.id} product={product} />)}
         {selectedItemMenu.name === 'Pizza' && pizzaProducts.map(product => <CardAllMenu key={product.id} product={product} />)}
         {selectedItemMenu.name === 'Wine' && wineProducts.map(product => <CardAllMenu key={product.id} product={product} />)}

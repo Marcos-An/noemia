@@ -16,12 +16,12 @@ export default function Suggestions({ products }) {
     const newStarters = products.filter(({ category }) => category.name === 'Starter')
     const newPizzas = products.filter(({ category }) => category.name === 'Pizza')
 
-    const starterSugestions = [newStarters[4], newStarters[2], newStarters[1], newStarters[3]]
+    const starterSuggestions = [newStarters[4], newStarters[2], newStarters[1], newStarters[3]]
 
-    const pizzaSugestions = [newPizzas[0], newPizzas[4], newPizzas[6], newPizzas[10]]
+    const pizzaSuggestions = [newPizzas[0], newPizzas[4], newPizzas[6], newPizzas[10]]
 
-    setStarterProducts(starterSugestions)
-    setPizzaProducts(pizzaSugestions)
+    setStarterProducts(starterSuggestions)
+    setPizzaProducts(pizzaSuggestions)
   }, [])
 
 

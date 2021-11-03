@@ -1,8 +1,8 @@
-.starter {
+.wine {
   padding: 0rem 2rem 0rem 2rem;
   position: relative;
   overflow: hidden;
-  .starterWrapper {
+  .wineWrapper {
     padding: 2rem;
     height: 17vh;
     border-radius: 1.2rem;
@@ -16,13 +16,43 @@
       font-size: 2rem;
       font-weight: 600;
     }
-
-    img {
+    .imageContainer {
       position: absolute;
-      opacity: 0.4;
-      height: 75%;
-      right: -10px;
+      right: -1.3rem;
       bottom: 0;
+      width: 10rem;
+      height: 10rem;
+
+      img {
+        opacity: 0.4;
+        border-radius: 0.8rem 0rem 0rem 0.8rem;
+      }
+    }
+  }
+}
+
+@media (min-width: 720px) and (min-width: 1080px) {
+  .wine {
+    padding: 0rem 28rem;
+
+    .wineWrapper {
+      height: 17vh;
+
+      p {
+        font-size: 2.4rem;
+        width: 29rem;
+        font-weight: 600;
+      }
+    }
+
+    .imageContainer {
+      position: absolute;
+      right: 28rem !important;
+
+      img {
+        opacity: 0.4;
+        border-radius: 0.8rem 0rem 0rem 0.8rem;
+      }
     }
   }
 }

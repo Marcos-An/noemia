@@ -7,3 +7,13 @@
     grid-gap: 1.4rem;
   }
 }
+
+@media (min-width: 720px) and (min-width: 1080px) {
+  .suggestions {
+    padding: 2rem 28rem;
+
+    .suggestionsWrapper {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+}

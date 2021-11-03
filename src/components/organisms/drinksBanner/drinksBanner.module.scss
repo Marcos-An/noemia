@@ -13,3 +13,13 @@
 .itemsWrapper {
   margin-top: -1.5rem;
 }
+
+@media (min-width: 720px) and (min-width: 1080px) {
+  .drinksBanner {
+    padding: 0rem 28rem;
+    .container {
+      grid-template-columns: repeat(6, 1fr);
+      grid-gap: 1rem;
+    }
+  }
+}

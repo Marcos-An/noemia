@@ -5,3 +5,10 @@
   justify-content: space-between;
   align-items: center;
 }
+
+@media (min-width: 720px) and (min-width: 1080px) {
+  .mainMenu {
+    padding: 7rem 25rem;
+    justify-content: center;
+  }
+}

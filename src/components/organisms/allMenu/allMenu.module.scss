@@ -1,3 +1,15 @@
 .allMenu {
   padding: 2rem 2.4rem 0rem 2.4rem;
 }
+
+@media (min-width: 720px) and (min-width: 1080px) {
+  .allMenu {
+    padding: 2rem 28rem 0rem 28rem;
+
+    .wrapperItems {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 2rem;
+    }
+  }
+}

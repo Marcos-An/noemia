@@ -16,7 +16,7 @@
       margin-right: 1rem;
     }
 
-    :hover{
+    :hover {
       cursor: pointer;
     }
   }
@@ -45,5 +45,12 @@
   div:first-child {
     position: absolute;
     left: 2.4rem;
+  }
+}
+
+@media (min-width: 720px) and (min-width: 1080px) {
+  .headerContainer {
+    padding: 4rem 28rem;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.04);
   }
 }
