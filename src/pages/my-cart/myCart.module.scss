@@ -16,3 +16,9 @@
     margin-bottom: 1rem;
   }
 }
+
+@media (min-width: 720px) and (min-width: 1080px) {
+  .container {
+    padding: 0rem 28rem;
+  }
+}

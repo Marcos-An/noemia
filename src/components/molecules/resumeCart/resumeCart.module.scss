@@ -21,3 +21,10 @@
     border-bottom: 2px dashed var(--grey);
   }
 }
+
+@media (min-width: 720px) and (min-width: 1080px) {
+  .resumeCart {
+    right: 28rem;
+    width: 20vw;
+  }
+}

@@ -40,7 +40,7 @@ export default function Address() {
   }, []);
 
   return (
-    <div className={styles.adress}>
+    <div className={styles.address}>
       {user.street ? (
         <CardAddress />
       ) : (
@@ -58,7 +58,7 @@ export default function Address() {
           </GenericText>
           <div className={styles.button}>
             <GenericButton
-              text="Add Addres!"
+              text="Add Address!"
               onClick={() => router.push("/profile/address/add-address")}
             />
           </div>

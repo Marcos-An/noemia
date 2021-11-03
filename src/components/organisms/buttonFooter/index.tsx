@@ -14,7 +14,7 @@ import { useMutation } from '@apollo/react-hooks';
 import _ from 'lodash'
 import { initializeApollo } from '@graphql/apollo'
 import { GET_CART_BY_UID } from '@graphql/queries'
-import toastMessage from '@utils/toastMessage'   
+import toastMessage from '@utils/toastMessage'
 
 export default function ButtonFooter() {
   const controllersContext = useContext(ControllersContext)
@@ -61,7 +61,7 @@ export function ProductDetail({ controllersContext, authContext, price }) {
   const { addingCardItem, updateMyCart, cartItems, initializeMyCart } = controllersContext
   const { user, updateUser } = authContext
   var hasInCart = false
- 
+
   useEffect(() => {
     const userStorage: any = JSON.parse(localStorage.getItem('@noemia:user'))
 
@@ -84,7 +84,7 @@ export function ProductDetail({ controllersContext, authContext, price }) {
   }, [])
 
   const addToCart = () => {
-    const userStorage: any = JSON.parse(localStorage.getItem('@noemia:user')) 
+    const userStorage: any = JSON.parse(localStorage.getItem('@noemia:user'))
 
     setIsLoading(true)
 
@@ -114,20 +114,20 @@ export function ProductDetail({ controllersContext, authContext, price }) {
       type,
       user_id: !!userStorage ? userStorage.uid : user.id,
     }
-     
-    if (user.cart) { 
+
+    if (user.cart) {
       hasInCart = _.includes([...cartItems, ...user.cart], newItem)
     } else {
       hasInCart = _.includes([...cartItems], newItem)
-    }  
+    }
 
-    if (!!userStorage) { 
+    if (!!userStorage) {
       if (!hasInCart) {
         createUserCartItem({
           variables: {
             cartItem: newItem
           }
-        }).then(() => { 
+        }).then(() => {
           Router.push('/my-cart')
           updateMyCart(addingCardItem)
         }).catch(() => toastMessage('Something went wrong!', 'error'))
@@ -138,12 +138,12 @@ export function ProductDetail({ controllersContext, authContext, price }) {
             id: newItem.id,
             cartItem: newItem
           }
-        }).then(() => { 
+        }).then(() => {
           Router.push('/my-cart')
           updateMyCart(addingCardItem)
         }).catch(() => toastMessage('Something went wrong!', 'error'))
       }
-    } else {   
+    } else {
       Router.push('/my-cart')
       updateMyCart(addingCardItem)
     }
@@ -151,15 +151,15 @@ export function ProductDetail({ controllersContext, authContext, price }) {
     setIsLoading(false)
   }
 
-  const isDisabled = () => {  
-    if(addingCardItem.category.name === 'Pizza'){ 
-      if(addingCardItem.size){
+  const isDisabled = () => {
+    if (addingCardItem.category.name === 'Pizza') {
+      if (addingCardItem.size) {
         return true
       } else {
         return false
       }
-    } else{
-      return true 
+    } else {
+      return true
     }
   }
 
@@ -243,7 +243,6 @@ function CartDetail({ controllersContext, authContext }) {
 
   return (
     <div className={styles.footer}>
-
       <div className={styles.totalPrice}>
         <GenericText>Total</GenericText>
         <GenericTitle>{formatCurrency(currentPrice())}</GenericTitle>

@@ -70,7 +70,7 @@ function HeaderHome({ authContext }) {
       }
     }
 
-    if (userStorage && !user.uid) {
+    if (!!userStorage) {
       fetchMyUserName()
     }
   }, [])
@@ -79,7 +79,10 @@ function HeaderHome({ authContext }) {
   const address = () => {
     if ((user.street && user.number) && user.uid) {
       return (
-        <div>
+        <div
+          className={styles.login}
+          onClick={() => Router.push('/profile/address/edit-address')}
+        >
           <SimpleAddress>{`${user.street} - ${user.number}`}</SimpleAddress>
         </div>
       )
@@ -87,7 +90,10 @@ function HeaderHome({ authContext }) {
 
     if ((!user.street && !user.number) && user.uid) {
       return (
-        <div onClick={() => Router.push('/profile/address/add-address')}>
+        <div
+          className={styles.login}
+          onClick={() => Router.push('/profile/address/add-address')}
+        >
           <SimpleAddress>Create Address</SimpleAddress>
         </div>
       )

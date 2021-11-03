@@ -47,3 +47,18 @@
     }
   }
 }
+
+@media (min-width: 720px) and (min-width: 1080px) {
+  .footer {
+    padding: 0rem 28rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    button {
+      height: 3rem;
+      margin-left: 10rem;
+      width: 20%;
+    }
+  }
+}

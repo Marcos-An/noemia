@@ -8,7 +8,7 @@ export const GET_CATEGORY_QUERY = gql`
       name
       gradient
     }
-  } 
+  }
 `;
 
 export const GET_PRODUCTS_QUERY = gql`
@@ -16,7 +16,7 @@ export const GET_PRODUCTS_QUERY = gql`
     product {
       name
       id
-      description 
+      description
       price
       path_image
       drinkType
@@ -24,7 +24,7 @@ export const GET_PRODUCTS_QUERY = gql`
         name
       }
     }
-  } 
+  }
 `;
 
 export const GET_PRODUCT_BY_ID = gql`
@@ -39,7 +39,7 @@ export const GET_PRODUCT_BY_ID = gql`
         name
       }
     }
-  } 
+  }
 `;
 
 
@@ -50,20 +50,20 @@ export const GET_SEARCH_PRODUCTS_QUERY = gql`
     product(where: {name: {_similar: $search}}){
       name
       id
-      description 
+      description
       price
       path_image
       category {
         name
       }
     }
-  } 
+  }
 `;
 
 
-//USER INFORMATIONS 
+//USER INFORMATIONS
 export const GET_USERS_BY_UID = gql`
-  query getUser($uid: String!) { 
+  query getUser($uid: String!) {
     users(where: {uid: {_eq: $uid}}) {
       uid
       zipCode
@@ -84,7 +84,7 @@ export const GET_USERS_BY_UID = gql`
         price
         priceBySize
         quantity
-        size 
+        size
         type
       }
       paymentMethods {
@@ -106,11 +106,11 @@ export const GET_USERS_BY_UID = gql`
         user_uid
       }
     }
-  } 
+  }
 `;
 
 export const GET_USER_MAIN_PAYMENT_BY_UID = gql`
-  query getUserMainPayment($uid: String!) { 
+  query getUserMainPayment($uid: String!) {
     users(where: {uid: {_eq: $uid}}) {
       uid
       name
@@ -124,11 +124,11 @@ export const GET_USER_MAIN_PAYMENT_BY_UID = gql`
         valid
       }
     }
-  } 
+  }
 `;
 
 export const GET_USER_NAME_BY_UID = gql`
-  query getUser($uid: String!) { 
+  query getUser($uid: String!) {
     users(where: {uid: {_eq: $uid}}) {
       uid
       name
@@ -141,63 +141,63 @@ export const GET_USER_NAME_BY_UID = gql`
         price
         priceBySize
         quantity
-        size 
+        size
         type
       }
     }
-  } 
+  }
 `;
 
 export const GET_USER_EMAIL_PHONE_BY_UID = gql`
-  query getUser($uid: String!) { 
+  query getUser($uid: String!) {
     users(where: {uid: {_eq: $uid}}) {
       uid
-      name 
+      name
       phone
       email
     }
-  } 
+  }
 `;
 
 export const GET_USER_ADDRESS_BY_UID = gql`
-  query getUser($uid: String!) { 
+  query getUser($uid: String!) {
     users(where: {uid: {_eq: $uid}}) {
       uid
       zipCode
       street
-      state 
+      state
       number
-      neighbourhood 
+      neighbourhood
       city
     }
-  } 
+  }
 `;
 
-export const GET_USER_PAYMENT_METHOD = gql` 
+export const GET_USER_PAYMENT_METHOD = gql`
  query MySubscription($uid: String!) {
-    users {
-      paymentMethods(where: {user_uid: {_eq: $uid}}) {
-        valid
+    users(where: {uid: {_eq: $uid}}) {
+      paymentMethods {
         type
         number
         nickName
         niceType
-        nameOwner
+        user_uid
+        valid
       }
     }
-  } 
+  }
 `;
 
 
 export const GET_USER_ADDRESS_PAYEMENT_BY_UID = gql`
-  query getUser($uid: String!) { 
+  query getUser($uid: String!) {
     users(where: {uid: {_eq: $uid}}) {
       uid
       zipCode
       street
-      state 
+      state
       number
-      neighbourhood 
+      neighbourhood
       city
       paymentMethods{
         valid
@@ -208,13 +208,13 @@ export const GET_USER_ADDRESS_PAYEMENT_BY_UID = gql`
         nameOwner
       }
     }
-  } 
+  }
 `;
 
-// USER CART 
+// USER CART
 
 export const GET_USERS_BY_UID_CART = gql`
-  query getUser($uid: String!) { 
+  query getUser($uid: String!) {
     users(where: {uid: {_eq: $uid}}) {
       cart {
         id
@@ -226,14 +226,14 @@ export const GET_USERS_BY_UID_CART = gql`
         price
         priceBySize
         quantity
-        size 
+        size
       }
-    } 
+    }
   }
 `;
 
 export const GET_CART_BY_UID = gql`
-  query getUser($uid: String!) { 
+  query getUser($uid: String!) {
     users(where: {uid: {_eq: $uid}}) {
       cart {
         id
@@ -245,8 +245,8 @@ export const GET_CART_BY_UID = gql`
         price
         priceBySize
         quantity
-        size 
+        size
       }
-    } 
+    }
   }
 `;

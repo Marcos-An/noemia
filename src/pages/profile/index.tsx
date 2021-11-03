@@ -63,7 +63,7 @@ function ProfileWithLogin({ authContext }) {
         Payment Methods
       </ItemProfileMenu>
       <ItemProfileMenu icon="map-pin" path="/profile/address">
-        Adress
+        address
       </ItemProfileMenu>
       <ProfileItemLogout
         icon="log-out"

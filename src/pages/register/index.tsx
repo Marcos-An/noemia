@@ -227,6 +227,7 @@ export default function Register() {
           onClick={() => goolgeSignIn()}
         />
         <br />
+        <br />
       </div>
     </div>
   );

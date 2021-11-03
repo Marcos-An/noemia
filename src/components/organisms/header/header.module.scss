@@ -50,7 +50,20 @@
 
 @media (min-width: 720px) and (min-width: 1080px) {
   .headerContainer {
-    padding: 4rem 28rem;
+    padding: 2rem 28rem;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.04);
+  }
+
+  .headerProfile {
+    padding: 2rem 28rem;
+  }
+
+  .headerWithBackButton {
+    padding: 2rem 28rem;
+
+    div:first-child {
+      position: absolute;
+      left: 28rem;
+    }
   }
 }

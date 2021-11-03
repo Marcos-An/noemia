@@ -8,3 +8,16 @@
     grid-gap: 1rem;
   }
 }
+
+@media (min-width: 720px) and (min-width: 1080px) {
+  .categoriesSearch {
+    margin-top: 3rem;
+
+    .categoriesItems {
+      display: grid;
+      margin-top: 2rem;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 2rem;
+    }
+  }
+}

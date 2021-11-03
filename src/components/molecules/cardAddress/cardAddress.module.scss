@@ -8,5 +8,9 @@
     position: absolute;
     top: 40%;
     right: 1.5rem;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }

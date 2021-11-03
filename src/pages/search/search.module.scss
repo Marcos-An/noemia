@@ -8,6 +8,10 @@
       margin-left: 1rem;
 
       font-size: 1.3rem;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 
@@ -17,5 +21,14 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 1.4rem;
+  }
+}
+
+@media (min-width: 720px) and (min-width: 1080px) {
+  .search {
+    padding: 2rem 28rem;
+    .searchedWrapper {
+      grid-template-columns: repeat(4, 1fr) !important;
+    }
   }
 }

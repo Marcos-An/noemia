@@ -32,7 +32,7 @@ export default function AddAdress() {
   const { updateUser, user } = authContext;
 
   useEffect(() => {
-    updateHeaderText("Add Adress");
+    updateHeaderText("Add address");
     updateFooterType("none");
 
     const userStorage: any = JSON.parse(localStorage.getItem("@noemia:user"));
@@ -70,12 +70,12 @@ export default function AddAdress() {
 
   const saveAddAdress = async () => {
     const newAdress = {
-      street,
-      number,
-      zipCode,
-      state,
-      city,
-      neighbourhood,
+      street: street ? street : ' ',
+      number: number ? number : ' ',
+      zipCode: zipCode ? zipCode : ' ',
+      state: state ? state : ' ',
+      city: city ? city : ' ',
+      neighbourhood: neighbourhood ? neighbourhood : ' ',
     };
 
     updateUser(newAdress);

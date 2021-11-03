@@ -3,8 +3,12 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  background-color: #F6F6F6;
+  background-color: #f6f6f6;
   height: 3rem;
   width: 3rem;
   border-radius: 3px;
+
+  &:hover {
+    cursor: pointer;
+  }
 }

@@ -8,3 +8,15 @@
     bottom: 2rem;
   }
 }
+
+@media (min-width: 720px) and (min-width: 1080px) {
+  .myInformations {
+    padding: 0rem 28rem;
+
+    .button {
+      width: 20%;
+      position: relative;
+      margin-top: 5rem;
+    }
+  }
+}

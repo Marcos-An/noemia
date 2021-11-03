@@ -18,3 +18,16 @@
     margin-top: 1rem;
   }
 }
+
+@media (min-width: 720px) and (min-width: 1080px) {
+  .myInformations {
+    padding: 0rem 28rem;
+    margin-top: 2rem;
+
+    .button {
+      width: 20%;
+      position: relative;
+      margin-top: 5rem;
+    }
+  }
+}

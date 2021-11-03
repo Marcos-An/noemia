@@ -7,6 +7,7 @@
     position: absolute;
     bottom: 2rem;
   }
+
   .buttonUpdate {
     width: 90%;
     position: absolute;
@@ -31,5 +32,18 @@
 
   .form {
     margin-top: 3rem;
+  }
+}
+
+@media (min-width: 720px) and (min-width: 1080px) {
+  .paymentMethods {
+    padding: 0rem 28rem;
+    margin-top: 2rem;
+
+    .button {
+      width: 40%;
+      position: relative;
+      margin-top: 5rem;
+    }
   }
 }

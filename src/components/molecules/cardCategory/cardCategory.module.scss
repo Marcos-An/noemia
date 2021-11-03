@@ -1,5 +1,4 @@
 .cardCategory {
-  height: 5rem;
   height: 7rem;
   padding-left: 1rem;
   padding-bottom: 0.6rem;
@@ -14,9 +13,14 @@
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 @media (min-width: 720px) and (min-width: 1080px) {
   .cardCategory {
+    height: 10rem;
   }
 }
