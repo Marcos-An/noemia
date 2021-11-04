@@ -41,3 +41,25 @@
     }
   }
 }
+
+@media (min-width: 720px) and (min-width: 1080px) {
+  .container {
+    padding: 0rem 27rem;
+
+    .imageContainer {
+      position: relative !important;
+      min-width: 100%;
+      max-width: 100%;
+
+      min-height: 50vh;
+      max-height: 50vh;
+
+      margin-top: -11vh;
+      z-index: -1;
+
+      img {
+        border-radius: 0rem 0rem 5rem 5rem;
+      }
+    }
+  }
+}

@@ -75,6 +75,10 @@
       }
     }
   }
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 @media (min-width: 720px) and (min-width: 1080px) {

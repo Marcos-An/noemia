@@ -32,6 +32,10 @@
     right: 1.5rem;
     top: 40%;
   }
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .cardPaymentMethodsMain {

@@ -7,4 +7,10 @@
   border-radius: 0.6rem;
   border: 1px solid #dcdcdc;
   padding: 1rem;
+
+  div {
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }

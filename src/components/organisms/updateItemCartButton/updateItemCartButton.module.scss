@@ -16,3 +16,10 @@
     }
   }
 }
+
+@media (min-width: 720px) and (min-width: 1080px) {
+  .footer {
+    width: 50%;
+    margin-bottom: 1rem;
+  }
+}

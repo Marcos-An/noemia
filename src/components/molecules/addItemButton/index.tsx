@@ -27,14 +27,18 @@ export default function AddItemButton() {
 
   return (
     <div className={styles.AddItemButton}>
-      <GenericIcon
-        icon="minus"
-        size="16"
-        color={addingCardItem.quantity === 1 ? "grey" : "black"}
-        onClick={addingCardItem.quantity !== 1 ? removeItem : () => { }}
-      />
+      <div>
+        <GenericIcon
+          icon="minus"
+          size="16"
+          color={addingCardItem.quantity === 1 ? "grey" : "black"}
+          onClick={addingCardItem.quantity !== 1 ? removeItem : () => { }}
+        />
+      </div>
       <GenericText>{addingCardItem.quantity}</GenericText>
-      <GenericIcon icon="plus" size="16" onClick={addItem} />
+      <div>
+        <GenericIcon icon="plus" size="16" onClick={addItem} />
+      </div>
     </div>
   )
 }
