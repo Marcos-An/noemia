@@ -65,12 +65,6 @@ export default function ResumeCart() {
 
   return user.cart || cartItems.length > 0 ? (<div className={styles.resumeCart}>
     <GenericTitle>Your Resume</GenericTitle>
-    {cartItems.map(item => (
-      <div key={item.id} className={styles.resumeItems}>
-        <GenericText>{item.name}</GenericText>
-        <GenericTitle>{formatCurrency(itemPrice(item))}</GenericTitle>
-      </div>
-    ))}
     <div className={styles.resumeItems}>
       <GenericText>Subtotal</GenericText>
       <GenericTitle>{formatCurrency(currentPrice())}</GenericTitle>
