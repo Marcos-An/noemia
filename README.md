@@ -67,7 +67,7 @@
   <img src="public/screen.png" alt="Logo">
 </a> 
 
-Noemia is a project to practice some skills building a Full Stack project with NextJS, Hasura, GraphQL, Apollo, Postgres, JavaScript. Here you can order a experience of eat a pizza gourmet with a good wine after a delicious starter. You can do login, put somethings delicious in your cart and place a order :tada:
+Noemia is a project to practice some skills building a Full Stack project with NextJS, Hasura, GraphQL, Apollo, Postgres, JavaScript. Here you can order an experience of eating a pizza gourmet with a good wine after a delicious starter. You can do log in, put somethings delicious in your cart and place an order :tada:
 <br>
 <a href="https://noemia.vercel.app/" target="_blank">
   Try Yourself!
